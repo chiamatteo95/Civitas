@@ -5,6 +5,7 @@ Zawartość paczki
   index.html               – cała gra (jeden plik, bez zewnętrznych zależności)
   manifest.webmanifest     – opis aplikacji (nazwa, ikony, kolory)
   sw.js                    – service worker (działanie bez internetu po pierwszym wejściu)
+  cover.webp               – grafika ekranu startowego
   icon-*.png, apple-touch-icon.png, favicon.png – ikony
 
 Ważne: wszystkie pliki muszą leżeć w tym samym folderze na serwerze.
@@ -43,4 +44,4 @@ Gra online (wersja 2)
   - W części sieci (np. niektóre mobilne i firmowe) połączenie może się nie udać, bo nie ma własnego serwera TURN.
   - Rozłączony gracz nie może wrócić do tej samej partii, jego tury są pomijane.
   - Nie jest to zabezpieczone przed oszustwami: gospodarz widzi wszystko, a gracze mogą ingerować w kod w przeglądarce.
-  - Przy aktualizacji pamiętaj o zwiększeniu wersji w sw.js (teraz civitas-v2).
+  - Przy aktualizacji pamiętaj o zwiększeniu wersji w sw.js (teraz civitas-v3).

@@ -27,10 +27,11 @@ header p{margin:0;color:var(--mut)}
 .h,.h2{position:absolute;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
 .h{inset:2%;background:#0003}.h2{inset:9%}
 .band{z-index:3}.h2{opacity:.82}
-#intro,#fight,#man{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(10,15,20,.85);padding:16px;overflow:auto}#intro[hidden],#fight[hidden],#man[hidden]{display:none}
+#intro,#fight,#man,#lobby{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(10,15,20,.85);padding:16px;overflow:auto}#intro[hidden],#fight[hidden],#man[hidden],#lobby[hidden]{display:none}
 .ibox{background:var(--panel);border:1px solid var(--line);border-radius:14px;max-width:560px;width:100%;overflow:hidden;text-align:center;padding-bottom:18px}
 .ibox h1{margin:14px 12px 2px}.ibox p{margin:6px 18px;color:var(--mut)}.ibox .sub{font-style:italic}.art{display:block;width:100%;height:auto}.ibox .start{justify-content:center;margin-top:14px}
 .ft{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left}.ft table{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}.ft td,.ft th{padding:3px 0;border-bottom:1px solid var(--line)}.ft td:last-child,.ft th:last-child{text-align:right}
+.ibox input{font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);text-align:center;letter-spacing:.2em;text-transform:uppercase;width:8em}
 .manual{max-width:720px;max-height:92vh;overflow:auto;text-align:left;padding:0}.mh{display:flex;justify-content:space-between;align-items:center;gap:8px;position:sticky;top:0;z-index:2;background:var(--panel);padding:12px 16px;border-bottom:1px solid var(--line)}.mh h2{margin:0;font:700 20px Georgia,serif}
 .mb{padding:6px 16px 16px;font-size:14px}.mb details{border-bottom:1px solid var(--line);padding:8px 0}.mb p,.mb li{margin:6px 0;color:var(--ink)}.mb ul{padding-left:18px;margin:6px 0}.mb table{width:100%;border-collapse:collapse;margin:6px 0}.mb th,.mb td{text-align:left;padding:4px 6px;border-bottom:1px solid var(--line);vertical-align:top}.mb th{color:var(--mut);font-weight:600}.menu{display:flex;gap:6px}.lake{fill:#7fb3d1;stroke:#4d86a8;stroke-width:.4;opacity:.92}.mt{fill:#6e665a;stroke:#3d382f;stroke-width:.3;opacity:.85}.snow{fill:#fff}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .lake{fill:#245f80;stroke:#3a86ad}}
@@ -74,7 +75,8 @@ details{font-size:14px}summary{cursor:pointer;font-weight:600}details ul{padding
 <h1 id="it">Civitas – Anthropogenesis</h1>
 <p class="sub">Dolny paleolit · Afryka · od ok. 3 mln do 300 tys. lat temu</p>
 <p>Wyprowadź swoją grupę z serca Afryki, rozwijaj cechy i technologie oraz zajmij kolejne regiony kontynentu.</p>
-<div class="start"><button class="a main" onclick="start(2)">2 graczy</button><button class="a main" onclick="start(3)">3 graczy</button><button class="a main" onclick="start(4)">4 graczy</button><button class="a" onclick="openMan()">Instrukcja</button></div></div></div>
+<div class="start"><button class="a main" onclick="startLocal(2)">2 graczy</button><button class="a main" onclick="startLocal(3)">3 graczy</button><button class="a main" onclick="startLocal(4)">4 graczy</button><button class="a" onclick="openLobby()">Gra online</button><button class="a" onclick="openMan()">Instrukcja</button></div></div></div>
+<div id="lobby" hidden role="dialog" aria-modal="true" aria-label="Gra online"><div class="ibox" id="lbox" style="padding:16px"></div></div>
 <div id="fight" hidden role="dialog" aria-modal="true" aria-label="Starcie"><div class="ibox" id="fbox" style="padding:16px"></div></div>
 <div id="man" hidden role="dialog" aria-modal="true" aria-labelledby="mt"><div class="ibox manual"><div class="mh"><h2 id="mt">Instrukcja gry</h2><button class="a" onclick="document.getElementById('man').hidden=true">Zamknij ✕</button></div><div class="mb">
 <details open><summary>1. Cel gry</summary><p>Prowadź swoje grupy hominidów z Serca Afryki ku kolejnym regionom kontynentu (bez Madagaskaru) w dolnym paleolicie, ok. 3 mln–300 tys. lat temu. Rozwijaj cechy ciała (ewolucja), technologie (karty rozwoju) i zajmuj nowe tereny.</p><p>Gra kończy się, gdy ktoś na koniec swojej tury ma <b>25 pkt ewolucji</b> albo w grze nie zostały żadne karty punktowane. Wygrywa gracz z największą liczbą <b>punktów końcowych</b> (p. 9).</p></details>
@@ -86,7 +88,8 @@ details{font-size:14px}summary{cursor:pointer;font-weight:600}details ul{padding
 <details><summary>7. Karty rozwoju</summary><table><tr><th>Karta</th><th>Koszt</th><th>Efekt</th></tr><tr><td>Ogień</td><td>2 drewna</td><td>wyprawy do innych regionów za darmo; w starciu −1 dla przeciwnika</td></tr><tr><td>Schronienie</td><td>2 drewna, 1 kamień</td><td>osiedlenie za 1 jedzenie; +1 w obronie</td></tr><tr><td>Narzędzia</td><td>2 kamienie</td><td>+1 drewna lub kamienia przy zbiorze; +1 w starciu</td></tr><tr><td>Polowanie</td><td>1 drewno, 1 kamień, 1 jedzenie</td><td>+1 jedzenia na sawannie; +1 w ataku</td></tr></table></details>
 <details><summary>8. Starcie</summary><p>Gdy wchodzisz na pole z cudzą lub neutralną grupą, otwiera się ekran starcia. Każda strona rzuca k6 i dodaje modyfikatory:</p><ul><li>numer generacji (era),</li><li>Narzędzia +1, Polowanie +1 w ataku, Schronienie +1 w obronie,</li><li>Ogień przeciwnika −1,</li><li>wsparcie: +1 za każdą dodatkową własną grupę w tym samym polu i za każde sąsiednie pole z własną grupą (maks. +2). Parantropy mają stałe +3.</li></ul><p>Wygrywa wyższy wynik, remis wygrywa obrońca. Przegrany traci jedną grupę. Jeśli po wygranej pole jest puste, napastnik wchodzi na nie. Jedzenie za wyprawę jest wydane niezależnie od wyniku.</p></details>
 <details><summary>9. Koniec gry i punktacja</summary><p>Gra kończy się na koniec tury gracza, który ma 25+ pkt ewolucji, albo gdy zabraknął kart punktowanych. Punkty końcowe:</p><ul><li>punkty ewolucji,</li><li>+2 za każdą kartę rozwoju,</li><li>+2 za każde pole poza Sercem Afryki, na którym masz grupę,</li><li>+1 za każdą swoją grupę.</li></ul><p>Gracz, który straci wszystkie grupy, odpada z gry.</p></details>
-<details><summary>10. Wskazówki i uproszczenia makiety</summary><ul><li>Wczesne osiedlanie daje więcej zbiorów, ale nie zapomnij o cechach: bez nich nie wejdziesz do dalszych regionów.</li><li>Rozwój Narzędzi i Polowania opłaca się szybko, a Ogień ma sens przy wielu wyprawach.</li><li>W makiecie pominięto: rezerwę 60 prowincji, karty migracji, 5–6 graczy oraz wydarzenia klimatyczne.</li></ul></details>
+<details><summary>10. Gra online</summary><ul><li>Jedna osoba wybiera na ekranie startowym „Gra online” → „Załóż pokój” i podaje pozostałym 5-znakowy kod.</li><li>Pozostali (do 3 osób) otwierają tę samą stronę i wybierają „Gra online” → wpisują kod → „Dołącz”. Gospodarz klika „Start”, gdy wszyscy są połączeni.</li><li>Przeglądarka gospodarza działa jak serwer, więc jego karta musi zostać otwarta przez całą grę. Gdy zamknie grę, kończy się ona dla wszystkich.</li><li>Rzuty kośćmi i tasowanie kart losuje gospodarz, a inni nie widzą kolejności talii. Każdy działa tylko w swojej turze. Gracz, który się rozłączy, nie może wrócić do tej partii, a jego tury są pomijane.</li><li>Do połączenia potrzebny jest internet. W niektórych sieciach (np. część mobilnych lub firmowych) połączenie może się nie udać.</li></ul></details>
+<details><summary>11. Wskazówki i uproszczenia makiety</summary><ul><li>Wczesne osiedlanie daje więcej zbiorów, ale nie zapomnij o cechach: bez nich nie wejdziesz do dalszych regionów.</li><li>Rozwój Narzędzi i Polowania opłaca się szybko, a Ogień ma sens przy wielu wyprawach.</li><li>W makiecie pominięto: rezerwę 60 prowincji, karty migracji, 5–6 graczy oraz wydarzenia klimatyczne.</li></ul></details>
 </div></div></div>
 <div class="wrap">
 <header><h1>Civitas – Anthropogenesis</h1><p>Dolny paleolit w Afryce · makieta: wspólny ekran, 2–4 graczy</p><nav class="menu" aria-label="Menu"><button class="a" onclick="openMan()">Instrukcja</button><button class="a" onclick="document.getElementById('intro').hidden=false">Ekran startowy</button></nav></header>
@@ -107,6 +110,7 @@ details{font-size:14px}summary{cursor:pointer;font-weight:600}details ul{padding
 <li><b>Karty rozwoju:</b> Ogień (wyprawy do innych regionów za darmo), Schronienie (osiedlenie za 1 jedzenie), Narzędzia (+1 drewno/kamień, +1 w walce), Polowanie (+1 jedzenie).</li>
 </ul></details></section>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js" defer></script>
 <script>
 const ERA=['Australopitek','Homo habilis','Homo erectus','Homo heidelbergensis','Archaiczny Homo (rhodesiensis)','Progowy H. sapiens'],TH=[0,4,8,13,19,25];
 const COL=['#e4572e','#4fc3f7','#f2c14e','#c77dff'],PN=['Czerwoni','Niebiescy','Żółci','Fioletowi'];
@@ -141,7 +145,7 @@ if(G.mk.filter(c=>!c.p).length<=3||!G.deck.concat(G.disc,G.mk).some(c=>c.p))brea
 G.deck=shuf(G.deck.concat(G.disc,G.mk));G.disc=[];G.mk=[];say('Rynek przetasowany: za dużo adaptacji.')}}
 const left=()=>G.deck.concat(G.mk).some(c=>c.p>0);
 const GATE={R:0,S:1,E:1,N:2,Z:3};
-const canGo=(r,c)=>{const p=G.P[G.cur];return !!G.sel&&!G.over&&G.acts>0&&adj(G.sel[0],G.sel[1],r,c)&&owner(r,c)!==G.cur&&era(p.evo)>=GATE[zone(r,c)]&&(p.dev.O||p.f>0||zone(G.sel[0],G.sel[1])==zone(r,c))};
+const canGo=(r,c)=>{const p=G.P[G.cur];return !!G.sel&&!G.over&&G.acts>0&&(NET.mode=='local'||NET.seat==G.cur)&&adj(G.sel[0],G.sel[1],r,c)&&owner(r,c)!==G.cur&&era(p.evo)>=GATE[zone(r,c)]&&(p.dev.O||p.f>0||zone(G.sel[0],G.sel[1])==zone(r,c))};
 function alert(t){MSG=t;draw()}
 function start(n){
 const xs=n==2?[6,10]:n==3?[6,8,10]:[6,7,9,10];
@@ -173,14 +177,15 @@ if(o>=0&&G.P[o].dev.O)A.push(['Ogień obrońcy: strach',-1]);
 G.fight={sr,sc,r,c,o,A,D,done:0};fightUI()}
 function fightUI(){const F=G.fight,nm=o=>o<0?'Parantropy':PN[o],col=o=>o<0?'#555':COL[o];
 const tb=(t,L,o)=>`<div><b style="color:${col(o)};text-shadow:0 0 1px #000">${t}: ${nm(o)}</b><table>${L.map(([n,v])=>`<tr><td>${n}</td><td>${v>0?'+':''}${v}</td></tr>`).join('')}<tr><th>Razem</th><th>${F.done?sum(L):'?'}</th></tr></table></div>`;
-document.getElementById('fbox').innerHTML=`<h2 style="font:700 20px Georgia,serif;margin:0 0 10px">Starcie</h2><div class="ft">${tb('Atak',F.A,G.cur)}${tb('Obrona',F.D,F.o)}</div><p>${F.done?(F.win?'Napastnik wygrywa: obrońca traci grupę.':'Obrońca wygrywa (remis też): napastnik traci grupę.'):'Wynik = k6 + modyfikatory. Remis wygrywa obrońca.'}</p><button class="a main" onclick="${F.done?'endFight()':'rollFight()'}">${F.done?'Dalej':'Rzuć kośćmi'}</button>`;
+document.getElementById('fbox').innerHTML=`<h2 style="font:700 20px Georgia,serif;margin:0 0 10px">Starcie</h2><div class="ft">${tb('Atak',F.A,G.cur)}${tb('Obrona',F.D,F.o)}</div><p>${F.done?(F.win?'Napastnik wygrywa: obrońca traci grupę.':'Obrońca wygrywa (remis też): napastnik traci grupę.'):'Wynik = k6 + modyfikatory. Remis wygrywa obrońca.'}</p>${NET.mode=='local'||NET.seat==G.cur?`<button class="a main" onclick="${F.done?'endFight()':'rollFight()'}">${F.done?'Dalej':'Rzuć kośćmi'}</button>`:'<p>Czekaj na gracza: '+PN[G.cur]+'</p>'}`;
 document.getElementById('fight').hidden=false}
-function rollFight(){const F=G.fight;F.A.unshift(['Rzut k6',d6()]);F.D.unshift(['Rzut k6',d6()]);F.done=1;F.win=sum(F.A)>sum(F.D);fightUI()}
-function endFight(){const F=G.fight,{sr,sc,r,c,o}=F,mine=at(sr,sc).find(b=>b.o==G.cur),who=o<0?'parantropami':PN[o],res=sum(F.A)+':'+sum(F.D);
+function rollFight(){if(NET.mode=='guest')return send(['roll']);if(NET.mode=='host'&&NET.seat!=G.cur)return;const F=G.fight;if(!F||F.done)return;F.A.unshift(['Rzut k6',d6()]);F.D.unshift(['Rzut k6',d6()]);F.done=1;F.win=sum(F.A)>sum(F.D);fightUI()}
+function endFight(){if(NET.mode=='guest')return send(['endf']);if(NET.mode=='host'&&NET.seat!=G.cur)return;if(!G.fight)return;const F=G.fight,{sr,sc,r,c,o}=F,mine=at(sr,sc).find(b=>b.o==G.cur),who=o<0?'parantropami':PN[o],res=sum(F.A)+':'+sum(F.D);
 if(F.win){G.B.splice(G.B.indexOf(at(r,c)[0]),1);say('Starcie z '+who+' ('+res+') – wygrana.');if(!at(r,c).length){mine.r=r;mine.c=c;G.sel=[r,c];discover(zone(r,c))}}
 else{G.B.splice(G.B.indexOf(mine),1);G.sel=null;say('Starcie z '+who+' ('+res+') – grupa przepadła.')}
 G.fight=null;G.acts--;document.getElementById('fight').hidden=true;draw()}
 function click(r,c){
+if(NET.mode=='guest')return send(['click',r,c]);if(NET.mode=='host'&&NET.seat!=G.cur)return;
 MSG='';if(G.over||G.fight)return;const o=owner(r,c);
 if(o===G.cur){G.sel=[r,c];return draw()}
 if(!G.sel||G.acts<1)return;
@@ -193,6 +198,7 @@ if(o===null||o===G.cur){mine.r=r;mine.c=c;G.sel=[r,c];say(PN[G.cur]+' wędrują 
 else{startFight(sr,sc,r,c,o);return}
 G.acts--;draw()}
 function act(k,x){
+if(NET.mode=='guest')return send(['act',k,x]);if(NET.mode=='host'&&NET.seat!=G.cur)return;
 MSG='';const p=G.P[G.cur];if(G.over||G.fight)return;
 if(k=='end')return endTurn();
 if(G.acts<1)return;
@@ -205,8 +211,9 @@ function score(i){const p=G.P[i],cells=new Set(G.B.filter(b=>b.o==i&&zone(b.r,b.
 return p.evo+2*Object.keys(p.dev).length+2*cells.size+G.B.filter(b=>b.o==i).length}
 function endTurn(){
 if(G.P.some(p=>p.evo>=25)||!left()){G.over=true;const s=G.P.map((_,i)=>score(i)),w=s.indexOf(Math.max(...s));say('Koniec gry! Wygrywają: '+PN[w]+' ('+s[w]+' pkt) po '+G.round+' turach.');return draw()}
+if(G.P.every((q,i)=>q.gone||!G.B.some(b=>b.o==i))){G.over=true;say('Koniec gry: nikt nie został.');return draw()}
 G.cur=(G.cur+1)%G.n;if(G.cur==0)G.round++;G.acts=2;G.sel=null;
-if(!G.B.some(b=>b.o==G.cur)){say(PN[G.cur]+' wymarli.');return endTurn()}
+if(!G.B.some(b=>b.o==G.cur)||G.P[G.cur].gone){say(PN[G.cur]+(G.P[G.cur].gone?' odeszli.':' wymarli.'));return endTurn()}
 say('Tura '+G.round+': '+PN[G.cur]+'.');draw()}
 function draw(){
 const bd=document.getElementById('board');bd.innerHTML='';const hx=document.createElement('div');hx.id='hx';hx.innerHTML=HEXBG+DECOR;bd.appendChild(hx);
@@ -217,9 +224,10 @@ const el=document.createElement('button');el.className='c '+t+' '+z+(ok?' ok':''
 el.setAttribute('aria-label',ZN[z]+', '+RN[t]+(o===null?'':o<0?', parantropy':', '+PN[o]+' x'+b.length));
 el.innerHTML='<span class="h"></span><span class="h2"></span><i><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">'+IC[t]+'</svg></i>'+(o===null?'':'<span class="band" style="background:'+(o<0?'#111;color:#fff':COL[o])+'">'+b.length+'</span>');
 el.onclick=()=>click(r,c);hx.appendChild(el)}
-const p=G.P[G.cur],e=era(p.evo),dis=G.over||G.acts<1?'disabled':'';
+const me=NET.mode=='local'?G.cur:NET.seat,p=G.P[me],e=era(p.evo),dis=G.over||G.acts<1||me!=G.cur?'disabled':'';
 document.getElementById('side').innerHTML=`
 <h2>Tura ${G.round} · <span style="color:${COL[G.cur]};text-shadow:0 0 1px #000">${PN[G.cur]}</span> · akcje: ${G.acts}</h2>
+${NET.mode!='local'?`<div class="card">Grasz jako <b style="color:${COL[me]};text-shadow:0 0 1px #000">${PN[me]}</b>${me==G.cur?' – Twój ruch!':' – czekasz na ruch: '+PN[G.cur]}</div>`:''}
 ${MSG?`<div class="card" role="alert" style="border-style:solid;color:var(--hot)">${MSG}</div>`:''}
 <div class="res"><span>Jedzenie ${p.f}</span><span>Drewno ${p.w}</span><span>Kamień ${p.s}</span></div>
 <div><b>Generacja ${['I','II','III','IV','V','VI'][e]}:</b> ${ERA[e]} · ${p.evo}/30 pkt
@@ -228,10 +236,64 @@ ${MSG?`<div class="card" role="alert" style="border-style:solid;color:var(--hot)
 <div class="card"><b>Rynek cech</b> (punktowana: 2 jedzenia, adaptacja: gratis)<div class="btns" style="margin-top:6px">${G.mk.map((c,i)=>`<button class="a" ${dis||(c.p&&p.f<2)?'disabled':''} onclick="act('evo',${i})">${c.n} +${c.p}${c.p?'':' · gratis'}</button>`).join('')}</div></div>
 <div class="btns">${Object.entries(DEV).map(([k,[n,c]])=>`<button class="a" ${dis||p.dev[k]?'disabled':''} onclick="act('dev','${k}')" title="${Object.entries(c).map(([a,v])=>v+' '+RN[a]).join(', ')}">${p.dev[k]?'✓ ':''}${n}</button>`).join('')}</div>
 <div class="card">Cechy: ${p.hand.length?p.hand.map(c=>c.n+' +'+c.p).join(', '):'brak'}<br>Talia: ${G.deck.length} kart, zestawów: ${Math.ceil(G.n/2)}.</div>
-<button class="a main" ${G.over?'disabled':''} onclick="act('end')">Zakończ turę</button>
+<button class="a main" ${G.over||me!=G.cur?'disabled':''} onclick="act('end')">Zakończ turę</button>
 <div class="pl">${G.P.map((q,i)=>`<div class="${i==G.cur?'cur':''}" style="border-color:${COL[i]}"><span>${PN[i]}</span><span>${q.evo} pkt · ${ERA[era(q.evo)]} · wynik ${score(i)}</span></div>`).join('')}</div>
 <div id="log">${G.log.map(l=>'<p>'+l+'</p>').join('')}</div>
-<div class="start">Nowa gra: ${[2,3,4].map(n=>`<button class="a" onclick="start(${n})">${n} graczy</button>`).join('')}<button class="a" onclick="document.getElementById('intro').hidden=false">Ekran startowy</button></div>`}
+<div class="start">${NET.mode=='local'?'Nowa gra: '+[2,3,4].map(n=>`<button class="a" onclick="startLocal(${n})">${n} graczy</button>`).join(''):'Pokój '+NET.code+': <button class="a" onclick="netLeave()">Opuść grę</button>'}<button class="a" onclick="document.getElementById('intro').hidden=false">Ekran startowy</button></div>`;
+if(G.fight)fightUI();else document.getElementById('fight').hidden=true;
+if(NET.mode=='host')broadcast()}
+
+const NET={mode:'local',seat:0,peer:null,conns:{},conn:null,code:'',started:false};
+const lb=h=>{document.getElementById('lbox').innerHTML=h;document.getElementById('lobby').hidden=false};
+const lbErr=m=>{netClose();lb('<p>'+m+'</p><div class="start"><button class="a" onclick="openLobby()">Wróć</button></div>')};
+function netClose(){try{if(NET.peer)NET.peer.destroy()}catch(e){}NET.peer=null;NET.conns={};NET.conn=null;NET.mode='local';NET.seat=0;NET.code='';NET.started=false}
+function startLocal(n){netClose();document.getElementById('lobby').hidden=true;start(n)}
+function netLeave(){netClose();start(3);document.getElementById('intro').hidden=false}
+function send(a){if(NET.conn&&NET.conn.open)NET.conn.send({t:'i',a})}
+function snap(){const o=Object.assign({},G);o.deck=G.deck.length;o.disc=G.disc.length;return JSON.stringify(o)}
+function broadcast(){if(!NET.started)return;const s=snap();Object.values(NET.conns).forEach(c=>{try{c.send({t:'state',s})}catch(e){}})}
+function openLobby(){document.getElementById('intro').hidden=true;
+lb('<h2 style="font:700 20px Georgia,serif;margin:0 0 8px">Gra online</h2><p>Jedna osoba zakłada pokój i podaje kod pozostałym (2–4 graczy). Wszyscy muszą mieć otwartą tę stronę.</p><div class="start"><button class="a main" onclick="hostRoom()">Załóż pokój</button></div><p>albo wpisz kod pokoju:</p><div class="start"><input id="jc" maxlength="5" aria-label="Kod pokoju"><button class="a main" onclick="joinRoom()">Dołącz</button></div><div class="start"><button class="a" onclick="closeLobby()">Wróć</button></div>')}
+function closeLobby(){netClose();document.getElementById('lobby').hidden=true;document.getElementById('intro').hidden=false}
+function lobbyHost(){if(NET.mode!='host'||NET.started)return;const k=Object.keys(NET.conns).length;
+lb(`<h2 style="font:700 20px Georgia,serif;margin:0 0 8px">Pokój online</h2><p>Kod pokoju:</p><p style="font:700 34px Georgia,serif;letter-spacing:.2em;color:var(--ink)">${NET.code}</p><p>Pozostali otwierają tę stronę, wybierają „Gra online” i wpisują ten kod.</p><p>Połączeni: ${k+1} z 4 (Ty + ${k}).</p><div class="start"><button class="a main" ${k<1?'disabled':''} onclick="startOnline()">Start (${k+1} graczy)</button><button class="a" onclick="closeLobby()">Anuluj</button></div>`)}
+function hostRoom(){if(typeof Peer=='undefined')return lbErr('Nie wczytano biblioteki sieciowej (PeerJS). Potrzebny jest internet. Odśwież stronę i spróbuj ponownie.');
+netClose();const code=Math.random().toString(36).slice(2,7).toUpperCase().padEnd(5,'X');
+NET.mode='host';NET.seat=0;NET.code=code;const peer=new Peer('civitas-'+code);NET.peer=peer;
+peer.on('open',lobbyHost);
+peer.on('error',e=>{if(e.type=='unavailable-id')hostRoom();else lbErr('Błąd sieci: '+e.type)});
+peer.on('connection',c=>{const free=[1,2,3].find(s=>!NET.conns[s]);
+if(NET.started||!free){c.on('open',()=>{c.send({t:'full'});setTimeout(()=>c.close(),400)});return}
+c.seat=free;NET.conns[free]=c;
+c.on('open',()=>{c.send({t:'seat',seat:c.seat});lobbyHost()});
+c.on('data',m=>{if(m&&m.t=='i')onIntent(c.seat,m.a)});
+c.on('close',()=>{if(NET.conns[c.seat]===c)delete NET.conns[c.seat];
+if(NET.started){G.P[c.seat].gone=true;say(PN[c.seat]+' rozłączyli się.');if(G.cur==c.seat&&!G.over)endTurn();else draw()}else lobbyHost()})})}
+function startOnline(){const es=Object.keys(NET.conns).map(Number).sort();if(!es.length)return;const old=NET.conns;NET.conns={};
+es.forEach((s,i)=>{const c=old[s];c.seat=i+1;NET.conns[i+1]=c;c.send({t:'seat',seat:i+1})});
+NET.started=true;document.getElementById('lobby').hidden=true;start(es.length+1)}
+function onIntent(seat,a){if(!NET.started||!G||G.over||!Array.isArray(a)||seat!=G.cur)return;
+const [f,x,y]=a,I=Number.isInteger,keep=NET.seat;NET.seat=seat;
+try{if(f=='click'&&I(x)&&I(y)&&ex(x,y))click(x,y);
+else if(f=='act'&&['gather','settle','dev','evo','end'].includes(x)&&(x!='evo'||I(y))&&(x!='dev'||DEV[y]))act(x,y);
+else if(f=='roll'&&G.fight)rollFight();
+else if(f=='endf'&&G.fight&&G.fight.done)endFight()}
+finally{NET.seat=keep}
+if(MSG){const m=MSG;MSG='';const c=NET.conns[seat];if(c)c.send({t:'msg',m});draw()}}
+function joinRoom(){const code=document.getElementById('jc').value.trim().toUpperCase();if(!code)return;
+if(typeof Peer=='undefined')return lbErr('Nie wczytano biblioteki sieciowej (PeerJS). Potrzebny jest internet. Odśwież stronę i spróbuj ponownie.');
+netClose();NET.mode='guest';NET.code=code;lb('<p>Łączenie z pokojem '+code+'…</p>');
+const peer=new Peer();NET.peer=peer;
+peer.on('error',e=>lbErr(e.type=='peer-unavailable'?'Nie znaleziono pokoju '+code+'. Sprawdź kod.':'Błąd sieci: '+e.type));
+peer.on('open',()=>{const c=peer.connect('civitas-'+code,{reliable:true});NET.conn=c;
+const to=setTimeout(()=>{if(!c.open)lbErr('Nie udało się połączyć z pokojem '+code+'. Spróbuj ponownie.')},12000);
+c.on('open',()=>{clearTimeout(to);lb('<p>Połączono z pokojem '+code+'. Czekaj, aż gospodarz rozpocznie grę…</p>')});
+c.on('data',m=>{if(!m)return;
+if(m.t=='seat')NET.seat=m.seat;
+else if(m.t=='full')lbErr('Pokój jest pełny albo gra już trwa.');
+else if(m.t=='state'){const o=JSON.parse(m.s);o.deck=new Array(o.deck).fill(0);o.disc=new Array(o.disc).fill(0);G=o;MSG='';document.getElementById('lobby').hidden=true;document.getElementById('intro').hidden=true;draw()}
+else if(m.t=='msg'){MSG=m.m;draw()}});
+c.on('close',()=>{if(NET.mode=='guest')lbErr('Połączenie z gospodarzem zostało przerwane.')})})}
 start(3);document.getElementById('intro').hidden=false;
 function openMan(){document.getElementById('man').hidden=false}
 document.addEventListener('keydown',e=>{if(e.key=='Escape')document.getElementById('man').hidden=true});

@@ -1,0 +1,35 @@
+CIVITAS – ANTHROPOGENESIS: instrukcja wdrożenia
+================================================
+
+Zawartość paczki
+  index.html               – cała gra (jeden plik, bez zewnętrznych zależności)
+  manifest.webmanifest     – opis aplikacji (nazwa, ikony, kolory)
+  sw.js                    – service worker (działanie bez internetu po pierwszym wejściu)
+  icon-*.png, apple-touch-icon.png, favicon.png – ikony
+
+Ważne: wszystkie pliki muszą leżeć w tym samym folderze na serwerze.
+Aplikację da się zainstalować tylko przez HTTPS (lub localhost).
+
+Wariant A – GitHub Pages (za darmo)
+  1. Załóż repozytorium na github.com i wgraj wszystkie pliki z tej paczki do głównego katalogu.
+  2. Settings → Pages → Source: „Deploy from a branch”, gałąź main, folder /(root).
+  3. Po chwili gra będzie pod adresem https://TWOJA-NAZWA.github.io/NAZWA-REPOZYTORIUM/
+
+Wariant B – Netlify / Cloudflare Pages
+  Przeciągnij cały folder na stronę netlify.com/drop (albo wgraj jako projekt Pages). Dostajesz adres HTTPS.
+
+Wariant C – własny serwer
+  Wgraj pliki przez FTP/SFTP do dowolnego katalogu obsługiwanego przez HTTPS.
+
+Instalacja na Androidzie
+  1. Otwórz adres gry w Chrome.
+  2. Menu (⋮) → „Zainstaluj aplikację” (albo „Dodaj do ekranu głównego”).
+  3. Ikona pojawi się na ekranie głównym, a gra otwiera się w osobnym oknie, bez paska przeglądarki.
+
+Aktualizacja gry
+  Podmień index.html, a w sw.js zwiększ numer wersji (const V='civitas-v2' itd.),
+  inaczej telefony mogą jeszcze jakiś czas pokazywać starą wersję.
+
+Test lokalny (opcjonalnie)
+  W folderze z plikami uruchom:  python3 -m http.server 8000
+  i wejdź na http://localhost:8000

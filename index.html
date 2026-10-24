@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1d2a33">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Civitas">
+<title>Civitas – Anthropogenesis</title>
+<style>
+:root{--bg:#f1efe9;--panel:#fff;--ink:#1d2a33;--mut:#5d6b74;--line:#cfd3d4;--hot:#b3261e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101a21;--panel:#18262f;--ink:#e8ecee;--mut:#97a6ae;--line:#2c3e49}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,sans-serif}
+h1{font:700 26px/1.1 Georgia,serif;margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding:16px;display:grid;gap:16px;grid-template-columns:minmax(0,1.6fr) minmax(280px,1fr)}
+@media(max-width:820px){.wrap{grid-template-columns:1fr}}
+header{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between}
+header p{margin:0;color:var(--mut)}
+.board{background:#bcd8e3;padding:8px;border:1px solid var(--line);border-radius:12px}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .board{background:#0e2733}:root:not([data-theme="light"]) .shelf{fill:#16394a}:root:not([data-theme="light"]) .land{fill:#554f36}}
+#hx{position:relative;aspect-ratio:135/124.1}
+.bgmap{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.shelf{fill:#a4c9d8}.land{fill:#dccfa6}
+.h,.h2{position:absolute;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.h{inset:2%;background:#0003}.h2{inset:9%}
+.band{z-index:3}.h2{opacity:.82}
+#intro,#fight,#man{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(10,15,20,.85);padding:16px;overflow:auto}#intro[hidden],#fight[hidden],#man[hidden]{display:none}
+.ibox{background:var(--panel);border:1px solid var(--line);border-radius:14px;max-width:560px;width:100%;overflow:hidden;text-align:center;padding-bottom:18px}
+.ibox h1{margin:14px 12px 2px}.ibox p{margin:6px 18px;color:var(--mut)}.ibox .sub{font-style:italic}.art{display:block;width:100%;height:auto}.ibox .start{justify-content:center;margin-top:14px}
+.ft{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left}.ft table{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}.ft td,.ft th{padding:3px 0;border-bottom:1px solid var(--line)}.ft td:last-child,.ft th:last-child{text-align:right}
+.manual{max-width:720px;max-height:92vh;overflow:auto;text-align:left;padding:0}.mh{display:flex;justify-content:space-between;align-items:center;gap:8px;position:sticky;top:0;z-index:2;background:var(--panel);padding:12px 16px;border-bottom:1px solid var(--line)}.mh h2{margin:0;font:700 20px Georgia,serif}
+.mb{padding:6px 16px 16px;font-size:14px}.mb details{border-bottom:1px solid var(--line);padding:8px 0}.mb p,.mb li{margin:6px 0;color:var(--ink)}.mb ul{padding-left:18px;margin:6px 0}.mb table{width:100%;border-collapse:collapse;margin:6px 0}.mb th,.mb td{text-align:left;padding:4px 6px;border-bottom:1px solid var(--line);vertical-align:top}.mb th{color:var(--mut);font-weight:600}.menu{display:flex;gap:6px}.lake{fill:#7fb3d1;stroke:#4d86a8;stroke-width:.4;opacity:.92}.mt{fill:#6e665a;stroke:#3d382f;stroke-width:.3;opacity:.85}.snow{fill:#fff}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .lake{fill:#245f80;stroke:#3a86ad}}
+.c svg{display:block}
+.c{position:absolute;width:7.4074%;height:9.3049%;border:0;background:none;cursor:pointer;color:#10181d;font:600 11px system-ui;padding:0;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.c.f .h2{background:#b9c46a}.c.w .h2{background:#5f9a73}.c.s .h2{background:#a3a9b3}
+.c.R .h{background:#e0a82e}.c.N .h{background:#c4793b}.c.Z .h{background:#3fa38a}.c.E .h{background:#8e63c9}.c.S .h{background:#3f7fc4}
+.c.ok{z-index:2}.c.ok .h{background:var(--hot);inset:0}.c.ok .h2,.c.sel .h2{inset:15%}
+.c.sel{z-index:2}.c.sel .h{background:#000;inset:0}
+.c:focus-visible{outline:none}.c:focus-visible .h{background:#fff;inset:0}
+.c i{position:absolute;left:50%;top:14%;transform:translateX(-50%);font-style:normal;opacity:.7}
+.band{position:absolute;left:50%;top:50%;transform:translate(-50%,-28%);width:50%;height:50%;border-radius:50%;display:grid;place-items:center;color:#111;font-weight:700;font-size:11px;border:2px solid #0006}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--mut);font-size:13px;margin-top:8px}
+.legend b{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:12px;align-content:start}
+.panel h2{font:700 17px Georgia,serif;margin:0}
+.res{display:flex;gap:14px;flex-wrap:wrap}.res span{font-weight:600}
+.btns{display:flex;flex-wrap:wrap;gap:6px}
+button.a{font:inherit;padding:8px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;min-height:40px}
+button.a:hover:not(:disabled){border-color:var(--ink)}button.a:disabled{opacity:.4;cursor:default}
+button.main{background:var(--ink);color:var(--bg)}
+.era{display:flex;gap:3px}.era div{flex:1;height:8px;border-radius:4px;background:var(--line)}.era .on{background:var(--hot)}
+.pl{display:grid;gap:4px;font-size:14px}.pl div{display:flex;justify-content:space-between;gap:8px;padding:4px 8px;border-radius:6px;border-left:6px solid}
+.pl .cur{background:var(--bg)}
+#log{max-height:150px;overflow:auto;font-size:13px;color:var(--mut);display:grid;gap:3px}
+#log p{margin:0}#log p:first-child{color:var(--ink)}
+details{font-size:14px}summary{cursor:pointer;font-weight:600}details ul{padding-left:18px;margin:8px 0 0}
+.card{border:1px dashed var(--line);border-radius:8px;padding:8px;font-size:14px}
+.start{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+@media(prefers-reduced-motion:no-preference){.c{transition:outline-color .1s}}
+</style></head><body>
+<div id="intro" role="dialog" aria-modal="true" aria-labelledby="it"><div class="ibox">
+<svg class="art" viewBox="0 0 400 190" role="img" aria-label="Zmierzch nad sawanną: akacja, ognisko, trzy postacie i ręczny topor"><defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b3a55"/><stop offset="1" stop-color="#e9a45b"/></linearGradient></defs>
+<rect width="400" height="190" fill="url(#sk)"/><circle cx="300" cy="88" r="28" fill="#f7d98a"/>
+<path d="M0 140c50-30 100-34 160-16 50-14 100-10 140 6l100 10v10H0z" fill="#5b4a3a"/>
+<path d="M0 150c60-8 120-4 200-2s140 6 200 0v42H0z" fill="#3b3126"/>
+<path d="M70 168c4-30 2-40 0-62M72 122c-10-8-18-10-26-8" stroke="#120d09" stroke-width="4" fill="none"/><ellipse cx="72" cy="100" rx="48" ry="12" fill="#120d09"/><ellipse cx="58" cy="92" rx="30" ry="9" fill="#120d09"/>
+<path d="M193 154l24 5M217 154l-24 5" stroke="#4a2f1a" stroke-width="4"/><path d="M205 128c8 10 12 16 6 24h-12c-6-8-2-14 6-24z" fill="#f08a24"/><path d="M205 138c4 6 6 9 3 14h-6c-3-5-1-8 3-14z" fill="#ffd45e"/>
+<g fill="#120d09"><circle cx="168" cy="128" r="5"/><path d="M163 134h10l3 24h-4l-2-12-2 12h-4z"/><circle cx="242" cy="130" r="5"/><path d="M237 136h10l3 22h-4l-2-11-2 11h-4z"/><circle cx="262" cy="140" r="4"/><path d="M258 145h8l2 13h-3l-1-6-1 6h-3z"/></g>
+<path d="M345 180c-9-3-13-13-11-23 2-10 7-20 11-30 4 10 9 20 11 30 2 10-2 20-11 23z" fill="#9a8f80" stroke="#3b3126"/><path d="M345 136v38M338 156l7 8M352 154l-7 8" stroke="#3b3126" stroke-width="1" fill="none"/></svg>
+<h1 id="it">Civitas – Anthropogenesis</h1>
+<p class="sub">Dolny paleolit · Afryka · od ok. 3 mln do 300 tys. lat temu</p>
+<p>Wyprowadź swoją grupę z serca Afryki, rozwijaj cechy i technologie oraz zajmij kolejne regiony kontynentu.</p>
+<div class="start"><button class="a main" onclick="start(2)">2 graczy</button><button class="a main" onclick="start(3)">3 graczy</button><button class="a main" onclick="start(4)">4 graczy</button><button class="a" onclick="openMan()">Instrukcja</button></div></div></div>
+<div id="fight" hidden role="dialog" aria-modal="true" aria-label="Starcie"><div class="ibox" id="fbox" style="padding:16px"></div></div>
+<div id="man" hidden role="dialog" aria-modal="true" aria-labelledby="mt"><div class="ibox manual"><div class="mh"><h2 id="mt">Instrukcja gry</h2><button class="a" onclick="document.getElementById('man').hidden=true">Zamknij ✕</button></div><div class="mb">
+<details open><summary>1. Cel gry</summary><p>Prowadź swoje grupy hominidów z Serca Afryki ku kolejnym regionom kontynentu (bez Madagaskaru) w dolnym paleolicie, ok. 3 mln–300 tys. lat temu. Rozwijaj cechy ciała (ewolucja), technologie (karty rozwoju) i zajmuj nowe tereny.</p><p>Gra kończy się, gdy ktoś na koniec swojej tury ma <b>25 pkt ewolucji</b> albo w grze nie zostały żadne karty punktowane. Wygrywa gracz z największą liczbą <b>punktów końcowych</b> (p. 9).</p></details>
+<details><summary>2. Przygotowanie</summary><ul><li>Gra 2–4 osób. Każdy ma kolor i zaczyna z jedną grupą w Sercu Afryki oraz z 2 jedzenia, 1 drewna i 1 kamieniem.</li><li>Na planszy stoją 4 neutralne grupy parantropów (czarne kółka). Nie ruszają się, ale bronią swoich pól.</li><li>Talia cech: 1 zestaw (50 kart) dla 2 graczy, 2 zestawy dla 3–4. Odkryte jest 5 kart rynku.</li><li>Gracze wykonują tury po kolei. Licznik pokazuje numer tury, która rośnie, gdy ruch wróci do pierwszego gracza.</li></ul></details>
+<details><summary>3. Plansza i regiony</summary><p>120 sześciokątnych pól w pięciu regionach. Kolor wypełnienia to teren, a kolor obramowania to region.</p><table><tr><th>Teren</th><th>Zbiór</th></tr><tr><td>Sawanna</td><td>2 jedzenia</td></tr><tr><td>Las</td><td>1 drewno + 1 jedzenie</td></tr><tr><td>Skały</td><td>1 kamień + 1 jedzenie</td></tr></table><table><tr><th>Region</th><th>Pól</th><th>Wejście od generacji</th></tr><tr><td>Serce Afryki</td><td>25</td><td>od początku</td></tr><tr><td>Afryka Południowa</td><td>33</td><td>II (4 pkt)</td></tr><tr><td>Róg Afryki</td><td>9</td><td>II (4 pkt)</td></tr><tr><td>Afryka Północna</td><td>32</td><td>III (8 pkt)</td></tr><tr><td>Afryka Zachodnia</td><td>21</td><td>IV (13 pkt)</td></tr></table><p>Jeziora i góry na mapie to tylko dekoracja.</p></details>
+<details><summary>4. Przebieg tury</summary><p>W swojej turze masz <b>2 akcje</b> (dowolne, można powtarzać). Gdy je wykorzystasz albo wcześniej zechcesz, kliknij <b>Zakończ turę</b>. Nie ma limitu zasobów do przechowania.</p></details>
+<details><summary>5. Akcje</summary><ul><li><b>Wędrówka:</b> kliknij swoją grupę, potem podświetlone sąsiednie pole (każde pole ma 6 sąsiadów). Ruch w obrębie regionu jest darmowy, wyprawa do innego regionu kosztuje 1 jedzenia. Przesuwasz jedną grupę. Nie wejdziesz do regionu, którego generacji jeszcze nie osiągnąłeś. Wejście na zajęte pole to starcie (p. 8).</li><li><b>Zbieraj:</b> każda Twoja grupa zbiera zasoby ze swojego pola (p. 3). Poza Sercem Afryki każda grupa zbiera o 1 więcej surowca z pola.</li><li><b>Osiedl:</b> zaznacz grupę i zapłać 2 jedzenia (1 ze Schronieniem). Nowa grupa pojawia się na tym samym polu. Maksymalnie 8 grup.</li><li><b>Rozwój:</b> kup jedną kartę rozwoju (p. 7). Każdą można mieć tylko raz.</li><li><b>Ewolucja:</b> weź kartę z rynku cech (p. 6).</li></ul><p>Pierwsze wejście do każdego regionu poza Sercem Afryki daje <b>+1 pkt ewolucji</b>.</p></details>
+<details><summary>6. Ewolucja i rynek cech</summary><p>Cecha punktowana (1–3 pkt) kosztuje <b>2 jedzenia</b> i zostaje u Ciebie. Suma punktów wyznacza Twoją generację:</p><table><tr><th>Gen.</th><th>Gatunek</th><th>Punkty</th></tr><tr><td>I</td><td>Australopitek</td><td>0–3</td></tr><tr><td>II</td><td>Homo habilis</td><td>4–7</td></tr><tr><td>III</td><td>Homo erectus</td><td>8–12</td></tr><tr><td>IV</td><td>Homo heidelbergensis</td><td>13–18</td></tr><tr><td>V</td><td>Archaiczny Homo (rhodesiensis)</td><td>19–24</td></tr><tr><td>VI</td><td>Progowy H. sapiens</td><td>25+</td></tr></table><p><b>Adaptacje</b> (0 pkt) bierzesz za darmo. Dostajesz +1 jedzenia i +1 drewna, a karta wraca do talii. To też akcja, więc możesz w ten sposób odświeżyć rynek. Gdy więcej niż 3 z 5 kart rynku to adaptacje, rynek jest tasowany od nowa.</p><p>Zestaw: 3 pkt – Myślenie abstrakcyjne, Inteligencja, Mowa i język, Zdolności manualne, Duży mózg; 2 pkt – Planowanie ×3, Postawa wyprostowana ×3, Płaska twarz ×2, Naga skóra ×2; 1 pkt – Dwunożność, Redukcja zębów, Wysunięty podbródek, Wysklepione stopy, Rozwój mózgowia (po ×3); 0 pkt – Bieganie, Skakanie, Chodzenie, Brak ogona, Budowa miednicy (po ×4).</p></details>
+<details><summary>7. Karty rozwoju</summary><table><tr><th>Karta</th><th>Koszt</th><th>Efekt</th></tr><tr><td>Ogień</td><td>2 drewna</td><td>wyprawy do innych regionów za darmo; w starciu −1 dla przeciwnika</td></tr><tr><td>Schronienie</td><td>2 drewna, 1 kamień</td><td>osiedlenie za 1 jedzenie; +1 w obronie</td></tr><tr><td>Narzędzia</td><td>2 kamienie</td><td>+1 drewna lub kamienia przy zbiorze; +1 w starciu</td></tr><tr><td>Polowanie</td><td>1 drewno, 1 kamień, 1 jedzenie</td><td>+1 jedzenia na sawannie; +1 w ataku</td></tr></table></details>
+<details><summary>8. Starcie</summary><p>Gdy wchodzisz na pole z cudzą lub neutralną grupą, otwiera się ekran starcia. Każda strona rzuca k6 i dodaje modyfikatory:</p><ul><li>numer generacji (era),</li><li>Narzędzia +1, Polowanie +1 w ataku, Schronienie +1 w obronie,</li><li>Ogień przeciwnika −1,</li><li>wsparcie: +1 za każdą dodatkową własną grupę w tym samym polu i za każde sąsiednie pole z własną grupą (maks. +2). Parantropy mają stałe +3.</li></ul><p>Wygrywa wyższy wynik, remis wygrywa obrońca. Przegrany traci jedną grupę. Jeśli po wygranej pole jest puste, napastnik wchodzi na nie. Jedzenie za wyprawę jest wydane niezależnie od wyniku.</p></details>
+<details><summary>9. Koniec gry i punktacja</summary><p>Gra kończy się na koniec tury gracza, który ma 25+ pkt ewolucji, albo gdy zabraknął kart punktowanych. Punkty końcowe:</p><ul><li>punkty ewolucji,</li><li>+2 za każdą kartę rozwoju,</li><li>+2 za każde pole poza Sercem Afryki, na którym masz grupę,</li><li>+1 za każdą swoją grupę.</li></ul><p>Gracz, który straci wszystkie grupy, odpada z gry.</p></details>
+<details><summary>10. Wskazówki i uproszczenia makiety</summary><ul><li>Wczesne osiedlanie daje więcej zbiorów, ale nie zapomnij o cechach: bez nich nie wejdziesz do dalszych regionów.</li><li>Rozwój Narzędzi i Polowania opłaca się szybko, a Ogień ma sens przy wielu wyprawach.</li><li>W makiecie pominięto: rezerwę 60 prowincji, karty migracji, 5–6 graczy oraz wydarzenia klimatyczne.</li></ul></details>
+</div></div></div>
+<div class="wrap">
+<header><h1>Civitas – Anthropogenesis</h1><p>Dolny paleolit w Afryce · makieta: wspólny ekran, 2–4 graczy</p><nav class="menu" aria-label="Menu"><button class="a" onclick="openMan()">Instrukcja</button><button class="a" onclick="document.getElementById('intro').hidden=false">Ekran startowy</button></nav></header>
+<main>
+<div class="board" id="board" role="grid" aria-label="Plansza: Afryka"></div>
+<div class="legend"><span><b style="background:#b9c46a"></b>sawanna (jedzenie)</span><span><b style="background:#5f9a73"></b>las (drewno)</span><span><b style="background:#a3a9b3"></b>skały (kamień)</span><span><b style="box-shadow:inset 0 0 0 2px #e0a82e"></b>Serce Afryki</span><span><b style="box-shadow:inset 0 0 0 2px #3f7fc4"></b>Południe</span><span><b style="box-shadow:inset 0 0 0 2px #8e63c9"></b>Róg Afryki</span><span><b style="box-shadow:inset 0 0 0 2px #c4793b"></b>Północ</span><span><b style="box-shadow:inset 0 0 0 2px #3fa38a"></b>Zachód</span><span>Czarne kółka: parantropy (rywale)</span></div>
+</main>
+<aside class="panel" id="side"></aside>
+<section class="panel" style="grid-column:1/-1">
+<details><summary>Notatki projektowe (dla autora gry)</summary><ul>
+<li><b>Cel:</b> pierwszy, kto osiągnie 25 pkt ewolucji (próg środkowego paleolitu, ok. 300 tys. lat temu), kończy grę. Wygrywa najwięcej punktów końcowych: ewolucja + 2 za każdą kartę rozwoju + 2 za każde pole poza sercem Afryki + liczba grup. Cechy leżą na rynku (5 odkrytych kart, cecha punktowana za 2 jedzenia, adaptacja gratis), więc gracze ścigają się po najlepsze. Gdy więcej niż 3 z 5 kart rynku to adaptacje, rynek jest tasowany od nowa. Zestawów kart jest ⌈graczy/2⌉ (1, 2, 2), dzięki czemu 25 pkt jest osiągalne przy każdej liczbie graczy; cel: ok. 15–18 tur na gracza.</li>
+<li><b>Plansza:</b> sama Afryka bez Madagaskaru: 120 pól w pięciu regionach (Serce Afryki 25, Północ 32, Zachód 21, Róg Afryki 9, Południe 33). 60 prowincji rezerwy wymienia wyczerpane pola (w makiecie pominięte).</li>
+<li><b>Tura:</b> 2 akcje spośród: wędrówka, zbieranie, osiedlenie, rozwój, ewolucja. <b>Jedzenie:</b> zbierając, każda grupa dostaje 1 jedzenia na każdym polu (2 na sawannie) oraz surowiec pola, więc nikt nie zostaje bez jedzenia. Ruch w obrębie regionu jest darmowy, wyprawa do innego regionu kosztuje 1 jedzenia.</li>
+<li><b>Wyjście z serca Afryki</b> zależy od ery: Południe i Róg od II (Homo habilis), Północ od III (Homo erectus), lasy Zachodu od IV (H. heidelbergensis). W dolnym paleolicie nikt nie opuszcza kontynentu. <b>Nowe tereny:</b> grupa poza Sercem Afryki zbiera o 1 więcej surowca, a pierwsze wejście do każdego regionu daje +1 pkt ewolucji.</li>
+<li><b>Karty 0 pkt to adaptacje:</b> nie przesuwają znacznika, dają +1 jedzenia i +1 drewna i wracają do talii. Można je brać za darmo (to też akcja), żeby odświeżyć zatkany rynek.</li>
+<li><b>Parantropy</b> (masywni krewni australopiteków, współcześni wczesnemu <i>Homo</i>) to neutralne grupy, z którymi rywalizujesz o pola.</li>
+<li><b>Starcie:</b> ekran walki. Każda strona rzuca k6 i dodaje: erę, kartę Narzędzia (+1), Polowanie (+1 w ataku), Schronienie (+1 w obronie), wsparcie własnych grup w stosie i na sąsiednich polach (maks. +2). Ogień daje przeciwnikowi −1. Remis wygrywa obrońca, przegrany traci grupę.</li>
+<li><b>Karty rozwoju:</b> Ogień (wyprawy do innych regionów za darmo), Schronienie (osiedlenie za 1 jedzenie), Narzędzia (+1 drewno/kamień, +1 w walce), Polowanie (+1 jedzenie).</li>
+</ul></details></section>
+</div>
+<script>
+const ERA=['Australopitek','Homo habilis','Homo erectus','Homo heidelbergensis','Archaiczny Homo (rhodesiensis)','Progowy H. sapiens'],TH=[0,4,8,13,19,25];
+const COL=['#e4572e','#4fc3f7','#f2c14e','#c77dff'],PN=['Czerwoni','Niebiescy','Żółci','Fioletowi'];
+const DEV={O:['Ogień',{w:2}],S:['Schronienie',{w:2,s:1}],N:['Narzędzia',{s:2}],P:['Polowanie',{w:1,s:1,f:1}]};
+const RN={f:'jedzenie',w:'drewno',s:'kamień'},ZN={R:'Serce Afryki',N:'Afryka Północna',Z:'Afryka Zachodnia',E:'Róg Afryki',S:'Afryka Południowa'};
+const AF=[[3,11],[2,12],[1,12],[0,12],[0,11],[2,12],[3,12],[4,12],[4,11],[5,11],[5,10],[5,9],[6,9],[6,8]];
+const zone=(r,c)=>r<3?'N':r>=8?'S':c<6?'Z':c>=11?'E':'R';
+const ex=(r,c)=>r>=0&&r<14&&c>=AF[r][0]&&c<=AF[r][1];
+const nb=(r,c)=>{const o=r%2?1:0;return [[r,c-1],[r,c+1],[r-1,c-1+o],[r-1,c+o],[r+1,c-1+o],[r+1,c+o]]};
+const adj=(a,b,c,d)=>ex(a,b)&&ex(c,d)&&nb(a,b).some(([x,y])=>x==c&&y==d);
+const hexp=(r,c)=>{const x=(c+(r%2?.5:0)+.5)*10,y=r*8.66+5.7735;return x+','+(y-5.7735)+' '+(x+5)+','+(y-2.887)+' '+(x+5)+','+(y+2.887)+' '+x+','+(y+5.7735)+' '+(x-5)+','+(y+2.887)+' '+(x-5)+','+(y-2.887)};
+const polys=(()=>{let s='';for(let r=0;r<14;r++)for(let c=0;c<13;c++)if(ex(r,c))s+='<polygon points="'+hexp(r,c)+'"/>';return s})();
+const HEXBG='<svg class="bgmap" viewBox="0 0 135 124.1" aria-hidden="true"><defs><filter id="g1" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 24 -3"/></filter><filter id="g2" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 30 -11"/></filter></defs><g class="shelf" filter="url(#g1)">'+polys+'</g><g class="land" filter="url(#g2)">'+polys+'</g></svg>';
+const px=(r,c)=>[(c+.75)*10,r*8.66+5.77];
+const LK=[[4.7,6,3,2.2],[6.5,10.2,1.6,3],[7.5,9.6,4.5,3.5],[8.4,8.9,1.3,4.5],[9.6,9.9,1.4,5]];
+const MT=[[.9,3.8,1],[.7,4.8,1],[.8,5.8,1],[.9,6.8,1],[1,7.8,1],[2.7,4.6,1.1],[2.9,5.2,.9],[3.2,7,1.1],[3.4,7.5,.9],[5.2,10.6,1.2],[5.5,11.2,1.2],[5,11.4,1],[5.4,10,1],[6.4,4.8,1],[7.9,10.6,1.4],[11,8.7,1.1],[11.7,8.8,1.1],[12.3,8.5,1]];
+const tri=(x,y,s)=>`<polygon class="mt" points="${x-2.4*s},${y+1.8*s} ${x},${y-2.6*s} ${x+2.4*s},${y+1.8*s}"/><polygon class="snow" points="${x-.8*s},${y-.9*s} ${x},${y-2.6*s} ${x+.8*s},${y-.9*s}"/>`;
+const DECOR='<svg class="bgmap decor" viewBox="0 0 135 124.1" aria-hidden="true">'+LK.map(([r,c,rx,ry])=>{const [x,y]=px(r,c);return `<ellipse class="lake" cx="${x}" cy="${y}" rx="${rx}" ry="${ry}"/>`}).join('')+MT.map(([r,c,s])=>{const [x,y]=px(r,c);return tri(x,y,s)}).join('')+'</svg>';
+const IC={f:'<path d="M3 14c0-5 1-8 3-10M8 14V3M13 14c0-5-1-8-3-10" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>',w:'<path d="M8 1l5 7H3zM8 6l6 7H2z" fill="currentColor"/>',s:'<path d="M1 14L6 4l3 5 2-3 4 8z" fill="currentColor"/>'};
+const ter=(r,c)=>['f','w','s','f','w'][(r*7+c*3+((r*c)%4))%5];
+const era=p=>TH.reduce((a,t,i)=>p>=t?i:a,0);
+let G,MSG='';
+function deck(sets){const d=[];
+['Myślenie abstrakcyjne','Inteligencja','Mowa i język','Zdolności manualne','Duży mózg'].forEach(n=>d.push({n,p:3}));
+[['Planowanie',3],['Postawa wyprostowana',3],['Płaska twarz',2],['Naga skóra',2]].forEach(([n,k])=>{for(let i=0;i<k;i++)d.push({n,p:2})});
+['Dwunożność','Redukcja uzębienia','Wysunięty podbródek','Wysklepione stopy','Rozwój mózgowia'].forEach(n=>{for(let i=0;i<3;i++)d.push({n,p:1})});
+['Bieganie','Skakanie','Chodzenie','Brak ogona','Budowa miednicy'].forEach(n=>{for(let i=0;i<4;i++)d.push({n,p:0})});
+const all=[];for(let s=0;s<sets;s++)d.forEach(x=>all.push({...x}));for(let i=all.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[all[i],all[j]]=[all[j],all[i]]}return all}
+const shuf=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function refill(){for(let t=0;t<20;t++){while(G.mk.length<5){if(!G.deck.length&&G.disc.length){G.deck=shuf(G.disc);G.disc=[]}if(!G.deck.length)break;G.mk.push(G.deck.pop())}
+if(G.mk.filter(c=>!c.p).length<=3||!G.deck.concat(G.disc,G.mk).some(c=>c.p))break;
+G.deck=shuf(G.deck.concat(G.disc,G.mk));G.disc=[];G.mk=[];say('Rynek przetasowany: za dużo adaptacji.')}}
+const left=()=>G.deck.concat(G.mk).some(c=>c.p>0);
+const GATE={R:0,S:1,E:1,N:2,Z:3};
+const canGo=(r,c)=>{const p=G.P[G.cur];return !!G.sel&&!G.over&&G.acts>0&&adj(G.sel[0],G.sel[1],r,c)&&owner(r,c)!==G.cur&&era(p.evo)>=GATE[zone(r,c)]&&(p.dev.O||p.f>0||zone(G.sel[0],G.sel[1])==zone(r,c))};
+function alert(t){MSG=t;draw()}
+function start(n){
+const xs=n==2?[6,10]:n==3?[6,8,10]:[6,7,9,10];
+G={n,round:1,cur:0,acts:2,sel:null,over:false,deck:deck(Math.ceil(n/2)),disc:[],mk:[],log:[],
+P:xs.map((x,i)=>({f:2,w:1,s:1,evo:0,dev:{},hand:[],seen:{}})),
+B:xs.map((x,i)=>({r:i%2?7:4,c:x,o:i})).concat([[9,8],[11,6],[5,11],[4,3]].map(([r,c])=>({r,c,o:-1})))};
+refill();say('Gra się zaczyna. Tura 1: '+PN[0]+'. Zaznacz swoją grupę, potem kliknij sąsiednie pole.');document.getElementById('intro').hidden=true;draw()}
+const at=(r,c)=>G.B.filter(b=>b.r==r&&b.c==c);
+const owner=(r,c)=>{const b=at(r,c)[0];return b?b.o:null};
+const say=t=>{G.log.unshift(t);G.log=G.log.slice(0,30)};
+const can=(p,cost)=>Object.entries(cost).every(([k,v])=>G.P[p][k]>=v);
+const pay=(p,cost)=>Object.entries(cost).forEach(([k,v])=>G.P[p][k]-=v);
+const d6=()=>1+Math.floor(Math.random()*6);
+function discover(z){const p=G.P[G.cur];if(z!='R'&&!p.seen[z]){p.seen[z]=1;p.evo+=1;say(PN[G.cur]+' odkrywają region: '+ZN[z]+' (+1 pkt ewolucji).')}}
+function parts(o,att,sr,sc,r,c){const L=[];
+if(o<0)L.push(['Siła parantropów',3]);
+else{const q=G.P[o],e=era(q.evo);L.push(['Era: '+ERA[e],e]);
+if(q.dev.N)L.push(['Narzędzia',1]);
+if(att&&q.dev.P)L.push(['Polowanie: zasadzka',1]);
+if(!att&&q.dev.S)L.push(['Schronienie: obrona',1]);
+const x=att?sr:r,y=att?sc:c;
+const s=Math.min(2,Math.max(0,at(x,y).filter(b=>b.o==o).length-1)+nb(x,y).filter(([i,j])=>ex(i,j)&&at(i,j).some(b=>b.o==o)).length);
+if(s)L.push(['Wsparcie grupy',s])}
+return L}
+const sum=L=>L.reduce((a,x)=>a+x[1],0);
+function startFight(sr,sc,r,c,o){const A=parts(G.cur,1,sr,sc,r,c),D=parts(o,0,sr,sc,r,c);
+if(G.P[G.cur].dev.O)D.push(['Ogień napastnika: strach',-1]);
+if(o>=0&&G.P[o].dev.O)A.push(['Ogień obrońcy: strach',-1]);
+G.fight={sr,sc,r,c,o,A,D,done:0};fightUI()}
+function fightUI(){const F=G.fight,nm=o=>o<0?'Parantropy':PN[o],col=o=>o<0?'#555':COL[o];
+const tb=(t,L,o)=>`<div><b style="color:${col(o)};text-shadow:0 0 1px #000">${t}: ${nm(o)}</b><table>${L.map(([n,v])=>`<tr><td>${n}</td><td>${v>0?'+':''}${v}</td></tr>`).join('')}<tr><th>Razem</th><th>${F.done?sum(L):'?'}</th></tr></table></div>`;
+document.getElementById('fbox').innerHTML=`<h2 style="font:700 20px Georgia,serif;margin:0 0 10px">Starcie</h2><div class="ft">${tb('Atak',F.A,G.cur)}${tb('Obrona',F.D,F.o)}</div><p>${F.done?(F.win?'Napastnik wygrywa: obrońca traci grupę.':'Obrońca wygrywa (remis też): napastnik traci grupę.'):'Wynik = k6 + modyfikatory. Remis wygrywa obrońca.'}</p><button class="a main" onclick="${F.done?'endFight()':'rollFight()'}">${F.done?'Dalej':'Rzuć kośćmi'}</button>`;
+document.getElementById('fight').hidden=false}
+function rollFight(){const F=G.fight;F.A.unshift(['Rzut k6',d6()]);F.D.unshift(['Rzut k6',d6()]);F.done=1;F.win=sum(F.A)>sum(F.D);fightUI()}
+function endFight(){const F=G.fight,{sr,sc,r,c,o}=F,mine=at(sr,sc).find(b=>b.o==G.cur),who=o<0?'parantropami':PN[o],res=sum(F.A)+':'+sum(F.D);
+if(F.win){G.B.splice(G.B.indexOf(at(r,c)[0]),1);say('Starcie z '+who+' ('+res+') – wygrana.');if(!at(r,c).length){mine.r=r;mine.c=c;G.sel=[r,c];discover(zone(r,c))}}
+else{G.B.splice(G.B.indexOf(mine),1);G.sel=null;say('Starcie z '+who+' ('+res+') – grupa przepadła.')}
+G.fight=null;G.acts--;document.getElementById('fight').hidden=true;draw()}
+function click(r,c){
+MSG='';if(G.over||G.fight)return;const o=owner(r,c);
+if(o===G.cur){G.sel=[r,c];return draw()}
+if(!G.sel||G.acts<1)return;
+const [sr,sc]=G.sel;if(!adj(sr,sc,r,c))return;
+const p=G.P[G.cur],e=era(p.evo),z=zone(r,c);
+if(e<GATE[z])return alert(ZN[z]+' wymaga generacji '+['I','II','III','IV'][GATE[z]]+': '+ERA[GATE[z]]+'.');
+if(!p.dev.O&&z!=zone(sr,sc)){if(p.f<1)return alert('Wyprawa do innego regionu kosztuje 1 jedzenia.');p.f--}
+const mine=at(sr,sc).find(b=>b.o==G.cur);
+if(o===null||o===G.cur){mine.r=r;mine.c=c;G.sel=[r,c];say(PN[G.cur]+' wędrują na pole: '+ZN[z]+'.');discover(z)}
+else{startFight(sr,sc,r,c,o);return}
+G.acts--;draw()}
+function act(k,x){
+MSG='';const p=G.P[G.cur];if(G.over||G.fight)return;
+if(k=='end')return endTurn();
+if(G.acts<1)return;
+if(k=='gather'){G.B.filter(b=>b.o==G.cur).forEach(b=>{const t=ter(b.r,b.c),x=zone(b.r,b.c)!='R'?1:0;if(t=='f')p.f+=2+(p.dev.P?1:0)+x;else{p[t]+=1+(p.dev.N?1:0)+x;p.f+=1}});say(PN[G.cur]+' zbierają surowce.')}
+if(k=='settle'){if(!G.sel)return alert('Zaznacz swoją grupę.');const cost={f:p.dev.S?1:2};if(!can(G.cur,cost)||G.B.filter(b=>b.o==G.cur).length>=8)return alert('Brak jedzenia lub limit 8 grup.');pay(G.cur,cost);G.B.push({r:G.sel[0],c:G.sel[1],o:G.cur});say(PN[G.cur]+' powiększają grupę.')}
+if(k=='dev'){if(p.dev[x]||!can(G.cur,DEV[x][1]))return alert('Brakuje surowców.');pay(G.cur,DEV[x][1]);p.dev[x]=1;say(PN[G.cur]+' odkrywają: '+DEV[x][0]+'.')}
+if(k=='evo'){const c=G.mk[x],cost=c&&c.p?2:0;if(!c||p.f<cost)return alert('Cecha punktowana kosztuje 2 jedzenia.');p.f-=cost;G.mk.splice(x,1);p.evo+=c.p;if(c.p)p.hand.push(c);else{p.f++;p.w++;G.disc.push(c)}refill();say(PN[G.cur]+' zdobywają cechę: '+c.n+' (+'+c.p+' pkt).')}
+G.acts--;draw()}
+function score(i){const p=G.P[i],cells=new Set(G.B.filter(b=>b.o==i&&zone(b.r,b.c)!='R').map(b=>b.r+'-'+b.c));
+return p.evo+2*Object.keys(p.dev).length+2*cells.size+G.B.filter(b=>b.o==i).length}
+function endTurn(){
+if(G.P.some(p=>p.evo>=25)||!left()){G.over=true;const s=G.P.map((_,i)=>score(i)),w=s.indexOf(Math.max(...s));say('Koniec gry! Wygrywają: '+PN[w]+' ('+s[w]+' pkt) po '+G.round+' turach.');return draw()}
+G.cur=(G.cur+1)%G.n;if(G.cur==0)G.round++;G.acts=2;G.sel=null;
+if(!G.B.some(b=>b.o==G.cur)){say(PN[G.cur]+' wymarli.');return endTurn()}
+say('Tura '+G.round+': '+PN[G.cur]+'.');draw()}
+function draw(){
+const bd=document.getElementById('board');bd.innerHTML='';const hx=document.createElement('div');hx.id='hx';hx.innerHTML=HEXBG+DECOR;bd.appendChild(hx);
+for(let r=0;r<14;r++)for(let c=0;c<13;c++){if(!ex(r,c))continue;
+const z=zone(r,c),t=ter(r,c),b=at(r,c),o=b.length?b[0].o:null,
+ok=canGo(r,c),sel=G.sel&&G.sel[0]==r&&G.sel[1]==c;
+const el=document.createElement('button');el.className='c '+t+' '+z+(ok?' ok':'')+(sel?' sel':'');el.style.left=(c+(r%2?.5:0))/13.5*100+'%';el.style.top=r*8.66/124.1*100+'%';
+el.setAttribute('aria-label',ZN[z]+', '+RN[t]+(o===null?'':o<0?', parantropy':', '+PN[o]+' x'+b.length));
+el.innerHTML='<span class="h"></span><span class="h2"></span><i><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">'+IC[t]+'</svg></i>'+(o===null?'':'<span class="band" style="background:'+(o<0?'#111;color:#fff':COL[o])+'">'+b.length+'</span>');
+el.onclick=()=>click(r,c);hx.appendChild(el)}
+const p=G.P[G.cur],e=era(p.evo),dis=G.over||G.acts<1?'disabled':'';
+document.getElementById('side').innerHTML=`
+<h2>Tura ${G.round} · <span style="color:${COL[G.cur]};text-shadow:0 0 1px #000">${PN[G.cur]}</span> · akcje: ${G.acts}</h2>
+${MSG?`<div class="card" role="alert" style="border-style:solid;color:var(--hot)">${MSG}</div>`:''}
+<div class="res"><span>Jedzenie ${p.f}</span><span>Drewno ${p.w}</span><span>Kamień ${p.s}</span></div>
+<div><b>Generacja ${['I','II','III','IV','V','VI'][e]}:</b> ${ERA[e]} · ${p.evo}/30 pkt
+<div class="era" style="margin-top:6px">${ERA.map((_,i)=>`<div class="${i<=e?'on':''}"></div>`).join('')}</div></div>
+<div class="btns"><button class="a" ${dis} onclick="act('gather')">Zbieraj</button><button class="a" ${dis} onclick="act('settle')">Osiedl</button></div>
+<div class="card"><b>Rynek cech</b> (punktowana: 2 jedzenia, adaptacja: gratis)<div class="btns" style="margin-top:6px">${G.mk.map((c,i)=>`<button class="a" ${dis||(c.p&&p.f<2)?'disabled':''} onclick="act('evo',${i})">${c.n} +${c.p}${c.p?'':' · gratis'}</button>`).join('')}</div></div>
+<div class="btns">${Object.entries(DEV).map(([k,[n,c]])=>`<button class="a" ${dis||p.dev[k]?'disabled':''} onclick="act('dev','${k}')" title="${Object.entries(c).map(([a,v])=>v+' '+RN[a]).join(', ')}">${p.dev[k]?'✓ ':''}${n}</button>`).join('')}</div>
+<div class="card">Cechy: ${p.hand.length?p.hand.map(c=>c.n+' +'+c.p).join(', '):'brak'}<br>Talia: ${G.deck.length} kart, zestawów: ${Math.ceil(G.n/2)}.</div>
+<button class="a main" ${G.over?'disabled':''} onclick="act('end')">Zakończ turę</button>
+<div class="pl">${G.P.map((q,i)=>`<div class="${i==G.cur?'cur':''}" style="border-color:${COL[i]}"><span>${PN[i]}</span><span>${q.evo} pkt · ${ERA[era(q.evo)]} · wynik ${score(i)}</span></div>`).join('')}</div>
+<div id="log">${G.log.map(l=>'<p>'+l+'</p>').join('')}</div>
+<div class="start">Nowa gra: ${[2,3,4].map(n=>`<button class="a" onclick="start(${n})">${n} graczy</button>`).join('')}<button class="a" onclick="document.getElementById('intro').hidden=false">Ekran startowy</button></div>`}
+start(3);document.getElementById('intro').hidden=false;
+function openMan(){document.getElementById('man').hidden=false}
+document.addEventListener('keydown',e=>{if(e.key=='Escape')document.getElementById('man').hidden=true});
+if('serviceWorker' in navigator&&location.protocol.startsWith('http')){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
+</script></body></html>

@@ -22,7 +22,7 @@ header{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:bas
 header p{margin:0;color:var(--mut)}
 .board{background:#bcd8e3;padding:8px;border:1px solid var(--line);border-radius:12px}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .board{background:#0e2733}:root:not([data-theme="light"]) .shelf{fill:#16394a}:root:not([data-theme="light"]) .land{fill:#554f36}}
-#hx{position:relative;aspect-ratio:135/124.1}
+#hx{position:relative;aspect-ratio:165/141.45}
 .bgmap{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .shelf{fill:#a4c9d8}.land{fill:#dccfa6}
 .h,.h2{position:absolute;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
@@ -37,9 +37,9 @@ header p{margin:0;color:var(--mut)}
 @media(min-aspect-ratio:1/1){#intro .menuBox{left:auto;right:3%;bottom:max(20px,env(safe-area-inset-bottom));transform:none;width:min(280px,40%)}#intro .mainMenu{flex-direction:column}#intro .menuBox .a.big{width:100%}}
 @media(max-aspect-ratio:1/1){#intro .menuBox{bottom:auto;top:calc(100vw*.716 + 4px)}.cover{background:var(--cf) url(cover.webp) center top/100% auto no-repeat}.cover::after{content:"";position:absolute;left:0;right:0;top:calc(100vw*.716 - 70px);height:72px;background:linear-gradient(transparent,var(--cf))}}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.menuBox{position:absolute;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(94%,600px);background:rgba(10,18,30,.66);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:12px;text-align:center;color:#fff}
+.menuBox{position:absolute;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(92%,360px);background:rgba(10,18,30,.66);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:12px;text-align:center;color:#fff}
 .menuBox [hidden]{display:none}.menuBox p{margin:0 0 8px;color:#fff}
-.mainMenu{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.menuBox .start{justify-content:center;margin-top:8px}
+.mainMenu,#m2 .start{display:flex;flex-direction:column;gap:8px}.menuBox .a.big{width:100%}.ver{position:absolute;left:12px;bottom:max(10px,env(safe-area-inset-bottom));color:#fff;opacity:.85;font-size:13px;text-shadow:0 1px 3px #000}.menuBox .start{justify-content:center;margin-top:8px}
 .menuBox .a{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.35)}
 .menuBox .a.main{background:#e0a82e;color:#1d2a33;border-color:#e0a82e;font-weight:700}
 .menuBox .a:hover:not(:disabled){border-color:#fff}.a.big{min-height:48px;padding:10px 18px;font-size:16px}
@@ -48,7 +48,7 @@ header p{margin:0;color:var(--mut)}
 .mb{padding:6px 16px 16px;font-size:14px}.mb details{border-bottom:1px solid var(--line);padding:8px 0}.mb p,.mb li{margin:6px 0;color:var(--ink)}.mb ul{padding-left:18px;margin:6px 0}.mb table{width:100%;border-collapse:collapse;margin:6px 0}.mb th,.mb td{text-align:left;padding:4px 6px;border-bottom:1px solid var(--line);vertical-align:top}.mb th{color:var(--mut);font-weight:600}.menu{display:flex;gap:6px}.lake{fill:#7fb3d1;stroke:#4d86a8;stroke-width:.4;opacity:.92}.mt{fill:#6e665a;stroke:#3d382f;stroke-width:.3;opacity:.85}.snow{fill:#fff}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .lake{fill:#245f80;stroke:#3a86ad}}
 .c svg{display:block}
-.c{position:absolute;width:7.4074%;height:9.3049%;border:0;background:none;cursor:pointer;color:#10181d;font:600 11px system-ui;padding:0;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.c{position:absolute;width:6.0606%;height:8.1634%;border:0;background:none;cursor:pointer;color:#10181d;font:600 11px system-ui;padding:0;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
 .c.f .h2{background:#b9c46a}.c.w .h2{background:#5f9a73}.c.s .h2{background:#a3a9b3}
 .c.R .h{background:#e0a82e}.c.N .h{background:#c4793b}.c.Z .h{background:#3fa38a}.c.E .h{background:#8e63c9}.c.S .h{background:#3f7fc4}
 .c.ok{z-index:2}.c.ok .h{background:var(--hot);inset:0}.c.ok .h2,.c.sel .h2{inset:15%}
@@ -75,7 +75,7 @@ details{font-size:14px}summary{cursor:pointer;font-weight:600}details ul{padding
 .start{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 @media(prefers-reduced-motion:no-preference){.c{transition:outline-color .1s}}
 </style></head><body>
-<div id="intro" role="dialog" aria-modal="true" aria-labelledby="it"><div class="cover"><h1 id="it" class="sr">Civitas – Anthropogenesis</h1>
+<div id="intro" role="dialog" aria-modal="true" aria-labelledby="it"><div class="cover"><h1 id="it" class="sr">Civitas – Anthropogenesis</h1><div class="ver" id="ver"></div>
 <div class="menuBox"><div id="m1" class="mainMenu"><button class="a main big" onclick="showPlayers()">Gra na tym urządzeniu</button><button class="a main big" onclick="openLobby()">Gra online</button><button class="a big" onclick="openMan()">Instrukcja</button></div>
 <div id="m2" hidden><p>Gra na jednym ekranie. Ilu graczy?</p><div class="start"><button class="a main big" onclick="startLocal(2)">2 graczy</button><button class="a main big" onclick="startLocal(3)">3 graczy</button><button class="a main big" onclick="startLocal(4)">4 graczy</button></div><div class="start"><button class="a" onclick="showMain()">Wróć</button></div></div></div></div></div>
 <div id="lobby" hidden role="dialog" aria-modal="true" aria-label="Gra online"><div class="ibox" id="lbox" style="padding:16px"></div></div>
@@ -83,7 +83,7 @@ details{font-size:14px}summary{cursor:pointer;font-weight:600}details ul{padding
 <div id="man" hidden role="dialog" aria-modal="true" aria-labelledby="mt"><div class="ibox manual"><div class="mh"><h2 id="mt">Instrukcja gry</h2><button class="a" onclick="document.getElementById('man').hidden=true">Zamknij ✕</button></div><div class="mb">
 <details open><summary>1. Cel gry</summary><p>Prowadź swoje grupy hominidów z Serca Afryki ku kolejnym regionom kontynentu (bez Madagaskaru) w dolnym paleolicie, ok. 3 mln–300 tys. lat temu. Rozwijaj cechy ciała (ewolucja), technologie (karty rozwoju) i zajmuj nowe tereny.</p><p>Gra kończy się, gdy ktoś na koniec swojej tury ma <b>25 pkt ewolucji</b> albo w grze nie zostały żadne karty punktowane. Wygrywa gracz z największą liczbą <b>punktów końcowych</b> (p. 9).</p></details>
 <details><summary>2. Przygotowanie</summary><ul><li>Gra 2–4 osób. Każdy ma kolor i zaczyna z jedną grupą w Sercu Afryki oraz z 2 jedzenia, 1 drewna i 1 kamieniem.</li><li>Na planszy stoją 4 neutralne grupy parantropów (czarne kółka). Nie ruszają się, ale bronią swoich pól.</li><li>Talia cech: 1 zestaw (50 kart) dla 2 graczy, 2 zestawy dla 3–4. Odkryte jest 5 kart rynku.</li><li>Gracze wykonują tury po kolei. Licznik pokazuje numer tury, która rośnie, gdy ruch wróci do pierwszego gracza.</li></ul></details>
-<details><summary>3. Plansza i regiony</summary><p>120 sześciokątnych pól w pięciu regionach. Kolor wypełnienia to teren, a kolor obramowania to region.</p><table><tr><th>Teren</th><th>Zbiór</th></tr><tr><td>Sawanna</td><td>2 jedzenia</td></tr><tr><td>Las</td><td>1 drewno + 1 jedzenie</td></tr><tr><td>Skały</td><td>1 kamień + 1 jedzenie</td></tr></table><table><tr><th>Region</th><th>Pól</th><th>Wejście od generacji</th></tr><tr><td>Serce Afryki</td><td>25</td><td>od początku</td></tr><tr><td>Afryka Południowa</td><td>33</td><td>II (4 pkt)</td></tr><tr><td>Róg Afryki</td><td>9</td><td>II (4 pkt)</td></tr><tr><td>Afryka Północna</td><td>32</td><td>III (8 pkt)</td></tr><tr><td>Afryka Zachodnia</td><td>21</td><td>IV (13 pkt)</td></tr></table><p>Jeziora i góry na mapie to tylko dekoracja.</p></details>
+<details><summary>3. Plansza i regiony</summary><p>155 sześciokątnych pól w pięciu strefach (I–V). Kolor wypełnienia to teren, a kolor obramowania to strefa. Im wyższy numer, tym dalej od serca Afryki.</p><table><tr><th>Teren</th><th>Zbiór</th></tr><tr><td>Sawanna</td><td>2 jedzenia</td></tr><tr><td>Las</td><td>1 drewno + 1 jedzenie</td></tr><tr><td>Skały</td><td>1 kamień + 1 jedzenie</td></tr></table><table><tr><th>Strefa</th><th>Pól</th><th>Wejście od generacji</th></tr><tr><td>I – Serce Afryki</td><td>35</td><td>od początku</td></tr><tr><td>II</td><td>30</td><td>II (4 pkt)</td></tr><tr><td>III</td><td>30</td><td>III (8 pkt)</td></tr><tr><td>IV</td><td>30</td><td>IV (13 pkt)</td></tr><tr><td>V</td><td>30</td><td>V (19 pkt)</td></tr></table><p>Jeziora i góry na mapie to tylko dekoracja.</p></details>
 <details><summary>4. Przebieg tury</summary><p>W swojej turze masz <b>2 akcje</b> (dowolne, można powtarzać). Gdy je wykorzystasz albo wcześniej zechcesz, kliknij <b>Zakończ turę</b>. Nie ma limitu zasobów do przechowania.</p></details>
 <details><summary>5. Akcje</summary><ul><li><b>Wędrówka:</b> kliknij swoją grupę, potem podświetlone sąsiednie pole (każde pole ma 6 sąsiadów). Ruch w obrębie regionu jest darmowy, wyprawa do innego regionu kosztuje 1 jedzenia. Przesuwasz jedną grupę. Nie wejdziesz do regionu, którego generacji jeszcze nie osiągnąłeś. Wejście na zajęte pole to starcie (p. 8).</li><li><b>Zbieraj:</b> każda Twoja grupa zbiera zasoby ze swojego pola (p. 3). Poza Sercem Afryki każda grupa zbiera o 1 więcej surowca z pola.</li><li><b>Osiedl:</b> zaznacz grupę i zapłać 2 jedzenia (1 ze Schronieniem). Nowa grupa pojawia się na tym samym polu. Maksymalnie 8 grup.</li><li><b>Rozwój:</b> kup jedną kartę rozwoju (p. 7). Każdą można mieć tylko raz.</li><li><b>Ewolucja:</b> weź kartę z rynku cech (p. 6).</li></ul><p>Pierwsze wejście do każdego regionu poza Sercem Afryki daje <b>+1 pkt ewolucji</b>.</p></details>
 <details><summary>6. Ewolucja i rynek cech</summary><p>Cecha punktowana (1–3 pkt) kosztuje <b>2 jedzenia</b> i zostaje u Ciebie. Suma punktów wyznacza Twoją generację:</p><table><tr><th>Gen.</th><th>Gatunek</th><th>Punkty</th></tr><tr><td>I</td><td>Australopitek</td><td>0–3</td></tr><tr><td>II</td><td>Homo habilis</td><td>4–7</td></tr><tr><td>III</td><td>Homo erectus</td><td>8–12</td></tr><tr><td>IV</td><td>Homo heidelbergensis</td><td>13–18</td></tr><tr><td>V</td><td>Archaiczny Homo (rhodesiensis)</td><td>19–24</td></tr><tr><td>VI</td><td>Progowy H. sapiens</td><td>25+</td></tr></table><p><b>Adaptacje</b> (0 pkt) bierzesz za darmo. Dostajesz +1 jedzenia i +1 drewna, a karta wraca do talii. To też akcja, więc możesz w ten sposób odświeżyć rynek. Gdy więcej niż 3 z 5 kart rynku to adaptacje, rynek jest tasowany od nowa.</p><p>Zestaw: 3 pkt – Myślenie abstrakcyjne, Inteligencja, Mowa i język, Zdolności manualne, Duży mózg; 2 pkt – Planowanie ×3, Postawa wyprostowana ×3, Płaska twarz ×2, Naga skóra ×2; 1 pkt – Dwunożność, Redukcja zębów, Wysunięty podbródek, Wysklepione stopy, Rozwój mózgowia (po ×3); 0 pkt – Bieganie, Skakanie, Chodzenie, Brak ogona, Budowa miednicy (po ×4).</p></details>
@@ -97,7 +97,7 @@ details{font-size:14px}summary{cursor:pointer;font-weight:600}details ul{padding
 <header><h1>Civitas – Anthropogenesis</h1><p>Dolny paleolit w Afryce · makieta: wspólny ekran, 2–4 graczy</p><nav class="menu" aria-label="Menu"><button class="a" onclick="openMan()">Instrukcja</button><button class="a" onclick="document.getElementById('intro').hidden=false">Ekran startowy</button></nav></header>
 <main>
 <div class="board" id="board" role="grid" aria-label="Plansza: Afryka"></div>
-<div class="legend"><span><b style="background:#b9c46a"></b>sawanna (jedzenie)</span><span><b style="background:#5f9a73"></b>las (drewno)</span><span><b style="background:#a3a9b3"></b>skały (kamień)</span><span><b style="box-shadow:inset 0 0 0 2px #e0a82e"></b>Serce Afryki</span><span><b style="box-shadow:inset 0 0 0 2px #3f7fc4"></b>Południe</span><span><b style="box-shadow:inset 0 0 0 2px #8e63c9"></b>Róg Afryki</span><span><b style="box-shadow:inset 0 0 0 2px #c4793b"></b>Północ</span><span><b style="box-shadow:inset 0 0 0 2px #3fa38a"></b>Zachód</span><span>Czarne kółka: parantropy (rywale)</span></div>
+<div class="legend"><span><b style="background:#b9c46a"></b>sawanna (jedzenie)</span><span><b style="background:#5f9a73"></b>las (drewno)</span><span><b style="background:#a3a9b3"></b>skały (kamień)</span><span><b style="box-shadow:inset 0 0 0 2px #e0a82e"></b>Strefa I (serce)</span><span><b style="box-shadow:inset 0 0 0 2px #3f7fc4"></b>II</span><span><b style="box-shadow:inset 0 0 0 2px #3fa38a"></b>III</span><span><b style="box-shadow:inset 0 0 0 2px #c4793b"></b>IV</span><span><b style="box-shadow:inset 0 0 0 2px #8e63c9"></b>V</span><span>Czarne kółka: parantropy (rywale)</span></div>
 </main>
 <aside class="panel" id="side"></aside>
 <section class="panel" style="grid-column:1/-1">
@@ -117,20 +117,20 @@ details{font-size:14px}summary{cursor:pointer;font-weight:600}details ul{padding
 const ERA=['Australopitek','Homo habilis','Homo erectus','Homo heidelbergensis','Archaiczny Homo (rhodesiensis)','Progowy H. sapiens'],TH=[0,4,8,13,19,25];
 const COL=['#e4572e','#4fc3f7','#f2c14e','#c77dff'],PN=['Czerwoni','Niebiescy','Żółci','Fioletowi'];
 const DEV={O:['Ogień',{w:2}],S:['Schronienie',{w:2,s:1}],N:['Narzędzia',{s:2}],P:['Polowanie',{w:1,s:1,f:1}]};
-const RN={f:'jedzenie',w:'drewno',s:'kamień'},ZN={R:'Serce Afryki',N:'Afryka Północna',Z:'Afryka Zachodnia',E:'Róg Afryki',S:'Afryka Południowa'};
-const AF=[[3,11],[2,12],[1,12],[0,12],[0,11],[2,12],[3,12],[4,12],[4,11],[5,11],[5,10],[5,9],[6,9],[6,8]];
-const zone=(r,c)=>r<3?'N':r>=8?'S':c<6?'Z':c>=11?'E':'R';
-const ex=(r,c)=>r>=0&&r<14&&c>=AF[r][0]&&c<=AF[r][1];
+const RN={f:'jedzenie',w:'drewno',s:'kamień'},ZN={R:'Strefa I (Serce Afryki)',S:'Strefa II',Z:'Strefa III',N:'Strefa IV',E:'Strefa V'};
+const MASK=['..55555.........', '..4443333355....', '5444332223455...', '5444322223445...', '5544322222222...', '44443222111113..', '.554333211111355', '.555433211111345', '......321111144.', '.......2111113..', '.......2111113..', '.......2111113.5', '.......222222445', '.......333333.45', '.......44445....', '........5555....'];
+const zone=(r,c)=>'RSZNE'[+MASK[r][c]-1];
+const ex=(r,c)=>r>=0&&r<16&&c>=0&&c<16&&MASK[r][c]!='.';
 const nb=(r,c)=>{const o=r%2?1:0;return [[r,c-1],[r,c+1],[r-1,c-1+o],[r-1,c+o],[r+1,c-1+o],[r+1,c+o]]};
 const adj=(a,b,c,d)=>ex(a,b)&&ex(c,d)&&nb(a,b).some(([x,y])=>x==c&&y==d);
 const hexp=(r,c)=>{const x=(c+(r%2?.5:0)+.5)*10,y=r*8.66+5.7735;return x+','+(y-5.7735)+' '+(x+5)+','+(y-2.887)+' '+(x+5)+','+(y+2.887)+' '+x+','+(y+5.7735)+' '+(x-5)+','+(y+2.887)+' '+(x-5)+','+(y-2.887)};
-const polys=(()=>{let s='';for(let r=0;r<14;r++)for(let c=0;c<13;c++)if(ex(r,c))s+='<polygon points="'+hexp(r,c)+'"/>';return s})();
-const HEXBG='<svg class="bgmap" viewBox="0 0 135 124.1" aria-hidden="true"><defs><filter id="g1" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 24 -3"/></filter><filter id="g2" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 30 -11"/></filter></defs><g class="shelf" filter="url(#g1)">'+polys+'</g><g class="land" filter="url(#g2)">'+polys+'</g></svg>';
+const polys=(()=>{let s='';for(let r=0;r<16;r++)for(let c=0;c<16;c++)if(ex(r,c))s+='<polygon points="'+hexp(r,c)+'"/>';return s})();
+const HEXBG='<svg class="bgmap" viewBox="0 0 165 141.45" aria-hidden="true"><defs><filter id="g1" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 24 -3"/></filter><filter id="g2" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 30 -11"/></filter></defs><g class="shelf" filter="url(#g1)">'+polys+'</g><g class="land" filter="url(#g2)">'+polys+'</g></svg>';
 const px=(r,c)=>[(c+.75)*10,r*8.66+5.77];
-const LK=[[4.7,6,3,2.2],[6.5,10.2,1.6,3],[7.5,9.6,4.5,3.5],[8.4,8.9,1.3,4.5],[9.6,9.9,1.4,5]];
-const MT=[[.9,3.8,1],[.7,4.8,1],[.8,5.8,1],[.9,6.8,1],[1,7.8,1],[2.7,4.6,1.1],[2.9,5.2,.9],[3.2,7,1.1],[3.4,7.5,.9],[5.2,10.6,1.2],[5.5,11.2,1.2],[5,11.4,1],[5.4,10,1],[6.4,4.8,1],[7.9,10.6,1.4],[11,8.7,1.1],[11.7,8.8,1.1],[12.3,8.5,1]];
+const LK=[[3,8.6,3,2.2],[5.6,13,1.6,3],[8.4,9.8,4.5,3.5],[10.2,8.6,1.3,4.5],[11.6,9.8,1.4,5]];
+const MT=[[1.4,3.6,1],[1.2,4.7,1],[1.3,5.8,1],[1.5,6.9,1],[1.7,8,1],[3.4,5.9,1.1],[3.6,6.6,.9],[3.4,9.4,1.1],[3.7,9.9,.9],[6.4,13.1,1.2],[6.8,13.8,1.2],[6.1,13.9,1],[6.7,12.4,1],[6.2,3.4,1],[9.6,11.2,1.4],[13.2,10.4,1.1],[13.9,10,1.1],[14.4,9.4,1]];
 const tri=(x,y,s)=>`<polygon class="mt" points="${x-2.4*s},${y+1.8*s} ${x},${y-2.6*s} ${x+2.4*s},${y+1.8*s}"/><polygon class="snow" points="${x-.8*s},${y-.9*s} ${x},${y-2.6*s} ${x+.8*s},${y-.9*s}"/>`;
-const DECOR='<svg class="bgmap decor" viewBox="0 0 135 124.1" aria-hidden="true">'+LK.map(([r,c,rx,ry])=>{const [x,y]=px(r,c);return `<ellipse class="lake" cx="${x}" cy="${y}" rx="${rx}" ry="${ry}"/>`}).join('')+MT.map(([r,c,s])=>{const [x,y]=px(r,c);return tri(x,y,s)}).join('')+'</svg>';
+const DECOR='<svg class="bgmap decor" viewBox="0 0 165 141.45" aria-hidden="true">'+LK.map(([r,c,rx,ry])=>{const [x,y]=px(r,c);return `<ellipse class="lake" cx="${x}" cy="${y}" rx="${rx}" ry="${ry}"/>`}).join('')+MT.map(([r,c,s])=>{const [x,y]=px(r,c);return tri(x,y,s)}).join('')+'</svg>';
 const IC={f:'<path d="M3 14c0-5 1-8 3-10M8 14V3M13 14c0-5-1-8-3-10" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>',w:'<path d="M8 1l5 7H3zM8 6l6 7H2z" fill="currentColor"/>',s:'<path d="M1 14L6 4l3 5 2-3 4 8z" fill="currentColor"/>'};
 const ter=(r,c)=>['f','w','s','f','w'][(r*7+c*3+((r*c)%4))%5];
 const era=p=>TH.reduce((a,t,i)=>p>=t?i:a,0);
@@ -146,14 +146,14 @@ function refill(){for(let t=0;t<20;t++){while(G.mk.length<5){if(!G.deck.length&&
 if(G.mk.filter(c=>!c.p).length<=3||!G.deck.concat(G.disc,G.mk).some(c=>c.p))break;
 G.deck=shuf(G.deck.concat(G.disc,G.mk));G.disc=[];G.mk=[];say('Rynek przetasowany: za dużo adaptacji.')}}
 const left=()=>G.deck.concat(G.mk).some(c=>c.p>0);
-const GATE={R:0,S:1,E:1,N:2,Z:3};
+const GATE={R:0,S:1,Z:2,N:3,E:4};
 const canGo=(r,c)=>{const p=G.P[G.cur];return !!G.sel&&!G.over&&G.acts>0&&(NET.mode=='local'||NET.seat==G.cur)&&adj(G.sel[0],G.sel[1],r,c)&&owner(r,c)!==G.cur&&era(p.evo)>=GATE[zone(r,c)]&&(p.dev.O||p.f>0||zone(G.sel[0],G.sel[1])==zone(r,c))};
 function alert(t){MSG=t;draw()}
 function start(n){
 const xs=n==2?[6,10]:n==3?[6,8,10]:[6,7,9,10];
 G={n,round:1,cur:0,acts:2,sel:null,over:false,deck:deck(Math.ceil(n/2)),disc:[],mk:[],log:[],
 P:xs.map((x,i)=>({f:2,w:1,s:1,evo:0,dev:{},hand:[],seen:{}})),
-B:xs.map((x,i)=>({r:i%2?7:4,c:x,o:i})).concat([[9,8],[11,6],[5,11],[4,3]].map(([r,c])=>({r,c,o:-1})))};
+B:xs.map((x,i)=>({r:x,c:10,o:i})).concat([[4,8],[11,9],[12,11],[2,6]].map(([r,c])=>({r,c,o:-1})))};
 refill();say('Gra się zaczyna. Tura 1: '+PN[0]+'. Zaznacz swoją grupę, potem kliknij sąsiednie pole.');showMain();document.getElementById('intro').hidden=true;draw()}
 const at=(r,c)=>G.B.filter(b=>b.r==r&&b.c==c);
 const owner=(r,c)=>{const b=at(r,c)[0];return b?b.o:null};
@@ -193,7 +193,7 @@ if(o===G.cur){G.sel=[r,c];return draw()}
 if(!G.sel||G.acts<1)return;
 const [sr,sc]=G.sel;if(!adj(sr,sc,r,c))return;
 const p=G.P[G.cur],e=era(p.evo),z=zone(r,c);
-if(e<GATE[z])return alert(ZN[z]+' wymaga generacji '+['I','II','III','IV'][GATE[z]]+': '+ERA[GATE[z]]+'.');
+if(e<GATE[z])return alert(ZN[z]+' wymaga generacji '+['I','II','III','IV','V'][GATE[z]]+': '+ERA[GATE[z]]+'.');
 if(!p.dev.O&&z!=zone(sr,sc)){if(p.f<1)return alert('Wyprawa do innego regionu kosztuje 1 jedzenia.');p.f--}
 const mine=at(sr,sc).find(b=>b.o==G.cur);
 if(o===null||o===G.cur){mine.r=r;mine.c=c;G.sel=[r,c];say(PN[G.cur]+' wędrują na pole: '+ZN[z]+'.');discover(z)}
@@ -219,10 +219,10 @@ if(!G.B.some(b=>b.o==G.cur)||G.P[G.cur].gone){say(PN[G.cur]+(G.P[G.cur].gone?' o
 say('Tura '+G.round+': '+PN[G.cur]+'.');draw()}
 function draw(){
 const bd=document.getElementById('board');bd.innerHTML='';const hx=document.createElement('div');hx.id='hx';hx.innerHTML=HEXBG+DECOR;bd.appendChild(hx);
-for(let r=0;r<14;r++)for(let c=0;c<13;c++){if(!ex(r,c))continue;
+for(let r=0;r<16;r++)for(let c=0;c<16;c++){if(!ex(r,c))continue;
 const z=zone(r,c),t=ter(r,c),b=at(r,c),o=b.length?b[0].o:null,
 ok=canGo(r,c),sel=G.sel&&G.sel[0]==r&&G.sel[1]==c;
-const el=document.createElement('button');el.className='c '+t+' '+z+(ok?' ok':'')+(sel?' sel':'');el.style.left=(c+(r%2?.5:0))/13.5*100+'%';el.style.top=r*8.66/124.1*100+'%';
+const el=document.createElement('button');el.className='c '+t+' '+z+(ok?' ok':'')+(sel?' sel':'');el.style.left=(c+(r%2?.5:0))/16.5*100+'%';el.style.top=r*8.66/141.447*100+'%';
 el.setAttribute('aria-label',ZN[z]+', '+RN[t]+(o===null?'':o<0?', parantropy':', '+PN[o]+' x'+b.length));
 el.innerHTML='<span class="h"></span><span class="h2"></span><i><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">'+IC[t]+'</svg></i>'+(o===null?'':'<span class="band" style="background:'+(o<0?'#111;color:#fff':COL[o])+'">'+b.length+'</span>');
 el.onclick=()=>click(r,c);hx.appendChild(el)}
@@ -245,6 +245,7 @@ ${MSG?`<div class="card" role="alert" style="border-style:solid;color:var(--hot)
 if(G.fight)fightUI();else document.getElementById('fight').hidden=true;
 if(NET.mode=='host')broadcast()}
 
+const VER='0.0.1';
 const NET={mode:'local',seat:0,peer:null,conns:{},conn:null,code:'',started:false};
 const lb=h=>{document.getElementById('lbox').innerHTML=h;document.getElementById('lobby').hidden=false};
 const lbErr=m=>{netClose();lb('<p>'+m+'</p><div class="start"><button class="a" onclick="openLobby()">Wróć</button></div>')};
@@ -296,7 +297,7 @@ else if(m.t=='full')lbErr('Pokój jest pełny albo gra już trwa.');
 else if(m.t=='state'){const o=JSON.parse(m.s);o.deck=new Array(o.deck).fill(0);o.disc=new Array(o.disc).fill(0);G=o;MSG='';document.getElementById('lobby').hidden=true;document.getElementById('intro').hidden=true;draw()}
 else if(m.t=='msg'){MSG=m.m;draw()}});
 c.on('close',()=>{if(NET.mode=='guest')lbErr('Połączenie z gospodarzem zostało przerwane.')})})}
-start(3);document.getElementById('intro').hidden=false;
+start(3);document.getElementById('intro').hidden=false;document.getElementById('ver').textContent='Wersja '+VER;
 function showPlayers(){document.getElementById('m1').hidden=true;document.getElementById('m2').hidden=false}
 function showMain(){document.getElementById('m1').hidden=false;document.getElementById('m2').hidden=true}
 function openMan(){document.getElementById('man').hidden=false}

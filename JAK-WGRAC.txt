@@ -44,10 +44,16 @@ Gra online (wersja 2)
   - W części sieci (np. niektóre mobilne i firmowe) połączenie może się nie udać, bo nie ma własnego serwera TURN.
   - Rozłączony gracz nie może wrócić do tej samej partii, jego tury są pomijane.
   - Nie jest to zabezpieczone przed oszustwami: gospodarz widzi wszystko, a gracze mogą ingerować w kod w przeglądarce.
-  - Przy aktualizacji pamiętaj o zwiększeniu wersji w sw.js (teraz civitas-v6).
+  - Przy aktualizacji pamiętaj o zwiększeniu wersji w sw.js (teraz civitas-v7).
 
 Zmiana ikony na Androidzie (wersja 0.0.3)
   - Ikony mają nowe nazwy (…-v3), żeby przeglądarki nie używały starych z pamięci podręcznej.
   - Na GitHubie usuń stare pliki: icon-192.png, icon-512.png, icon-512-maskable.png, apple-touch-icon.png, favicon.png.
   - Zainstalowana aplikacja na Androidzie odświeża ikonę sama dopiero po jakimś czasie (do kilku dni).
     Najszybciej: odinstaluj aplikację z ekranu głównego, w Chrome wyczyść dane strony i zainstaluj ponownie.
+
+Wersja 0.0.4
+  - Zapis gry: Menu → „Zapisz grę” (tylko gra na jednym urządzeniu). Zapis trafia do pamięci przeglądarki na tym urządzeniu,
+    więc nie przenosi się między telefonami i znika po wyczyszczeniu danych strony. Wczytanie: ekran startowy → „Wczytaj grę”.
+  - „Wyjście z gry” zamyka okno zainstalowanej aplikacji. W zwykłej karcie przeglądarki system tego zwykle blokuje.
+  - Plansza ma przyciski + i −. Poziom powiększenia jest zapamiętywany.

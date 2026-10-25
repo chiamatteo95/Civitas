@@ -44,7 +44,7 @@ Gra online (wersja 2)
   - W części sieci (np. niektóre mobilne i firmowe) połączenie może się nie udać, bo nie ma własnego serwera TURN.
   - Rozłączony gracz nie może wrócić do tej samej partii, jego tury są pomijane.
   - Nie jest to zabezpieczone przed oszustwami: gospodarz widzi wszystko, a gracze mogą ingerować w kod w przeglądarce.
-  - Przy aktualizacji pamiętaj o zwiększeniu wersji w sw.js (teraz civitas-v7).
+  - Przy aktualizacji pamiętaj o zwiększeniu wersji w sw.js (teraz civitas-v8).
 
 Zmiana ikony na Androidzie (wersja 0.0.3)
   - Ikony mają nowe nazwy (…-v3), żeby przeglądarki nie używały starych z pamięci podręcznej.
@@ -57,3 +57,7 @@ Wersja 0.0.4
     więc nie przenosi się między telefonami i znika po wyczyszczeniu danych strony. Wczytanie: ekran startowy → „Wczytaj grę”.
   - „Wyjście z gry” zamyka okno zainstalowanej aplikacji. W zwykłej karcie przeglądarki system tego zwykle blokuje.
   - Plansza ma przyciski + i −. Poziom powiększenia jest zapamiętywany.
+
+Wersja 0.0.5
+  - Nowy wygląd planszy: nocny ocean, tytuł na planszy, karty faz z sylwetkami, Targ z kartami cech, kompas,
+    kolorowe heksy z rzymską cyfrą strefy oraz zachód słońca z akacją w pustym rogu mapy.

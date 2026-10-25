@@ -28,7 +28,7 @@ header p{margin:0;color:var(--mut)}
 .h,.h2{position:absolute;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
 .h{inset:2%;background:#0003}.h2{inset:9%}
 .band{z-index:3}.h2{opacity:.82}
-#intro,#fight,#man,#lobby{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(10,15,20,.85);padding:16px;overflow:auto}#intro[hidden],#fight[hidden],#man[hidden],#lobby[hidden]{display:none}
+#intro,#fight,#man,#lobby,#notes{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(10,15,20,.85);padding:16px;overflow:auto}#intro[hidden],#fight[hidden],#man[hidden],#lobby[hidden],#notes[hidden]{display:none}
 .ibox{background:var(--panel);border:1px solid var(--line);border-radius:14px;max-width:560px;width:100%;overflow:hidden;text-align:center;padding-bottom:18px}
 .ibox h1{margin:14px 12px 2px}.ibox p{margin:6px 18px;color:var(--mut)}.ibox .sub{font-style:italic}.art{display:block;width:100%;height:auto}.ibox .start{justify-content:center;margin-top:14px}
 .ft{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left}.ft table{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}.ft td,.ft th{padding:3px 0;border-bottom:1px solid var(--line)}.ft td:last-child,.ft th:last-child{text-align:right}
@@ -44,6 +44,9 @@ header p{margin:0;color:var(--mut)}
 .menuBox .a.main{background:#e0a82e;color:#1d2a33;border-color:#e0a82e;font-weight:700}
 .menuBox .a:hover:not(:disabled){border-color:#fff}.a.big{min-height:48px;padding:10px 18px;font-size:16px}
 .ibox input{font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);text-align:center;letter-spacing:.2em;text-transform:uppercase;width:8em}
+header{flex-wrap:nowrap;align-items:flex-start}.ht{display:flex;gap:10px;align-items:center;min-width:0}.ht h1{font-size:clamp(18px,5vw,26px)}.ht p{margin:2px 0 0;font-size:13px}.logo{width:44px;height:44px;border-radius:10px;flex:none}
+.dd{position:relative;flex:none}.ddm{position:absolute;right:0;top:calc(100% + 6px);min-width:240px;z-index:20;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px;box-shadow:0 8px 24px #0004}.ddm[hidden]{display:none}
+.ddm button{display:block;width:100%;text-align:left;font:inherit;padding:9px 10px;border:0;border-radius:6px;background:none;color:var(--ink);cursor:pointer}.ddm button:hover{background:var(--bg)}.ddm hr{border:0;border-top:1px solid var(--line);margin:6px 0}.dl{padding:4px 10px;color:var(--mut);font-size:12px}
 .manual{max-width:720px;max-height:92vh;overflow:auto;text-align:left;padding:0}.mh{display:flex;justify-content:space-between;align-items:center;gap:8px;position:sticky;top:0;z-index:2;background:var(--panel);padding:12px 16px;border-bottom:1px solid var(--line)}.mh h2{margin:0;font:700 20px Georgia,serif}
 .mb{padding:6px 16px 16px;font-size:14px}.mb details{border-bottom:1px solid var(--line);padding:8px 0}.mb p,.mb li{margin:6px 0;color:var(--ink)}.mb ul{padding-left:18px;margin:6px 0}.mb table{width:100%;border-collapse:collapse;margin:6px 0}.mb th,.mb td{text-align:left;padding:4px 6px;border-bottom:1px solid var(--line);vertical-align:top}.mb th{color:var(--mut);font-weight:600}.menu{display:flex;gap:6px}.lake{fill:#7fb3d1;stroke:#4d86a8;stroke-width:.4;opacity:.92}.mt{fill:#6e665a;stroke:#3d382f;stroke-width:.3;opacity:.85}.snow{fill:#fff}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .lake{fill:#245f80;stroke:#3a86ad}}
@@ -80,10 +83,18 @@ details{font-size:14px}summary{cursor:pointer;font-weight:600}details ul{padding
 <div id="m2" hidden><p>Gra na jednym ekranie. Ilu graczy?</p><div class="start"><button class="a main big" onclick="startLocal(2)">2 graczy</button><button class="a main big" onclick="startLocal(3)">3 graczy</button><button class="a main big" onclick="startLocal(4)">4 graczy</button></div><div class="start"><button class="a" onclick="showMain()">Wróć</button></div></div></div></div></div>
 <div id="lobby" hidden role="dialog" aria-modal="true" aria-label="Gra online"><div class="ibox" id="lbox" style="padding:16px"></div></div>
 <div id="fight" hidden role="dialog" aria-modal="true" aria-label="Starcie"><div class="ibox" id="fbox" style="padding:16px"></div></div>
+<div id="notes" hidden role="dialog" aria-modal="true" aria-labelledby="nt"><div class="ibox manual"><div class="mh"><h2 id="nt">Notatki projektowe</h2><button class="a" onclick="document.getElementById('notes').hidden=true">Zamknij ✕</button></div><div class="mb"><ul>
+<li><b>Cel:</b> pierwszy do 25 pkt ewolucji kończy grę, wygrywa najwięcej punktów końcowych (ewolucja + 2 za kartę rozwoju + 2 za pole poza strefą I + liczba grup).</li>
+<li><b>Plansza:</b> 150 pól w strefach I–V według projektu planszy. Numer strefy to wymagana generacja (I–V). Strefa I to serce Afryki z miejscami startu.</li>
+<li><b>Rynek cech:</b> 5 odkrytych kart, cecha punktowana kosztuje 2 jedzenia, adaptacje są darmowe. Gdy więcej niż 3 karty rynku to adaptacje, rynek jest tasowany. Zestawów kart: ⌈graczy/2⌉.</li>
+<li><b>Starcie:</b> k6 + era + efekty kart rozwoju (Narzędzia, Polowanie, Schronienie, Ogień) + wsparcie grup. Remis wygrywa obrońca.</li>
+<li><b>Tempo:</b> pierwsza partia testowa trwała 23 tury, cel to 15–18 tur.</li>
+<li><b>Do rozważenia:</b> tor ewolucji 0–50 pkt w 5 fazach (Habilis, Ergaster, Erectus, Antecessor, Sapiens), 5 graczy, karty migracji, wydarzenia klimatyczne, rezerwa prowincji.</li>
+</ul></div></div></div>
 <div id="man" hidden role="dialog" aria-modal="true" aria-labelledby="mt"><div class="ibox manual"><div class="mh"><h2 id="mt">Instrukcja gry</h2><button class="a" onclick="document.getElementById('man').hidden=true">Zamknij ✕</button></div><div class="mb">
-<details open><summary>1. Cel gry</summary><p>Prowadź swoje grupy hominidów z Serca Afryki ku kolejnym regionom kontynentu (bez Madagaskaru) w dolnym paleolicie, ok. 3 mln–300 tys. lat temu. Rozwijaj cechy ciała (ewolucja), technologie (karty rozwoju) i zajmuj nowe tereny.</p><p>Gra kończy się, gdy ktoś na koniec swojej tury ma <b>25 pkt ewolucji</b> albo w grze nie zostały żadne karty punktowane. Wygrywa gracz z największą liczbą <b>punktów końcowych</b> (p. 9).</p></details>
+<details open><summary>1. Cel gry</summary><p>Prowadź swoje grupy hominidów z Serca Afryki ku kolejnym regionom kontynentu w dolnym paleolicie, ok. 3 mln–300 tys. lat temu. Rozwijaj cechy ciała (ewolucja), technologie (karty rozwoju) i zajmuj nowe tereny.</p><p>Gra kończy się, gdy ktoś na koniec swojej tury ma <b>25 pkt ewolucji</b> albo w grze nie zostały żadne karty punktowane. Wygrywa gracz z największą liczbą <b>punktów końcowych</b> (p. 9).</p></details>
 <details><summary>2. Przygotowanie</summary><ul><li>Gra 2–4 osób. Każdy ma kolor i zaczyna z jedną grupą w Sercu Afryki oraz z 2 jedzenia, 1 drewna i 1 kamieniem.</li><li>Na planszy stoją 4 neutralne grupy parantropów (czarne kółka). Nie ruszają się, ale bronią swoich pól.</li><li>Talia cech: 1 zestaw (50 kart) dla 2 graczy, 2 zestawy dla 3–4. Odkryte jest 5 kart rynku.</li><li>Gracze wykonują tury po kolei. Licznik pokazuje numer tury, która rośnie, gdy ruch wróci do pierwszego gracza.</li></ul></details>
-<details><summary>3. Plansza i regiony</summary><p>155 sześciokątnych pól w pięciu strefach (I–V). Kolor wypełnienia to teren, a kolor obramowania to strefa. Im wyższy numer, tym dalej od serca Afryki.</p><table><tr><th>Teren</th><th>Zbiór</th></tr><tr><td>Sawanna</td><td>2 jedzenia</td></tr><tr><td>Las</td><td>1 drewno + 1 jedzenie</td></tr><tr><td>Skały</td><td>1 kamień + 1 jedzenie</td></tr></table><table><tr><th>Strefa</th><th>Pól</th><th>Wejście od generacji</th></tr><tr><td>I – Serce Afryki</td><td>35</td><td>od początku</td></tr><tr><td>II</td><td>30</td><td>II (4 pkt)</td></tr><tr><td>III</td><td>30</td><td>III (8 pkt)</td></tr><tr><td>IV</td><td>30</td><td>IV (13 pkt)</td></tr><tr><td>V</td><td>30</td><td>V (19 pkt)</td></tr></table><p>Jeziora i góry na mapie to tylko dekoracja.</p></details>
+<details><summary>3. Plansza i regiony</summary><p>150 sześciokątnych pól w pięciu strefach (I–V). Kolor wypełnienia to teren, a kolor obramowania to strefa. Im wyższy numer, tym dalej od serca Afryki.</p><table><tr><th>Teren</th><th>Zbiór</th></tr><tr><td>Sawanna</td><td>2 jedzenia</td></tr><tr><td>Las</td><td>1 drewno + 1 jedzenie</td></tr><tr><td>Skały</td><td>1 kamień + 1 jedzenie</td></tr></table><table><tr><th>Strefa</th><th>Pól</th><th>Wejście od generacji</th></tr><tr><td>I – Serce Afryki</td><td>35</td><td>od początku</td></tr><tr><td>II</td><td>30</td><td>II (4 pkt)</td></tr><tr><td>III</td><td>30</td><td>III (8 pkt)</td></tr><tr><td>IV</td><td>28</td><td>IV (13 pkt)</td></tr><tr><td>V</td><td>27</td><td>V (19 pkt)</td></tr></table><p>Jeziora i góry na mapie to tylko dekoracja.</p></details>
 <details><summary>4. Przebieg tury</summary><p>W swojej turze masz <b>2 akcje</b> (dowolne, można powtarzać). Gdy je wykorzystasz albo wcześniej zechcesz, kliknij <b>Zakończ turę</b>. Nie ma limitu zasobów do przechowania.</p></details>
 <details><summary>5. Akcje</summary><ul><li><b>Wędrówka:</b> kliknij swoją grupę, potem podświetlone sąsiednie pole (każde pole ma 6 sąsiadów). Ruch w obrębie regionu jest darmowy, wyprawa do innego regionu kosztuje 1 jedzenia. Przesuwasz jedną grupę. Nie wejdziesz do regionu, którego generacji jeszcze nie osiągnąłeś. Wejście na zajęte pole to starcie (p. 8).</li><li><b>Zbieraj:</b> każda Twoja grupa zbiera zasoby ze swojego pola (p. 3). Poza Sercem Afryki każda grupa zbiera o 1 więcej surowca z pola.</li><li><b>Osiedl:</b> zaznacz grupę i zapłać 2 jedzenia (1 ze Schronieniem). Nowa grupa pojawia się na tym samym polu. Maksymalnie 8 grup.</li><li><b>Rozwój:</b> kup jedną kartę rozwoju (p. 7). Każdą można mieć tylko raz.</li><li><b>Ewolucja:</b> weź kartę z rynku cech (p. 6).</li></ul><p>Pierwsze wejście do każdego regionu poza Sercem Afryki daje <b>+1 pkt ewolucji</b>.</p></details>
 <details><summary>6. Ewolucja i rynek cech</summary><p>Cecha punktowana (1–3 pkt) kosztuje <b>2 jedzenia</b> i zostaje u Ciebie. Suma punktów wyznacza Twoją generację:</p><table><tr><th>Gen.</th><th>Gatunek</th><th>Punkty</th></tr><tr><td>I</td><td>Australopitek</td><td>0–3</td></tr><tr><td>II</td><td>Homo habilis</td><td>4–7</td></tr><tr><td>III</td><td>Homo erectus</td><td>8–12</td></tr><tr><td>IV</td><td>Homo heidelbergensis</td><td>13–18</td></tr><tr><td>V</td><td>Archaiczny Homo (rhodesiensis)</td><td>19–24</td></tr><tr><td>VI</td><td>Progowy H. sapiens</td><td>25+</td></tr></table><p><b>Adaptacje</b> (0 pkt) bierzesz za darmo. Dostajesz +1 jedzenia i +1 drewna, a karta wraca do talii. To też akcja, więc możesz w ten sposób odświeżyć rynek. Gdy więcej niż 3 z 5 kart rynku to adaptacje, rynek jest tasowany od nowa.</p><p>Zestaw: 3 pkt – Myślenie abstrakcyjne, Inteligencja, Mowa i język, Zdolności manualne, Duży mózg; 2 pkt – Planowanie ×3, Postawa wyprostowana ×3, Płaska twarz ×2, Naga skóra ×2; 1 pkt – Dwunożność, Redukcja zębów, Wysunięty podbródek, Wysklepione stopy, Rozwój mózgowia (po ×3); 0 pkt – Bieganie, Skakanie, Chodzenie, Brak ogona, Budowa miednicy (po ×4).</p></details>
@@ -94,23 +105,13 @@ details{font-size:14px}summary{cursor:pointer;font-weight:600}details ul{padding
 <details><summary>11. Wskazówki i uproszczenia makiety</summary><ul><li>Wczesne osiedlanie daje więcej zbiorów, ale nie zapomnij o cechach: bez nich nie wejdziesz do dalszych regionów.</li><li>Rozwój Narzędzi i Polowania opłaca się szybko, a Ogień ma sens przy wielu wyprawach.</li><li>W makiecie pominięto: rezerwę 60 prowincji, karty migracji, 5–6 graczy oraz wydarzenia klimatyczne.</li></ul></details>
 </div></div></div>
 <div class="wrap">
-<header><h1>Civitas – Anthropogenesis</h1><p>Dolny paleolit w Afryce · makieta: wspólny ekran, 2–4 graczy</p><nav class="menu" aria-label="Menu"><button class="a" onclick="openMan()">Instrukcja</button><button class="a" onclick="document.getElementById('intro').hidden=false">Ekran startowy</button></nav></header>
+<header><div class="ht"><img class="logo" src="icon-192.png" alt="" width="44" height="44"><div><h1>Civitas – Anthropogenesis</h1><p>Dolny paleolit w Afryce · 2–4 graczy</p></div></div><div class="dd"><button class="a" id="ddb" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu()">Menu ▾</button><div class="ddm" id="ddm" hidden role="menu"></div></div></header>
 <main>
 <div class="board" id="board" role="grid" aria-label="Plansza: Afryka"></div>
 <div class="legend"><span><b style="background:#b9c46a"></b>sawanna (jedzenie)</span><span><b style="background:#5f9a73"></b>las (drewno)</span><span><b style="background:#a3a9b3"></b>skały (kamień)</span><span><b style="box-shadow:inset 0 0 0 2px #e0a82e"></b>Strefa I (serce)</span><span><b style="box-shadow:inset 0 0 0 2px #3f7fc4"></b>II</span><span><b style="box-shadow:inset 0 0 0 2px #3fa38a"></b>III</span><span><b style="box-shadow:inset 0 0 0 2px #c4793b"></b>IV</span><span><b style="box-shadow:inset 0 0 0 2px #8e63c9"></b>V</span><span>Czarne kółka: parantropy (rywale)</span></div>
 </main>
 <aside class="panel" id="side"></aside>
-<section class="panel" style="grid-column:1/-1">
-<details><summary>Notatki projektowe (dla autora gry)</summary><ul>
-<li><b>Cel:</b> pierwszy, kto osiągnie 25 pkt ewolucji (próg środkowego paleolitu, ok. 300 tys. lat temu), kończy grę. Wygrywa najwięcej punktów końcowych: ewolucja + 2 za każdą kartę rozwoju + 2 za każde pole poza sercem Afryki + liczba grup. Cechy leżą na rynku (5 odkrytych kart, cecha punktowana za 2 jedzenia, adaptacja gratis), więc gracze ścigają się po najlepsze. Gdy więcej niż 3 z 5 kart rynku to adaptacje, rynek jest tasowany od nowa. Zestawów kart jest ⌈graczy/2⌉ (1, 2, 2), dzięki czemu 25 pkt jest osiągalne przy każdej liczbie graczy; cel: ok. 15–18 tur na gracza.</li>
-<li><b>Plansza:</b> sama Afryka bez Madagaskaru: 120 pól w pięciu regionach (Serce Afryki 25, Północ 32, Zachód 21, Róg Afryki 9, Południe 33). 60 prowincji rezerwy wymienia wyczerpane pola (w makiecie pominięte).</li>
-<li><b>Tura:</b> 2 akcje spośród: wędrówka, zbieranie, osiedlenie, rozwój, ewolucja. <b>Jedzenie:</b> zbierając, każda grupa dostaje 1 jedzenia na każdym polu (2 na sawannie) oraz surowiec pola, więc nikt nie zostaje bez jedzenia. Ruch w obrębie regionu jest darmowy, wyprawa do innego regionu kosztuje 1 jedzenia.</li>
-<li><b>Wyjście z serca Afryki</b> zależy od ery: Południe i Róg od II (Homo habilis), Północ od III (Homo erectus), lasy Zachodu od IV (H. heidelbergensis). W dolnym paleolicie nikt nie opuszcza kontynentu. <b>Nowe tereny:</b> grupa poza Sercem Afryki zbiera o 1 więcej surowca, a pierwsze wejście do każdego regionu daje +1 pkt ewolucji.</li>
-<li><b>Karty 0 pkt to adaptacje:</b> nie przesuwają znacznika, dają +1 jedzenia i +1 drewna i wracają do talii. Można je brać za darmo (to też akcja), żeby odświeżyć zatkany rynek.</li>
-<li><b>Parantropy</b> (masywni krewni australopiteków, współcześni wczesnemu <i>Homo</i>) to neutralne grupy, z którymi rywalizujesz o pola.</li>
-<li><b>Starcie:</b> ekran walki. Każda strona rzuca k6 i dodaje: erę, kartę Narzędzia (+1), Polowanie (+1 w ataku), Schronienie (+1 w obronie), wsparcie własnych grup w stosie i na sąsiednich polach (maks. +2). Ogień daje przeciwnikowi −1. Remis wygrywa obrońca, przegrany traci grupę.</li>
-<li><b>Karty rozwoju:</b> Ogień (wyprawy do innych regionów za darmo), Schronienie (osiedlenie za 1 jedzenie), Narzędzia (+1 drewno/kamień, +1 w walce), Polowanie (+1 jedzenie).</li>
-</ul></details></section>
+
 </div>
 <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js" defer></script>
 <script>
@@ -118,7 +119,7 @@ const ERA=['Australopitek','Homo habilis','Homo erectus','Homo heidelbergensis',
 const COL=['#e4572e','#4fc3f7','#f2c14e','#c77dff'],PN=['Czerwoni','Niebiescy','Żółci','Fioletowi'];
 const DEV={O:['Ogień',{w:2}],S:['Schronienie',{w:2,s:1}],N:['Narzędzia',{s:2}],P:['Polowanie',{w:1,s:1,f:1}]};
 const RN={f:'jedzenie',w:'drewno',s:'kamień'},ZN={R:'Strefa I (Serce Afryki)',S:'Strefa II',Z:'Strefa III',N:'Strefa IV',E:'Strefa V'};
-const MASK=['..55555.........', '..4443333355....', '5444332223455...', '5444322223445...', '5544322222222...', '44443222111113..', '.554333211111355', '.555433211111345', '......321111144.', '.......2111113..', '.......2111113..', '.......2111113.5', '.......222222445', '.......333333.45', '.......44445....', '........5555....'];
+const MASK=['..55555.........', '..4443333355....', '5444332223455...', '5444322223445...', '5544322222222...', '44443222111113..', '.554333211111355', '.555433211111345', '......321111144.', '.......2111113..', '.......2111113..', '.......2111113..', '.......2222224..', '.......333333...', '.......44445....', '........5555....'];
 const zone=(r,c)=>'RSZNE'[+MASK[r][c]-1];
 const ex=(r,c)=>r>=0&&r<16&&c>=0&&c<16&&MASK[r][c]!='.';
 const nb=(r,c)=>{const o=r%2?1:0;return [[r,c-1],[r,c+1],[r-1,c-1+o],[r-1,c+o],[r+1,c-1+o],[r+1,c+o]]};
@@ -241,11 +242,12 @@ ${MSG?`<div class="card" role="alert" style="border-style:solid;color:var(--hot)
 <button class="a main" ${G.over||me!=G.cur?'disabled':''} onclick="act('end')">Zakończ turę</button>
 <div class="pl">${G.P.map((q,i)=>`<div class="${i==G.cur?'cur':''}" style="border-color:${COL[i]}"><span>${PN[i]}</span><span>${q.evo} pkt · ${ERA[era(q.evo)]} · wynik ${score(i)}</span></div>`).join('')}</div>
 <div id="log">${G.log.map(l=>'<p>'+l+'</p>').join('')}</div>
-<div class="start">${NET.mode=='local'?'Nowa gra: '+[2,3,4].map(n=>`<button class="a" onclick="startLocal(${n})">${n} graczy</button>`).join(''):'Pokój '+NET.code+': <button class="a" onclick="netLeave()">Opuść grę</button>'}<button class="a" onclick="document.getElementById('intro').hidden=false">Ekran startowy</button></div>`;
+`;
 if(G.fight)fightUI();else document.getElementById('fight').hidden=true;
+renderMenu();
 if(NET.mode=='host')broadcast()}
 
-const VER='0.0.1';
+const VER='0.0.2';
 const NET={mode:'local',seat:0,peer:null,conns:{},conn:null,code:'',started:false};
 const lb=h=>{document.getElementById('lbox').innerHTML=h;document.getElementById('lobby').hidden=false};
 const lbErr=m=>{netClose();lb('<p>'+m+'</p><div class="start"><button class="a" onclick="openLobby()">Wróć</button></div>')};
@@ -300,7 +302,12 @@ c.on('close',()=>{if(NET.mode=='guest')lbErr('Połączenie z gospodarzem został
 start(3);document.getElementById('intro').hidden=false;document.getElementById('ver').textContent='Wersja '+VER;
 function showPlayers(){document.getElementById('m1').hidden=true;document.getElementById('m2').hidden=false}
 function showMain(){document.getElementById('m1').hidden=false;document.getElementById('m2').hidden=true}
+function toggleMenu(){const m=document.getElementById('ddm');m.hidden=!m.hidden;document.getElementById('ddb').setAttribute('aria-expanded',String(!m.hidden))}
+function closeMenu(){document.getElementById('ddm').hidden=true;document.getElementById('ddb').setAttribute('aria-expanded','false')}
+function mi(t,f){return `<button role="menuitem" onclick="closeMenu();${f}">${t}</button>`}
+function renderMenu(){document.getElementById('ddm').innerHTML=mi('Instrukcja','openMan()')+mi('Notatki projektowe',"document.getElementById('notes').hidden=false")+'<hr>'+(NET.mode=='local'?'<div class="dl">Nowa gra</div>'+[2,3,4].map(n=>mi(n+' graczy (to urządzenie)','startLocal('+n+')')).join(''):'<div class="dl">Pokój online: '+NET.code+'</div>'+mi('Opuść grę','netLeave()'))+'<hr>'+mi('Ekran startowy',"document.getElementById('intro').hidden=false")+'<div class="dl">Wersja '+VER+'</div>'}
 function openMan(){document.getElementById('man').hidden=false}
-document.addEventListener('keydown',e=>{if(e.key=='Escape')document.getElementById('man').hidden=true});
+document.addEventListener('keydown',e=>{if(e.key=='Escape'){document.getElementById('man').hidden=true;document.getElementById('notes').hidden=true;closeMenu()}});
+document.addEventListener('click',e=>{if(e.target.closest&&!e.target.closest('.dd'))closeMenu()});
 if('serviceWorker' in navigator&&location.protocol.startsWith('http')){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
 </script></body></html>

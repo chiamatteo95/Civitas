@@ -44,7 +44,7 @@ Gra online (wersja 2)
   - W części sieci (np. niektóre mobilne i firmowe) połączenie może się nie udać, bo nie ma własnego serwera TURN.
   - Rozłączony gracz nie może wrócić do tej samej partii, jego tury są pomijane.
   - Nie jest to zabezpieczone przed oszustwami: gospodarz widzi wszystko, a gracze mogą ingerować w kod w przeglądarce.
-  - Przy aktualizacji pamiętaj o zwiększeniu wersji w sw.js (teraz civitas-v8).
+  - Przy aktualizacji pamiętaj o zwiększeniu wersji w sw.js (teraz civitas-v10).
 
 Zmiana ikony na Androidzie (wersja 0.0.3)
   - Ikony mają nowe nazwy (…-v3), żeby przeglądarki nie używały starych z pamięci podręcznej.
@@ -61,3 +61,15 @@ Wersja 0.0.4
 Wersja 0.0.5
   - Nowy wygląd planszy: nocny ocean, tytuł na planszy, karty faz z sylwetkami, Targ z kartami cech, kompas,
     kolorowe heksy z rzymską cyfrą strefy oraz zachód słońca z akacją w pustym rogu mapy.
+
+Wersja 0.0.6
+  - 5 faz (Habilis, Ergaster, Erectus, Antecessor, Sapiens), tor 30 pkt, progi: II = 5, III = 12, IV = 20, V = 30 (koniec gry).
+  - Strefa V na planszy wymaga fazy IV, bo faza V kończy grę.
+  - Madagaskar jest tylko ozdobą (bez pól). Targ służy tylko do podglądu.
+  - Poprawiony błąd: pod koniec talii rynek mógł zostać pusty po wielokrotnym tasowaniu.
+
+Wersja 0.0.7
+  - Tor ewolucji ma 40 pkt (stała TRACK w index.html). Faza V trwa od 30 pkt do końca toru, a koniec toru kończy grę.
+  - Strefa V wymaga fazy V.
+  - Pola stref II–V leżą rewersem i odkrywają się po wejściu pierwszej grupy. Teren jest losowany w każdej grze.
+  - Liczba zestawów kart = liczba graczy (min. 2).

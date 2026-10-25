@@ -6,7 +6,7 @@ Zawartość paczki
   manifest.webmanifest     – opis aplikacji (nazwa, ikony, kolory)
   sw.js                    – service worker (działanie bez internetu po pierwszym wejściu)
   cover.webp               – grafika ekranu startowego
-  icon-*.png, apple-touch-icon.png, favicon.png – ikony
+  icon-v3-*.png, apple-touch-icon-v3.png, favicon-v3.png – ikony (nowe logo)
 
 Ważne: wszystkie pliki muszą leżeć w tym samym folderze na serwerze.
 Aplikację da się zainstalować tylko przez HTTPS (lub localhost).
@@ -44,4 +44,10 @@ Gra online (wersja 2)
   - W części sieci (np. niektóre mobilne i firmowe) połączenie może się nie udać, bo nie ma własnego serwera TURN.
   - Rozłączony gracz nie może wrócić do tej samej partii, jego tury są pomijane.
   - Nie jest to zabezpieczone przed oszustwami: gospodarz widzi wszystko, a gracze mogą ingerować w kod w przeglądarce.
-  - Przy aktualizacji pamiętaj o zwiększeniu wersji w sw.js (teraz civitas-v5).
+  - Przy aktualizacji pamiętaj o zwiększeniu wersji w sw.js (teraz civitas-v6).
+
+Zmiana ikony na Androidzie (wersja 0.0.3)
+  - Ikony mają nowe nazwy (…-v3), żeby przeglądarki nie używały starych z pamięci podręcznej.
+  - Na GitHubie usuń stare pliki: icon-192.png, icon-512.png, icon-512-maskable.png, apple-touch-icon.png, favicon.png.
+  - Zainstalowana aplikacja na Androidzie odświeża ikonę sama dopiero po jakimś czasie (do kilku dni).
+    Najszybciej: odinstaluj aplikację z ekranu głównego, w Chrome wyczyść dane strony i zainstaluj ponownie.

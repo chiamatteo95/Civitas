@@ -6,6 +6,7 @@ Zawartość paczki
   manifest.webmanifest     – opis aplikacji (nazwa, ikony, kolory)
   sw.js                    – service worker (działanie bez internetu po pierwszym wejściu)
   cover.webp               – grafika ekranu startowego
+  face1-5.webp             – twarze hominidów na torze ewolucji
   icon-v3-*.png, apple-touch-icon-v3.png, favicon-v3.png – ikony (nowe logo)
 
 Ważne: wszystkie pliki muszą leżeć w tym samym folderze na serwerze.
@@ -44,7 +45,7 @@ Gra online (wersja 2)
   - W części sieci (np. niektóre mobilne i firmowe) połączenie może się nie udać, bo nie ma własnego serwera TURN.
   - Rozłączony gracz nie może wrócić do tej samej partii, jego tury są pomijane.
   - Nie jest to zabezpieczone przed oszustwami: gospodarz widzi wszystko, a gracze mogą ingerować w kod w przeglądarce.
-  - Przy aktualizacji pamiętaj o zwiększeniu wersji w sw.js (teraz civitas-v11).
+  - Przy aktualizacji pamiętaj o zwiększeniu wersji w sw.js (teraz civitas-v12).
 
 Zmiana ikony na Androidzie (wersja 0.0.3)
   - Ikony mają nowe nazwy (…-v3), żeby przeglądarki nie używały starych z pamięci podręcznej.
@@ -79,3 +80,7 @@ Wersja 0.0.8
   - Gra wieloosobowa na jednym ekranie jest osobną opcją w tym samym menu.
   - Z planszy usunięto podpis „Półwysep Arabski” i kompas.
   - Osobny plik civitas_elementy_gry.xlsx zawiera listę wszystkich elementów gry z ilościami dla 2, 3 i 4 graczy.
+
+Wersja 0.0.9
+  - Tor ewolucji (0–40 pkt) z twarzami hominidów przy właściwych fazach: Homo habilis, ergaster, erectus, antecessor, sapiens.
+  - Pod torem znaczniki graczy, które przesuwają się na bieżąco po zdobyciu punktów ewolucji.

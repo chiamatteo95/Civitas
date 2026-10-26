@@ -17,7 +17,7 @@
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,sans-serif}
 h1{font:700 26px/1.1 Georgia,serif;margin:0}
 .wrap{max-width:1480px;margin:0 auto;padding:16px;display:grid;gap:16px;grid-template-columns:minmax(0,3.3fr) minmax(300px,1fr)}
-@media(max-width:900px){.wrap{grid-template-columns:minmax(0,1fr)}.compass{display:none}.ph{width:84px}}
+@media(max-width:900px){.wrap{grid-template-columns:minmax(0,1fr)}.ph{width:84px}}
 .wrap>*{min-width:0}.tbl,.tm>*{min-width:0}
 header{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between}
 header p{margin:0;color:var(--mut)}
@@ -41,7 +41,7 @@ header p{margin:0;color:var(--mut)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .menuBox{position:absolute;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(92%,360px);background:rgba(10,18,30,.66);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:12px;text-align:center;color:#fff}
 .menuBox [hidden]{display:none}.menuBox p{margin:0 0 8px;color:#fff}
-.mainMenu,#m2 .start{display:flex;flex-direction:column;gap:8px}.menuBox .a.big{width:100%}.ver{position:absolute;left:12px;bottom:max(10px,env(safe-area-inset-bottom));color:#fff;opacity:.85;font-size:13px;text-shadow:0 1px 3px #000}.menuBox .start{justify-content:center;margin-top:8px}
+.mainMenu,#m2 .start,#m3 .start,#m4 .start,#m5 .start{display:flex;flex-direction:column;gap:8px}.menuBox .a.big{width:100%}.ver{position:absolute;left:12px;bottom:max(10px,env(safe-area-inset-bottom));color:#fff;opacity:.85;font-size:13px;text-shadow:0 1px 3px #000}.menuBox .start{justify-content:center;margin-top:8px}
 .menuBox .a{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.35)}
 .menuBox .a.main{background:#e0a82e;color:#1d2a33;border-color:#e0a82e;font-weight:700}
 .menuBox .a:hover:not(:disabled){border-color:#fff}.a.big{min-height:48px;padding:10px 18px;font-size:16px}
@@ -61,8 +61,7 @@ header{flex-wrap:nowrap;align-items:flex-start}.ht{display:flex;gap:10px;align-i
 .slots{display:grid;gap:8px}.slot{min-height:68px;border:1px solid #c9a24f88;border-radius:8px;background:#1b2436;color:#ffe9b8;font:inherit;padding:6px 8px;text-align:center;display:grid;gap:2px;align-content:center}.slot b{font:700 13px Georgia,serif}.slot span{font-size:12px;opacity:.85}
 .slot.p3{background:linear-gradient(#4a3a12,#2a2210);border-color:#ffd566}.slot.p2{background:linear-gradient(#34384a,#1f2230);border-color:#cfd6e6}.slot.p0{opacity:.9}
 .slot.empty{display:grid;place-items:center;opacity:.5;cursor:default}.slot svg{width:28px;height:28px}
-.compass{position:absolute;left:8px;top:8px;width:64px;height:64px;pointer-events:none;z-index:4;opacity:.9}
-@media(max-width:900px){.tm{grid-template-columns:1fr}.slots{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}.compass{width:60px;height:60px}}
+@media(max-width:900px){.tm{grid-template-columns:1fr}.slots{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}}
 .c.x .h2{background:repeating-linear-gradient(45deg,#26385e 0 6px,#2f4670 6px 12px)}.c.x .zn{bottom:auto;top:50%;transform:translateY(-50%);font-size:max(10px,2.6cqw);color:#dfe8ff;opacity:.95}.legend b.bk{background:repeating-linear-gradient(45deg,#26385e 0 4px,#2f4670 4px 8px)}
 .c .zn{position:absolute;left:0;right:0;bottom:12%;text-align:center;font:700 max(8px,1.8cqw) Georgia,serif;color:#1d2a33;opacity:.8;pointer-events:none}.c.occ .zn{display:none}
 .manual{max-width:720px;max-height:92vh;overflow:auto;text-align:left;padding:0}.mh{display:flex;justify-content:space-between;align-items:center;gap:8px;position:sticky;top:0;z-index:2;background:var(--panel);padding:12px 16px;border-bottom:1px solid var(--line)}.mh h2{margin:0;font:700 20px Georgia,serif}
@@ -105,8 +104,8 @@ details{font-size:14px}summary{cursor:pointer;font-weight:600}details ul{padding
 @media(prefers-reduced-motion:no-preference){.c{transition:outline-color .1s}}
 </style></head><body>
 <div id="intro" role="dialog" aria-modal="true" aria-labelledby="it"><div class="cover"><h1 id="it" class="sr">Civitas – Anthropogenesis</h1><div class="ver" id="ver"></div>
-<div class="menuBox"><div id="m1" class="mainMenu"><button class="a main big" onclick="showPlayers()">Gra na tym urządzeniu</button><button class="a main big" id="ld" onclick="loadGame()">Wczytaj grę</button><button class="a main big" onclick="openLobby()">Gra online</button><button class="a big" onclick="openMan()">Instrukcja</button><button class="a big" onclick="exitGame()">Wyjście z gry</button></div><div id="svinfo" class="svinfo"></div>
-<div id="m2" hidden><p>Gra na jednym ekranie. Ilu graczy?</p><div class="start"><button class="a main big" onclick="startLocal(2)">2 graczy</button><button class="a main big" onclick="startLocal(3)">3 graczy</button><button class="a main big" onclick="startLocal(4)">4 graczy</button></div><div class="start"><button class="a" onclick="showMain()">Wróć</button></div></div></div></div></div>
+<div class="menuBox"><div id="m1" class="mainMenu"><button class="a main big" onclick="showMode()">Gra na tym urządzeniu</button><button class="a main big" id="ld" onclick="loadGame()">Wczytaj grę</button><button class="a main big" onclick="openLobby()">Gra online</button><button class="a big" onclick="openMan()">Instrukcja</button><button class="a big" onclick="exitGame()">Wyjście z gry</button></div><div id="svinfo" class="svinfo"></div>
+<div id="m2" hidden><p>Gra na tym urządzeniu</p><div class="start"><button class="a main big" onclick="showM('m4')">Gra z komputerem</button><button class="a main big" onclick="showPlayers()">Gra wieloosobowa</button></div><div class="start"><button class="a" onclick="showMain()">Wróć</button></div></div><div id="m4" hidden><p>Poziom trudności komputera</p><div class="start"><button class="a main big" onclick="pickLevel('easy')">Łatwy</button><button class="a main big" onclick="pickLevel('med')">Średni</button><button class="a main big" onclick="pickLevel('hard')">Trudny</button></div><div class="start"><button class="a" onclick="showMode()">Wróć</button></div></div><div id="m5" hidden><p>Ilu przeciwników?</p><div class="start"><button class="a main big" onclick="startAI(1)">1 przeciwnik</button><button class="a main big" onclick="startAI(2)">2 przeciwników</button><button class="a main big" onclick="startAI(3)">3 przeciwników</button></div><div class="start"><button class="a" onclick="showM('m4')">Wróć</button></div></div><div id="m3" hidden><p>Gra wieloosobowa na jednym ekranie. Ilu graczy?</p><div class="start"><button class="a main big" onclick="startLocal(2)">2 graczy</button><button class="a main big" onclick="startLocal(3)">3 graczy</button><button class="a main big" onclick="startLocal(4)">4 graczy</button></div><div class="start"><button class="a" onclick="showMode()">Wróć</button></div></div></div></div></div>
 <div id="lobby" hidden role="dialog" aria-modal="true" aria-label="Gra online"><div class="ibox" id="lbox" style="padding:16px"></div></div>
 <div id="fight" hidden role="dialog" aria-modal="true" aria-label="Starcie"><div class="ibox" id="fbox" style="padding:16px"></div></div>
 <div id="notes" hidden role="dialog" aria-modal="true" aria-labelledby="nt"><div class="ibox manual"><div class="mh"><h2 id="nt">Notatki projektowe</h2><button class="a" onclick="document.getElementById('notes').hidden=true">Zamknij ✕</button></div><div class="mb"><ul>
@@ -121,7 +120,7 @@ details{font-size:14px}summary{cursor:pointer;font-weight:600}details ul{padding
 <details open><summary>1. Cel gry</summary><p>Prowadź swoje grupy hominidów z Serca Afryki ku kolejnym regionom kontynentu w dolnym paleolicie, ok. 3 mln–300 tys. lat temu. Rozwijaj cechy ciała (ewolucja), technologie (karty rozwoju) i zajmuj nowe tereny.</p><p>Gra kończy się, gdy ktoś na koniec swojej tury ma <b>40 pkt ewolucji</b> (koniec toru) albo w grze nie zostały żadne karty punktowane. Wygrywa gracz z największą liczbą <b>punktów końcowych</b> (p. 9).</p></details>
 <details><summary>2. Przygotowanie</summary><ul><li>Gra 2–4 osób. Każdy ma kolor i zaczyna z jedną grupą w Sercu Afryki oraz z 2 jedzenia, 1 drewna i 1 kamieniem.</li><li>Na planszy stoją 4 neutralne grupy parantropów (czarne kółka). Nie ruszają się, ale bronią swoich pól.</li><li>Talia cech: tyle zestawów po 50 kart, ilu graczy (minimum 2). Odkryte jest 5 kart rynku.</li><li>Gracze wykonują tury po kolei. Licznik pokazuje numer tury, która rośnie, gdy ruch wróci do pierwszego gracza.</li></ul></details>
 <details><summary>3. Plansza i regiony</summary><p>150 sześciokątnych pól w pięciu strefach (I–V). Kolor wypełnienia to teren, a kolor obramowania to strefa. Im wyższy numer, tym dalej od serca Afryki.</p><table><tr><th>Teren</th><th>Zbiór</th></tr><tr><td>Sawanna</td><td>2 jedzenia</td></tr><tr><td>Las</td><td>1 drewno + 1 jedzenie</td></tr><tr><td>Skały</td><td>1 kamień + 1 jedzenie</td></tr></table><table><tr><th>Strefa</th><th>Pól</th><th>Wejście od fazy</th></tr><tr><td>I – Serce Afryki</td><td>35</td><td>od początku</td></tr><tr><td>II</td><td>30</td><td>Faza II (5 pkt)</td></tr><tr><td>III</td><td>30</td><td>Faza III (12 pkt)</td></tr><tr><td>IV</td><td>28</td><td>Faza IV (20 pkt)</td></tr><tr><td>V</td><td>27</td><td>Faza V (30 pkt)</td></tr></table><p><b>Rewers:</b> pola stref II–V na początku leżą zakryte (widać tylko numer strefy). Teren pola odkrywa się, gdy pierwsza grupa na nie wejdzie, i od tej chwili widzą go wszyscy. Teren jest losowany w każdej grze, a pola startowe to sawanna.</p><p>Jeziora i góry na mapie to tylko dekoracja.</p></details>
-<details><summary>4. Przebieg tury</summary><p>W swojej turze masz <b>2 akcje</b> (dowolne, można powtarzać). Gdy je wykorzystasz albo wcześniej zechcesz, kliknij <b>Zakończ turę</b>. Nie ma limitu zasobów do przechowania.</p><p>Akcje wybierasz z listy „Akcje”: Zbieraj, Osiedl, Zakup z rynku cech i Zakup narzędzi (podglądy rozwijają się po najechaniu lub dotknięciu). Przyciski + i − nad planszą ją powiększają. Grę na jednym urządzeniu zapiszesz w Menu, a wczytasz na ekranie startowym.</p></details>
+<details><summary>4. Przebieg tury</summary><p>W swojej turze masz <b>2 akcje</b> (dowolne, można powtarzać). Gdy je wykorzystasz albo wcześniej zechcesz, kliknij <b>Zakończ turę</b>. Nie ma limitu zasobów do przechowania.</p><p><b>Gra z komputerem:</b> na ekranie startowym wybierz „Gra na tym urządzeniu” → „Gra z komputerem”, poziom trudności (Łatwy, Średni, Trudny) i liczbę przeciwników (1–3). Ty grasz czerwonymi, a komputer wykonuje swoje tury automatycznie. Komputer jest oznaczony ikoną ⚙ na liście graczy.</p><p>Akcje wybierasz z listy „Akcje”: Zbieraj, Osiedl, Zakup z rynku cech i Zakup narzędzi (podglądy rozwijają się po najechaniu lub dotknięciu). Przyciski + i − nad planszą ją powiększają. Grę na jednym urządzeniu zapiszesz w Menu, a wczytasz na ekranie startowym.</p></details>
 <details><summary>5. Akcje</summary><ul><li><b>Wędrówka:</b> kliknij swoją grupę, potem podświetlone sąsiednie pole (każde pole ma 6 sąsiadów). Ruch w obrębie regionu jest darmowy, wyprawa do innego regionu kosztuje 1 jedzenia. Przesuwasz jedną grupę (wejście na pole rewersem je odkrywa). Nie wejdziesz do regionu, którego fazy jeszcze nie osiągnąłeś. Wejście na zajęte pole to starcie (p. 8).</li><li><b>Zbieraj:</b> każda Twoja grupa zbiera zasoby ze swojego pola (p. 3). Poza Sercem Afryki każda grupa zbiera o 1 więcej surowca z pola.</li><li><b>Osiedl:</b> zaznacz grupę i zapłać 2 jedzenia (1 ze Schronieniem). Nowa grupa pojawia się na tym samym polu. Maksymalnie 8 grup.</li><li><b>Rozwój:</b> kup jedną kartę rozwoju (p. 7). Każdą można mieć tylko raz.</li><li><b>Ewolucja:</b> weź kartę z rynku cech (p. 6).</li></ul><p>Pierwsze wejście do każdego regionu poza Sercem Afryki daje <b>+1 pkt ewolucji</b>.</p></details>
 <details><summary>6. Ewolucja i rynek cech</summary><p>Cechy leżą na Targu (z prawej strony planszy), można je też kupić z listy akcji. Cecha punktowana (1–3 pkt) kosztuje <b>2 jedzenia</b> i zostaje u Ciebie. Suma punktów (tor ma 40 pkt, a faza V trwa od 30 pkt do końca toru) wyznacza Twoją fazę:</p><table><tr><th>Faza</th><th>Gatunek</th><th>Od punktów</th></tr><tr><td>I</td><td>Homo habilis</td><td>0</td></tr><tr><td>II</td><td>Homo ergaster</td><td>5</td></tr><tr><td>III</td><td>Homo erectus</td><td>12</td></tr><tr><td>IV</td><td>Homo antecessor</td><td>20</td></tr><tr><td>V</td><td>Homo sapiens</td><td>30</td></tr></table><p><b>Adaptacje</b> (0 pkt) bierzesz za darmo. Dostajesz +1 jedzenia i +1 drewna, a karta wraca do talii. To też akcja, więc możesz w ten sposób odświeżyć rynek. Gdy więcej niż 3 z 5 kart rynku to adaptacje, rynek jest tasowany od nowa.</p><p>Zestaw: 3 pkt – Myślenie abstrakcyjne, Inteligencja, Mowa i język, Zdolności manualne, Duży mózg; 2 pkt – Planowanie ×3, Postawa wyprostowana ×3, Płaska twarz ×2, Naga skóra ×2; 1 pkt – Dwunożność, Redukcja zębów, Wysunięty podbródek, Wysklepione stopy, Rozwój mózgowia (po ×3); 0 pkt – Bieganie, Skakanie, Chodzenie, Brak ogona, Budowa miednicy (po ×4).</p></details>
 <details><summary>7. Karty rozwoju</summary><table><tr><th>Karta</th><th>Koszt</th><th>Efekt</th></tr><tr><td>Ogień</td><td>2 drewna</td><td>wyprawy do innych regionów za darmo; w starciu −1 dla przeciwnika</td></tr><tr><td>Schronienie</td><td>2 drewna, 1 kamień</td><td>osiedlenie za 1 jedzenie; +1 w obronie</td></tr><tr><td>Narzędzia</td><td>2 kamienie</td><td>+1 drewna lub kamienia przy zbiorze; +1 w starciu</td></tr><tr><td>Polowanie</td><td>1 drewno, 1 kamień, 1 jedzenie</td><td>+1 jedzenia na sawannie; +1 w ataku</td></tr></table></details>
@@ -134,7 +133,7 @@ details{font-size:14px}summary{cursor:pointer;font-weight:600}details ul{padding
 <header><div class="ht"><img class="logo" src="icon-v3-192.png" alt="" width="44" height="44"><h1 class="sr">Civitas – Anthropogenesis</h1></div><div class="dd"><button class="a" id="ddb" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu()">Menu ▾</button><div class="ddm" id="ddm" hidden role="menu"></div></div></header>
 <main>
 <div class="tbl"><div class="tt"><div class="ttl"><b>Civitas</b><i></i><span>Anthropogenesis</span></div><div class="phases" id="phases"></div></div>
-<div class="tm"><div class="bwrap"><div class="zoom"><button class="a" onclick="zoomBy(-.3)" aria-label="Pomniejsz planszę">−</button><button class="a" onclick="zoomBy(.3)" aria-label="Powiększ planszę">+</button></div><div class="bscroll" id="bs"><div class="board" id="board" role="grid" aria-label="Plansza: Afryka"></div></div><svg class="compass" viewBox="-60 -60 120 120" aria-hidden="true"><g fill="none" stroke="#ffd566" stroke-width="1.5"><circle r="22"/><circle r="28" stroke-dasharray="1 3"/></g><path d="M0 -32L5 0L0 32L-5 0ZM-32 0L0 5L32 0L0 -5Z" fill="#ffcf5a" opacity=".9"/><g fill="#ffe3a0" font-family="Georgia,serif" font-size="14" text-anchor="middle"><text y="-38">N</text><text y="52">S</text><text x="46" y="5">E</text><text x="-46" y="5">W</text></g></svg></div><div class="targ" id="targ"></div></div></div>
+<div class="tm"><div class="bwrap"><div class="zoom"><button class="a" onclick="zoomBy(-.3)" aria-label="Pomniejsz planszę">−</button><button class="a" onclick="zoomBy(.3)" aria-label="Powiększ planszę">+</button></div><div class="bscroll" id="bs"><div class="board" id="board" role="grid" aria-label="Plansza: Afryka"></div></div></div><div class="targ" id="targ"></div></div></div>
 <div class="legend"><span><b style="background:#f2d94e"></b>sawanna (jedzenie)</span><span><b style="background:#63b95a"></b>las (drewno)</span><span><b style="background:#cfc7b4"></b>skały (kamień)</span><span><b style="box-shadow:inset 0 0 0 2px #e0a82e"></b>Strefa I (serce)</span><span><b style="box-shadow:inset 0 0 0 2px #3f7fc4"></b>II</span><span><b style="box-shadow:inset 0 0 0 2px #3fa38a"></b>III</span><span><b style="box-shadow:inset 0 0 0 2px #c4793b"></b>IV</span><span><b style="box-shadow:inset 0 0 0 2px #8e63c9"></b>V</span><span><b class="bk"></b>rewers: pole nieodkryte</span><span>Czarne kółka: parantropy (rywale)</span></div>
 </main>
 <aside class="panel" id="side"></aside>
@@ -156,7 +155,7 @@ const polys=(()=>{let s='';for(let r=0;r<16;r++)for(let c=0;c<16;c++)if(ex(r,c))
 const AP=[[125,-14],[180,-14],[180,44],[172,46.5],[164,48],[158,49],[154,51],[152.5,47],[150.5,42],[148,36],[145.5,30],[143,24],[140.5,18],[139,13],[138,9.5],[136.6,13],[135.2,19],[134,25],[133,30],[131,25],[129.4,18],[128.2,12],[127.2,7],[126,2]];
 const smoothP=AP=>{const n=AP.length,m=(a,b)=>[(a[0]+b[0])/2,(a[1]+b[1])/2];let d='M'+m(AP[n-1],AP[0]).join(' ');for(let i=0;i<n;i++){const p=AP[i],q=m(p,AP[(i+1)%n]);d+='Q'+p.join(' ')+' '+q.join(' ')}return d+'Z'};
 const ASIA=smoothP(AP),MADA=smoothP([[160,93],[163.5,99],[164,107],[162,115],[158,120],[154.5,115],[153.5,106],[155.5,98]]);
-const HEXBG='<svg class="bgmap" viewBox="0 0 165 141.45" aria-hidden="true"><defs><filter id="g1" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 24 -3"/></filter><filter id="g2" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 30 -11"/></filter><filter id="g3" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 30 -7"/></filter></defs><g class="shelf" filter="url(#g1)">'+polys+'<path d="'+ASIA+'"/><path d="'+MADA+'"/></g><g class="foam" filter="url(#g3)">'+polys+'</g><g class="land" filter="url(#g2)">'+polys+'</g><path class="asia" d="'+ASIA+'"/><path class="asia" d="'+MADA+'"/><g class="art"><radialGradient id="af" gradientUnits="userSpaceOnUse" cx="-6" cy="150" r="70"><stop offset="0" stop-color="#fff"/><stop offset=".4" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient><mask id="am" maskUnits="userSpaceOnUse" x="-40" y="60" width="120" height="100"><rect x="-40" y="60" width="120" height="100" fill="url(#af)"/></mask><g mask="url(#am)"><rect x="-40" y="96" width="130" height="50" fill="#ff9a3c" opacity=".28"/><circle cx="30" cy="108" r="5.5" fill="#ffd77a"/><path d="M-40 110Q-10 100 12 107T80 106L80 150L-40 150Z" fill="#3b2a52"/><path d="M-40 122Q-5 112 80 124L80 150L-40 150Z" fill="#231f10"/><path d="M16 136C19 124 18 116 15 108M17 118C11 115 8 113 3 114" stroke="#120d09" stroke-width="2" fill="none"/><ellipse cx="13" cy="106" rx="19" ry="4.2" fill="#18331d"/><ellipse cx="4" cy="102" rx="11" ry="3.4" fill="#18331d"/><path d="M-4 134l2-7 2 7M4 138l2-8 2 8M30 132l2-7 2 7M42 136l2-8 2 8M50 130l2-6 2 6" stroke="#f0a73a" stroke-width="1.1" fill="none"/></g></g><text class="geo" x="149" y="18">Półwysep</text><text class="geo" x="149" y="22.4">Arabski</text></svg>';
+const HEXBG='<svg class="bgmap" viewBox="0 0 165 141.45" aria-hidden="true"><defs><filter id="g1" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 24 -3"/></filter><filter id="g2" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 30 -11"/></filter><filter id="g3" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 30 -7"/></filter></defs><g class="shelf" filter="url(#g1)">'+polys+'<path d="'+ASIA+'"/><path d="'+MADA+'"/></g><g class="foam" filter="url(#g3)">'+polys+'</g><g class="land" filter="url(#g2)">'+polys+'</g><path class="asia" d="'+ASIA+'"/><path class="asia" d="'+MADA+'"/><g class="art"><radialGradient id="af" gradientUnits="userSpaceOnUse" cx="-6" cy="150" r="70"><stop offset="0" stop-color="#fff"/><stop offset=".4" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient><mask id="am" maskUnits="userSpaceOnUse" x="-40" y="60" width="120" height="100"><rect x="-40" y="60" width="120" height="100" fill="url(#af)"/></mask><g mask="url(#am)"><rect x="-40" y="96" width="130" height="50" fill="#ff9a3c" opacity=".28"/><circle cx="30" cy="108" r="5.5" fill="#ffd77a"/><path d="M-40 110Q-10 100 12 107T80 106L80 150L-40 150Z" fill="#3b2a52"/><path d="M-40 122Q-5 112 80 124L80 150L-40 150Z" fill="#231f10"/><path d="M16 136C19 124 18 116 15 108M17 118C11 115 8 113 3 114" stroke="#120d09" stroke-width="2" fill="none"/><ellipse cx="13" cy="106" rx="19" ry="4.2" fill="#18331d"/><ellipse cx="4" cy="102" rx="11" ry="3.4" fill="#18331d"/><path d="M-4 134l2-7 2 7M4 138l2-8 2 8M30 132l2-7 2 7M42 136l2-8 2 8M50 130l2-6 2 6" stroke="#f0a73a" stroke-width="1.1" fill="none"/></g></g></svg>';
 const px=(r,c)=>[(c+.75)*10,r*8.66+5.77];
 const LK=[[3,8.6,3,2.2],[5.6,13,1.6,3],[8.4,9.8,4.5,3.5],[10.2,8.6,1.3,4.5],[11.6,9.8,1.4,5]];
 const MT=[[1.4,3.6,1],[1.2,4.7,1],[1.3,5.8,1],[1.5,6.9,1],[1.7,8,1],[3.4,5.9,1.1],[3.6,6.6,.9],[3.4,9.4,1.1],[3.7,9.9,.9],[6.4,13.1,1.2],[6.8,13.8,1.2],[6.1,13.9,1],[6.7,12.4,1],[6.2,3.4,1],[9.6,11.2,1.4],[13.2,10.4,1.1],[13.9,10,1.1],[14.4,9.4,1]];
@@ -169,7 +168,7 @@ const TN={f:'sawanna',w:'las',s:'skały'};
 function initMap(){G.T=[];G.rev={};for(let r=0;r<16;r++)for(let c=0;c<16;c++)if(ex(r,c)){const i=r*16+c,x=Math.random();G.T[i]=x<.4?'f':x<.8?'w':'s';if(zone(r,c)=='R')G.rev[i]=1}for(let r=6;r<=10;r++)G.T[r*16+10]='f'}
 function reveal(r,c){const i=r*16+c;if(G.rev&&!G.rev[i]){G.rev[i]=1;say(PN[G.cur]+' odkrywają pole: '+TN[ter(r,c)]+' ('+ZN[zone(r,c)]+').')}}
 const era=p=>TH.reduce((a,t,i)=>p>=t?i:a,0);
-let G,MSG='',ZOOM=1;
+let G,MSG='',ZOOM=1,AIRUN=false,AIT=null,AIFAIL=0,LV='med';
 function deck(sets){const d=[];
 ['Myślenie abstrakcyjne','Inteligencja','Mowa i język','Zdolności manualne','Duży mózg'].forEach(n=>d.push({n,p:3}));
 [['Planowanie',3],['Postawa wyprostowana',3],['Płaska twarz',2],['Naga skóra',2]].forEach(([n,k])=>{for(let i=0;i<k;i++)d.push({n,p:2})});
@@ -183,7 +182,7 @@ fill();if(k)say('Rynek przetasowany: za dużo adaptacji.')}
 const left=()=>G.deck.concat(G.mk).some(c=>c.p>0);
 const GATE={R:0,S:1,Z:2,N:3,E:4};
 const canGo=(r,c)=>{const p=G.P[G.cur];return !!G.sel&&!G.over&&G.acts>0&&(NET.mode=='local'||NET.seat==G.cur)&&adj(G.sel[0],G.sel[1],r,c)&&owner(r,c)!==G.cur&&era(p.evo)>=GATE[zone(r,c)]&&(p.dev.O||p.f>0||zone(G.sel[0],G.sel[1])==zone(r,c))};
-function alert(t){MSG=t;draw()}
+function alert(t){if(AIRUN)return;MSG=t;draw()}
 function start(n){
 const xs=n==2?[6,10]:n==3?[6,8,10]:[6,7,9,10];
 G={n,round:1,cur:0,acts:2,sel:null,over:false,deck:deck(Math.max(2,n)),disc:[],mk:[],log:[],
@@ -216,13 +215,13 @@ function fightUI(){const F=G.fight,nm=o=>o<0?'Parantropy':PN[o],col=o=>o<0?'#555
 const tb=(t,L,o)=>`<div><b style="color:${col(o)};text-shadow:0 0 1px #000">${t}: ${nm(o)}</b><table>${L.map(([n,v])=>`<tr><td>${n}</td><td>${v>0?'+':''}${v}</td></tr>`).join('')}<tr><th>Razem</th><th>${F.done?sum(L):'?'}</th></tr></table></div>`;
 document.getElementById('fbox').innerHTML=`<h2 style="font:700 20px Georgia,serif;margin:0 0 10px">Starcie</h2><div class="ft">${tb('Atak',F.A,G.cur)}${tb('Obrona',F.D,F.o)}</div><p>${F.done?(F.win?'Napastnik wygrywa: obrońca traci grupę.':'Obrońca wygrywa (remis też): napastnik traci grupę.'):'Wynik = k6 + modyfikatory. Remis wygrywa obrońca.'}</p>${NET.mode=='local'||NET.seat==G.cur?`<button class="a main" onclick="${F.done?'endFight()':'rollFight()'}">${F.done?'Dalej':'Rzuć kośćmi'}</button>`:'<p>Czekaj na gracza: '+PN[G.cur]+'</p>'}`;
 document.getElementById('fight').hidden=false}
-function rollFight(){if(NET.mode=='guest')return send(['roll']);if(NET.mode=='host'&&NET.seat!=G.cur)return;const F=G.fight;if(!F||F.done)return;F.A.unshift(['Rzut k6',d6()]);F.D.unshift(['Rzut k6',d6()]);F.done=1;F.win=sum(F.A)>sum(F.D);fightUI()}
-function endFight(){if(NET.mode=='guest')return send(['endf']);if(NET.mode=='host'&&NET.seat!=G.cur)return;if(!G.fight)return;const F=G.fight,{sr,sc,r,c,o}=F,mine=at(sr,sc).find(b=>b.o==G.cur),who=o<0?'parantropami':PN[o],res=sum(F.A)+':'+sum(F.D);
-if(F.win){G.B.splice(G.B.indexOf(at(r,c)[0]),1);say('Starcie z '+who+' ('+res+') – wygrana.');if(!at(r,c).length){mine.r=r;mine.c=c;G.sel=[r,c];reveal(r,c);discover(zone(r,c))}}
-else{G.B.splice(G.B.indexOf(mine),1);G.sel=null;say('Starcie z '+who+' ('+res+') – grupa przepadła.')}
+function rollFight(){if(NET.mode=='guest')return send(['roll']);if(NET.mode=='host'&&NET.seat!=G.cur)return;if(G.ai&&G.ai[G.cur]&&!AIRUN)return;const F=G.fight;if(!F||F.done)return;F.A.unshift(['Rzut k6',d6()]);F.D.unshift(['Rzut k6',d6()]);F.done=1;F.win=sum(F.A)>sum(F.D);fightUI()}
+function endFight(){if(NET.mode=='guest')return send(['endf']);if(NET.mode=='host'&&NET.seat!=G.cur)return;if(G.ai&&G.ai[G.cur]&&!AIRUN)return;if(!G.fight)return;const F=G.fight,{sr,sc,r,c,o}=F,mine=at(sr,sc).find(b=>b.o==G.cur),who=o<0?'parantropami':PN[o],res=sum(F.A)+':'+sum(F.D);
+if(F.win){G.B.splice(G.B.indexOf(at(r,c)[0]),1);say(PN[G.cur]+': starcie z '+who+' ('+res+') – wygrana.');if(!at(r,c).length){mine.r=r;mine.c=c;G.sel=[r,c];reveal(r,c);discover(zone(r,c))}}
+else{G.B.splice(G.B.indexOf(mine),1);G.sel=null;say(PN[G.cur]+': starcie z '+who+' ('+res+') – grupa przepadła.')}
 G.fight=null;G.acts--;document.getElementById('fight').hidden=true;draw()}
 function click(r,c){
-if(NET.mode=='guest')return send(['click',r,c]);if(NET.mode=='host'&&NET.seat!=G.cur)return;
+if(NET.mode=='guest')return send(['click',r,c]);if(NET.mode=='host'&&NET.seat!=G.cur)return;if(G.ai&&G.ai[G.cur]&&!AIRUN)return;
 MSG='';if(G.over||G.fight)return;const o=owner(r,c);
 if(o===G.cur){G.sel=[r,c];return draw()}
 if(!G.sel||G.acts<1)return;
@@ -235,7 +234,7 @@ if(o===null||o===G.cur){mine.r=r;mine.c=c;G.sel=[r,c];say(PN[G.cur]+' wędrują 
 else{startFight(sr,sc,r,c,o);return}
 G.acts--;draw()}
 function act(k,x){
-if(NET.mode=='guest')return send(['act',k,x]);if(NET.mode=='host'&&NET.seat!=G.cur)return;
+if(NET.mode=='guest')return send(['act',k,x]);if(NET.mode=='host'&&NET.seat!=G.cur)return;if(G.ai&&G.ai[G.cur]&&!AIRUN)return;
 MSG='';const p=G.P[G.cur];if(G.over||G.fight)return;
 if(k=='end')return endTurn();
 if(G.acts<1)return;
@@ -248,10 +247,11 @@ function score(i){const p=G.P[i],cells=new Set(G.B.filter(b=>b.o==i&&zone(b.r,b.
 return p.evo+2*Object.keys(p.dev).length+2*cells.size+G.B.filter(b=>b.o==i).length}
 function endTurn(){
 if(G.P.some(p=>p.evo>=TRACK)||!left()){G.over=true;const s=G.P.map((_,i)=>score(i)),w=s.indexOf(Math.max(...s));say('Koniec gry! Wygrywają: '+PN[w]+' ('+s[w]+' pkt) po '+G.round+' turach.');return draw()}
+if(G.ai&&!G.B.some(b=>b.o==0)){G.over=true;say('Wszystkie Twoje grupy przepadły. Koniec gry.');return draw()}
 if(G.P.every((q,i)=>q.gone||!G.B.some(b=>b.o==i))){G.over=true;say('Koniec gry: nikt nie został.');return draw()}
 G.cur=(G.cur+1)%G.n;if(G.cur==0)G.round++;G.acts=2;G.sel=null;
 if(!G.B.some(b=>b.o==G.cur)||G.P[G.cur].gone){say(PN[G.cur]+(G.P[G.cur].gone?' odeszli.':' wymarli.'));return endTurn()}
-say('Tura '+G.round+': '+PN[G.cur]+'.');draw()}
+say('Tura '+G.round+': '+PN[G.cur]+'.');if(G.ai&&G.ai[G.cur]&&!G.over)aiSchedule();draw()}
 function draw(){
 const bd=document.getElementById('board');bd.innerHTML='';const hx=document.createElement('div');hx.id='hx';hx.innerHTML=HEXBG+DECOR;bd.appendChild(hx);
 for(let r=0;r<16;r++)for(let c=0;c<16;c++){if(!ex(r,c))continue;
@@ -261,16 +261,17 @@ const el=document.createElement('button');el.className='c '+t+' '+z+(ok?' ok':''
 el.setAttribute('aria-label',ZN[z]+', '+(rv?RN[t]:'nieodkryte')+(o===null?'':o<0?', parantropy':', '+PN[o]+' x'+b.length));
 el.innerHTML='<span class="h"></span><span class="h2"></span>'+(rv?'<i><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">'+IC[t]+'</svg></i>':'')+'<b class="zn">'+['','I','II','III','IV','V'][+MASK[r][c]]+'</b>'+(o===null?'':'<span class="band" style="background:'+(o<0?'#111;color:#fff':COL[o])+'">'+b.length+'</span>');
 el.onclick=()=>click(r,c);hx.appendChild(el)}
-const me=NET.mode=='local'?G.cur:NET.seat,p=G.P[me],e=era(p.evo),dis=G.over||G.acts<1||me!=G.cur?'disabled':'';
+const me=mySeat(),p=G.P[me],e=era(p.evo),dis=G.over||G.acts<1||me!=G.cur?'disabled':'';
 const RG=['I','II','III','IV','V'];
 const opt=(c,i)=>`<button class="it" ${c.p&&p.f<2?'disabled':''} onclick="act('evo',${i})">${c.n} +${c.p} · ${c.p?'2 jedz.':'gratis'}</button>`;
 const tool=([k,[n,c]])=>`<button class="it" ${p.dev[k]?'disabled':''} onclick="act('dev','${k}')">${p.dev[k]?'✓ ':''}${n} · ${Object.entries(c).map(([x,v])=>v+' '+RN[x]).join(', ')}</button>`;
 document.getElementById('side').innerHTML=`
 <h2>Tura ${G.round} · <span style="color:${COL[G.cur]};text-shadow:0 0 1px #000">${PN[G.cur]}</span></h2>
 ${NET.mode!='local'?`<div class="card">Grasz jako <b style="color:${COL[me]};text-shadow:0 0 1px #000">${PN[me]}</b>${me==G.cur?' – Twój ruch!':' – czekasz na ruch: '+PN[G.cur]}</div>`:''}
+${G.ai&&G.ai[G.cur]&&!G.over?`<div class="card">Ruch komputera (${LVN[G.ai[G.cur]]}): ${PN[G.cur]}…</div>`:''}
 ${MSG?`<div class="card" role="alert" style="border-style:solid;color:${MSG[0]=='✓'?'var(--ink)':'var(--hot)'}">${MSG}</div>`:''}
 <div class="res"><em>Bank surowców:</em><span>Jedzenie ${p.f}</span><span>Drewno ${p.w}</span><span>Kamień ${p.s}</span></div>
-<div class="gen" aria-label="Fazy graczy">${G.P.map((q,i)=>`<div class="gp ${i==G.cur?'cur':''}"><span class="dot" style="background:${COL[i]}"></span><span>${PN[i]}</span><b>Faza ${RG[era(q.evo)]}</b><div class="gb" title="${ERA[era(q.evo)]}"><i style="width:${Math.min(100,q.evo/TRACK*100)}%;background:${COL[i]}"></i>${[5,12,20,30].map(t=>`<u style="left:${t/TRACK*100}%"></u>`).join('')}</div><span class="gv">${q.evo} pkt</span></div>`).join('')}</div>
+<div class="gen" aria-label="Fazy graczy">${G.P.map((q,i)=>`<div class="gp ${i==G.cur?'cur':''}"><span class="dot" style="background:${COL[i]}"></span><span>${PN[i]}${G.ai&&G.ai[i]?' ⚙':''}</span><b>Faza ${RG[era(q.evo)]}</b><div class="gb" title="${ERA[era(q.evo)]}"><i style="width:${Math.min(100,q.evo/TRACK*100)}%;background:${COL[i]}"></i>${[5,12,20,30].map(t=>`<u style="left:${t/TRACK*100}%"></u>`).join('')}</div><span class="gv">${q.evo} pkt</span></div>`).join('')}</div>
 <div class="r4"><span>Akcje: <b>${G.acts}</b></span>${dis?'<span class="sm off">Wybierz akcję ▾</span>':`<details class="act"><summary class="sm">Wybierz akcję ▾</summary><div class="ddl">
 <button class="it" onclick="act('gather')">Zbieraj</button><button class="it" onclick="act('settle')">Osiedl</button>
 <div class="sub1"><span onclick="this.parentNode.classList.toggle('open')">Zakup z rynku cech ▸</span><div class="subm">${G.mk.map(opt).join('')}</div></div>
@@ -282,7 +283,7 @@ if(G.fight)fightUI();else document.getElementById('fight').hidden=true;
 renderMenu();renderTable();
 if(NET.mode=='host')broadcast()}
 
-const VER='0.0.7';
+const VER='0.0.8';
 const NET={mode:'local',seat:0,peer:null,conns:{},conn:null,code:'',started:false};
 const lb=h=>{document.getElementById('lbox').innerHTML=h;document.getElementById('lobby').hidden=false};
 const lbErr=m=>{netClose();lb('<p>'+m+'</p><div class="start"><button class="a" onclick="openLobby()">Wróć</button></div>')};
@@ -337,25 +338,53 @@ c.on('close',()=>{if(NET.mode=='guest')lbErr('Połączenie z gospodarzem został
 try{const z=parseFloat(localStorage.getItem('civitas-zoom'));ZOOM=z>=1&&z<=2.8?z:(typeof innerWidth!='undefined'&&innerWidth<700?1.8:1)}catch(e){if(typeof innerWidth!='undefined'&&innerWidth<700)ZOOM=1.8}
 applyZoom(false);
 start(3);document.getElementById('intro').hidden=false;showMain();document.getElementById('ver').textContent='Wersja '+VER;
-function showPlayers(){document.getElementById('m1').hidden=true;document.getElementById('m2').hidden=false}
-function showMain(){document.getElementById('m1').hidden=false;document.getElementById('m2').hidden=true;refreshSave()}
+function showPlayers(){showM('m3')}
+function showMain(){showM('m1');refreshSave()}
 function applyZoom(keep){const bs=document.getElementById('bs');let fx=.5,fy=.5;if(keep){fx=(bs.scrollLeft+bs.clientWidth/2)/bs.scrollWidth;fy=(bs.scrollTop+bs.clientHeight/2)/bs.scrollHeight}document.getElementById('board').style.setProperty('--z',ZOOM);if(keep){bs.scrollLeft=fx*bs.scrollWidth-bs.clientWidth/2;bs.scrollTop=fy*bs.scrollHeight-bs.clientHeight/2}}
 function zoomBy(d){ZOOM=Math.min(2.8,Math.max(1,Math.round((ZOOM+d)*10)/10));try{localStorage.setItem('civitas-zoom',ZOOM)}catch(e){}applyZoom(true)}
 function centerHeart(){const bs=document.getElementById('bs');if(ZOOM>1){bs.scrollLeft=.62*bs.scrollWidth-bs.clientWidth/2;bs.scrollTop=.5*bs.scrollHeight-bs.clientHeight/2}}
 function refreshSave(){let d=null;try{d=JSON.parse(localStorage.getItem('civitas-save'))}catch(e){}const b=document.getElementById('ld'),i=document.getElementById('svinfo');if(b)b.disabled=!(d&&d.G);if(i)i.textContent=d&&d.G?'Zapis: tura '+d.G.round+', '+d.G.n+' graczy, '+new Date(d.t).toLocaleString('pl-PL'):'Brak zapisanej gry.'}
 function saveGame(){if(NET.mode!='local'||!G||G.fight)return alert('Zapis działa tylko w grze na jednym urządzeniu, poza starciem.');try{localStorage.setItem('civitas-save',JSON.stringify({v:VER,t:Date.now(),G}));alert('✓ Gra zapisana (tura '+G.round+').')}catch(e){alert('Nie udało się zapisać gry: przeglądarka blokuje pamięć.')}}
-function loadGame(){let d=null;try{d=JSON.parse(localStorage.getItem('civitas-save'))}catch(e){}if(!d||!d.G){refreshSave();return}netClose();document.getElementById('lobby').hidden=true;G=d.G;G.fight=null;MSG='';document.getElementById('intro').hidden=true;document.getElementById('fight').hidden=true;draw();centerHeart()}
+function loadGame(){let d=null;try{d=JSON.parse(localStorage.getItem('civitas-save'))}catch(e){}if(!d||!d.G){refreshSave();return}netClose();document.getElementById('lobby').hidden=true;G=d.G;G.fight=null;MSG='';document.getElementById('intro').hidden=true;document.getElementById('fight').hidden=true;draw();centerHeart();if(G.ai&&G.ai[G.cur]&&!G.over)aiSchedule()}
 function exitGame(){try{window.close()}catch(e){}setTimeout(()=>{document.getElementById('svinfo').textContent='Aby wyjść, zamknij kartę przeglądarki lub aplikację.'},300)}
 function toggleMenu(){const m=document.getElementById('ddm');m.hidden=!m.hidden;document.getElementById('ddb').setAttribute('aria-expanded',String(!m.hidden))}
 function closeMenu(){document.getElementById('ddm').hidden=true;document.getElementById('ddb').setAttribute('aria-expanded','false')}
 function mi(t,f){return `<button role="menuitem" onclick="closeMenu();${f}">${t}</button>`}
-function renderMenu(){document.getElementById('ddm').innerHTML=mi('Instrukcja','openMan()')+mi('Notatki projektowe',"document.getElementById('notes').hidden=false")+'<hr>'+(NET.mode=='local'?'<div class="dl">Nowa gra</div>'+[2,3,4].map(n=>mi(n+' graczy (to urządzenie)','startLocal('+n+')')).join(''):'<div class="dl">Pokój online: '+NET.code+'</div>'+mi('Opuść grę','netLeave()'))+(NET.mode=='local'?mi('Zapisz grę','saveGame()'):'')+'<hr>'+mi('Ekran startowy',"showMain();document.getElementById('intro').hidden=false")+'<div class="dl">Wersja '+VER+'</div>'}
+function renderMenu(){document.getElementById('ddm').innerHTML=mi('Instrukcja','openMan()')+mi('Notatki projektowe',"document.getElementById('notes').hidden=false")+'<hr>'+(NET.mode=='local'?'<div class="dl">Nowa gra</div>'+mi('Z komputerem…',"showM('m4');document.getElementById('intro').hidden=false")+[2,3,4].map(n=>mi(n+' graczy (wieloosobowa)','startLocal('+n+')')).join(''):'<div class="dl">Pokój online: '+NET.code+'</div>'+mi('Opuść grę','netLeave()'))+(NET.mode=='local'?mi('Zapisz grę','saveGame()'):'')+'<hr>'+mi('Ekran startowy',"showMain();document.getElementById('intro').hidden=false")+'<div class="dl">Wersja '+VER+'</div>'}
 function hom(i){const L=[52,36,20,6,0][i]*Math.PI/180,k=(4-i)/4,hx=28,hy=60,sx=hx+Math.sin(L)*24,sy=hy-Math.cos(L)*24,hd=[sx+Math.sin(L)*8,sy-Math.cos(L)*8],kn=hx+3+k*7,hand=[sx+4+k*10,sy+18+k*10];
 return `<svg viewBox="0 0 60 84" aria-hidden="true"><g fill="none" stroke="#f0b94d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M${hx} ${hy}L${sx} ${sy}"/><path d="M${hx} ${hy}L${kn} ${hy+12}L${hx-3} 80M${hx} ${hy}L${hx+9} ${hy+12}L${hx+10} 80"/><path d="M${sx} ${sy}L${hand[0]} ${hand[1]}"/>${i==4?'<path d="M46 80V6" stroke-width="2"/>':''}</g><circle cx="${hd[0]}" cy="${hd[1]}" r="${6.5-k*.6}" fill="#f0b94d"/></svg>`}
 const LEAF='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19C5 9 11 4 20 4c0 9-5 15-13 15M5 19l8-8" fill="none" stroke="#c9a24f" stroke-width="1.6" stroke-linecap="round"/></svg>';
-function renderTable(){const me=NET.mode=='local'?G.cur:NET.seat,p=G.P[me],can=!G.over&&G.acts>0&&me==G.cur,R6=['I','II','III','IV','V'];
+function renderTable(){const me=mySeat(),p=G.P[me],can=!G.over&&G.acts>0&&me==G.cur,R6=['I','II','III','IV','V'];
 document.getElementById('phases').innerHTML=ERA.map((n,i)=>`<div class="ph ${era(G.P[G.cur].evo)==i?'cur':''}"><div>Faza ${R6[i]}:</div>${hom(i)}<div>${n}</div><div class="dots">${G.P.map((q,j)=>era(q.evo)==i?`<u style="background:${COL[j]}" title="${PN[j]}"></u>`:'').join('')}</div></div>`).join('');
 document.getElementById('targ').innerHTML='<h3>TARG</h3><div class="slots">'+[0,1,2,3,4].map(i=>{const c=G.mk[i];return c?`<div class="slot p${c.p}"><b>${c.n}</b><span>+${c.p} pkt · ${c.p?'2 jedz.':'gratis'}</span></div>`:`<div class="slot empty">${LEAF}</div>`}).join('')+'</div>'}
+const LVN={easy:'Łatwy',med:'Średni',hard:'Trudny'};
+function mySeat(){return NET.mode!='local'?NET.seat:(G.ai?0:G.cur)}
+function aiSchedule(){clearTimeout(AIT);AIT=setTimeout(aiStep,650)}
+function aiStep(){if(!G||G.over||!G.ai||!G.ai[G.cur])return;const a0=G.acts,c0=G.cur;AIRUN=true;try{aiAct(G.ai[G.cur])}finally{AIRUN=false}
+if(G.cur==c0&&G.acts==a0){if(++AIFAIL>=3){AIFAIL=0;AIRUN=true;try{act('end')}finally{AIRUN=false}}}else AIFAIL=0;
+if(!G.over&&G.ai&&G.ai[G.cur])aiSchedule()}
+function yieldOf(b,p){const t=ter(b.r,b.c),x=zone(b.r,b.c)!='R'?1:0;return t=='f'?{f:2+(p.dev.P?1:0)+x,w:0,s:0}:{f:1,w:t=='w'?1+(p.dev.N?1:0)+x:0,s:t=='s'?1+(p.dev.N?1:0)+x:0}}
+function aiAct(lv){const me=G.cur,p=G.P[me],e=era(p.evo),own=G.B.filter(b=>b.o==me),C=[],seen=p.seen||{};
+if(G.acts<1){act('end');return}
+let gf=0,gw=0,gs=0;own.forEach(b=>{const y=yieldOf(b,p);gf+=y.f;gw+=y.w;gs+=y.s});
+C.push({s:gf*.55*Math.max(.12,1-p.f/8)+gw*.35*Math.max(.1,1-p.w/6)+gs*.4*Math.max(.1,1-p.s/6)+(p.f<2?2.5:0),run:()=>act('gather')});
+G.mk.forEach((c,i)=>{const cost=c.p?2:0;if(p.f<cost)return;let s=c.p?c.p*2-cost*.5+(p.f>=4?.8:0):.9;if(p.evo+c.p>=TRACK)s+=60;C.push({s,run:()=>act('evo',i)})});
+if(own.length&&own.length<8){const cost=p.dev.S?1:2;if(p.f>=cost){const bb=own.reduce((a,x)=>{const y=yieldOf(x,p),v=y.f*.5+y.w*.35+y.s*.4;return !a||v>a.v?{b:x,v}:a},null).b;C.push({s:2.3-cost*.4+(own.length<3?2:0)-(own.length>=6?1.6:0),run:()=>{click(bb.r,bb.c);act('settle')}})}}
+const W={N:3,P:2.6,S:1.7,O:2.2};Object.entries(DEV).forEach(([k,[n,cost]])=>{if(p.dev[k]||!can(me,cost))return;C.push({s:W[k]+(own.length<2?-1.5:0)-(lv=='easy'?2:0),run:()=>act('dev',k)})});
+own.forEach(b=>{if(own.length<2&&lv!='hard')return;nb(b.r,b.c).forEach(([r2,c2])=>{if(!ex(r2,c2))return;const o=owner(r2,c2);if(o===me)return;const z=zone(r2,c2);if(e<GATE[z])return;const cross=z!=zone(b.r,b.c);if(cross&&!p.dev.O&&p.f<1)return;
+let s=-.3-(cross&&!p.dev.O?.4:0);if(!isRev(r2,c2))s+=.6;if(z!='R'&&!seen[z])s+=2.6;s+=(+MASK[r2][c2])*.25;
+if(o!==null){const A=parts(me,1,b.r,b.c,r2,c2),D=parts(o,0,b.r,b.c,r2,c2);if(p.dev.O)D.push(['',-1]);if(o>=0&&G.P[o].dev.O)A.push(['',-1]);const a=sum(A),d=sum(D);let w=0;for(let x=1;x<=6;x++)for(let y=1;y<=6;y++)if(a+x>d+y)w++;w/=36;s+=w*(o<0?2.2:3)-(1-w)*3.2;if(lv=='easy')s=-.5+w*.8}
+else if(z=='R'&&own.length>=3)s-=.4;
+C.push({s,run:()=>{click(b.r,b.c);click(r2,c2);if(G.fight){rollFight();endFight()}}})})});
+C.push({s:.15,run:()=>act('end')});
+const noise={easy:4,med:1.1,hard:.2}[lv];let pick;
+if(lv=='easy'&&Math.random()<.3)pick=C[Math.floor(Math.random()*C.length)];
+else pick=C.reduce((a,x)=>{const v=x.s+(Math.random()-.5)*2*noise;return !a||v>a.v?{c:x,v}:a},null).c;
+pick.run()}
+function showM(id){['m1','m2','m3','m4','m5'].forEach(k=>document.getElementById(k).hidden=k!=id);document.getElementById('svinfo').hidden=id!='m1'}
+function showMode(){showM('m2')}
+function pickLevel(l){LV=l;showM('m5')}
+function startAI(n){netClose();document.getElementById('lobby').hidden=true;start(n+1);G.ai=[null];for(let i=0;i<n;i++)G.ai.push(LV);draw()}
 function openMan(){document.getElementById('man').hidden=false}
 document.addEventListener('keydown',e=>{if(e.key=='Escape'){document.getElementById('man').hidden=true;document.getElementById('notes').hidden=true;closeMenu()}});
 document.addEventListener('click',e=>{if(e.target.closest&&!e.target.closest('.dd'))closeMenu()});

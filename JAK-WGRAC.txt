@@ -44,7 +44,7 @@ Gra online (wersja 2)
   - W części sieci (np. niektóre mobilne i firmowe) połączenie może się nie udać, bo nie ma własnego serwera TURN.
   - Rozłączony gracz nie może wrócić do tej samej partii, jego tury są pomijane.
   - Nie jest to zabezpieczone przed oszustwami: gospodarz widzi wszystko, a gracze mogą ingerować w kod w przeglądarce.
-  - Przy aktualizacji pamiętaj o zwiększeniu wersji w sw.js (teraz civitas-v10).
+  - Przy aktualizacji pamiętaj o zwiększeniu wersji w sw.js (teraz civitas-v11).
 
 Zmiana ikony na Androidzie (wersja 0.0.3)
   - Ikony mają nowe nazwy (…-v3), żeby przeglądarki nie używały starych z pamięci podręcznej.
@@ -73,3 +73,9 @@ Wersja 0.0.7
   - Strefa V wymaga fazy V.
   - Pola stref II–V leżą rewersem i odkrywają się po wejściu pierwszej grupy. Teren jest losowany w każdej grze.
   - Liczba zestawów kart = liczba graczy (min. 2).
+
+Wersja 0.0.8
+  - Gra z komputerem (poziomy: Łatwy, Średni, Trudny; 1–3 przeciwników): Ekran startowy → Gra na tym urządzeniu → Gra z komputerem.
+  - Gra wieloosobowa na jednym ekranie jest osobną opcją w tym samym menu.
+  - Z planszy usunięto podpis „Półwysep Arabski” i kompas.
+  - Osobny plik civitas_elementy_gry.xlsx zawiera listę wszystkich elementów gry z ilościami dla 2, 3 i 4 graczy.

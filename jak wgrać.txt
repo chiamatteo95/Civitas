@@ -1,0 +1,90 @@
+CIVITAS – ANTHROPOGENESIS, WERSJA 0.1.2
+=======================================
+
+JAK WGRAĆ NA GITHUB
+-------------------
+1. Rozpakuj plik Civitas-0.1.2.zip. W środku jest folder "Civitas" z plikami gry.
+2. Otwórz swoje repozytorium: https://github.com/chiamatteo95/Civitas
+3. Kliknij "Add file" → "Upload files".
+4. Przeciągnij do okna WSZYSTKIE pliki z folderu "Civitas" (nie ma w nim podfolderów):
+   - index.html, sw.js, manifest.webmanifest,
+   - cover.webp, corner.webp,
+   - face1.webp … face5.webp (to Twoje dotychczasowe portrety, bez zmian),
+   - icon-v4-192.png, icon-v4-512.png, icon-v4-maskable-512.png,
+     apple-touch-icon-v4.png, favicon-v4.png,
+   - 4 pliki czcionek: dm-sans-latin-wght-normal.woff2, dm-sans-latin-ext-wght-normal.woff2,
+     playfair-display-latin-wght-normal.woff2, playfair-display-latin-ext-wght-normal.woff2,
+   - ten plik (jak wgrać.txt) – opcjonalnie.
+   Pliki o tych samych nazwach (index.html, sw.js, manifest.webmanifest, cover.webp,
+   corner.webp) GitHub nadpisze. Portrety face1–5.webp są takie same jak dotąd.
+5. Na dole wpisz opis, np. "Wersja 0.1.2", i kliknij "Commit changes".
+   Jeśli wcześniej wgrałeś folder "fonts", możesz go usunąć z repozytorium.
+6. Po 1–2 minutach nowa wersja będzie pod adresem https://chiamatteo95.github.io/Civitas/
+   Jeśli widzisz jeszcze starą wersję, odśwież stronę dwa razy (sw.js ma nową wersję
+   pamięci "civitas-v16", więc przeglądarka sama pobierze nowe pliki).
+7. Stare pliki ikon nie są już używane i można je usunąć z repozytorium:
+   icon-v3-192.png, icon-v3-512.png, icon-v3-maskable-512.png,
+   apple-touch-icon-v3.png, favicon-v3.png.
+
+WAŻNE – GRA ONLINE
+------------------
+GitHub Pages pokazuje tylko pliki, nie uruchamia serwera. Pokoje online działają
+na osobnym serwerze gry. Adres tego serwera jest wpisany w index.html w linii:
+    const SERVER='https://game-edits.preview.emergentagent.com';
+Na razie to adres podglądu, który może się wyłączać, gdy podgląd jest uśpiony.
+Po opublikowaniu serwera na stałe podmień ten adres na stały adres serwera
+i wgraj index.html ponownie. Gra na jednym urządzeniu i z komputerem
+działa bez serwera, także offline.
+
+CO ZMIENIŁEM W WERSJI 0.1.2
+---------------------------
+Zasady gry są bez zmian.
+
+Nowy wygląd (granat i złoto, dopracowane):
+- Nowa okładka z tytułem, nowa grafika w rogu planszy i nowe ikony aplikacji
+  (pięściak w złotym sześciokącie). Portrety hominidów na torze ewolucji
+  zostały oryginalne, mają tylko nowe złote ramki.
+- Nowe czcionki: Playfair Display (nagłówki) i DM Sans (tekst). Są zapisane
+  w plikach .woff2 obok index.html, więc działają też offline.
+- Ciemniejszy, głębszy granat w całej grze, złote ramki i przyciski
+  z gradientem, panel gracza i dziennik w nowych ramkach, surowce jako
+  „żetony”, nagłówek z nazwą gry obok logo.
+- Plansza: pola z delikatnym cieniowaniem, podświetlenie pola po najechaniu,
+  pulsujące pola, na które można wejść, odświeżone kolory stref
+  (I złota, II niebieska, III turkusowa, IV pomarańczowa, V fioletowa)
+  i terenów; legenda pod planszą w ramce.
+- Rynek cech: karty za 3 pkt złote z połyskiem, za 2 pkt srebrne,
+  za 1 pkt brązowe, adaptacje z przerywaną ramką.
+- Tor ewolucji: złote ramki portretów, znacznik gracza, który ma ruch,
+  delikatnie świeci.
+- Starcie: wyrzucone kości pokazane jako animowana kostka.
+- Okna (instrukcja, starcie, pokój online) z rozmyciem tła i płynnym pojawianiem się.
+- Animacje są wyłączane, gdy w systemie włączono „ogranicz ruch”.
+
+Dźwięki gry:
+- Rzut kośćmi w starciu – grzechot kości.
+- Odkrycie nowego pola – krótki dzwonek.
+- Zmiana tury – spokojny, niski gong (także w grze z komputerem i online).
+- Głośność: w Menu jest suwak „Głośność” (0–100%). Przesunięcie do zera albo
+  kliknięcie ikony głośnika wycisza dźwięki, a ponowne kliknięcie przywraca
+  poprzednią głośność. Ustawienie zapamiętuje się na urządzeniu. Dźwięki są tworzone przez przeglądarkę, bez dodatkowych plików,
+  więc działają też offline. Opis dodałem w instrukcji (rozdział 4).
+
+Gra online przez serwer (zamiast połączenia PeerJS między przeglądarkami):
+- „Gra online” → „Załóż pokój” daje 5-znakowy kod, pozostali wpisują go
+  i klikają „Dołącz”. W pokoju widać listę graczy i kto jest online.
+- Stan gry przechowuje serwer, więc partia trwa, nawet gdy założyciel
+  zamknie kartę.
+- Kto zamknie kartę, może wrócić na tym samym urządzeniu przyciskiem
+  „Wróć do pokoju …” w menu „Gra online”.
+- Tura gracza, który jest offline dłużej niż ok. 10 sekund, jest pomijana,
+  dopóki on nie wróci.
+- Podczas gry panel pokazuje kod pokoju i kropki online/offline przy graczach.
+- Pokój wygasa po 3 dniach bez ruchu.
+- Zaktualizowałem rozdział 10 instrukcji (Gra online).
+
+Inne:
+- Numer wersji: 0.1.2.
+- sw.js: nowa wersja pamięci (civitas-v16), nowe pliki na liście,
+  zapytania do serwera gry nie są zapisywane w pamięci offline.
+- manifest.webmanifest: nowe ikony i kolor motywu.

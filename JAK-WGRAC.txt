@@ -161,3 +161,22 @@ Poprawki:
 - Instrukcja: nazwa karty „Redukcja uzębienia” zgodna z grą.
 - Instrukcja: rozdziały 4, 5, 7 i 9 opisują karty odkryć i ikony.
 Zasady gry są bez zmian.
+
+CO ZMIENIŁEM W WERSJI 0.1.4
+---------------------------
+Karta pomocnicza (nowa):
+- Otwierasz ją przyciskiem „Karta pomocnicza: legenda i ruchy” w panelu
+ gracza, przyciskiem „Karta pomocnicza ▸” na końcu legendy pod mapą
+ albo w Menu. Zamykasz przyciskiem „Zamknij”, klawiszem Esc lub kliknięciem obok.
+- Legenda planszy: tereny i ich zbiory (z ikonami surowców), strefy I–V
+ z wymaganą fazą i portretem hominida, znaki na planszy (rewers, pulsujące
+ pole, zaznaczona grupa, kółka graczy, parantropy).
+- Akcje w turze, każda z opisem „jak / koszt / warunek / efekt”: Wędrówka,
+ Zbieraj, Osiedl, Zakup z rynku cech, Zakup karty odkryć (z miniaturami kart),
+ a także Starcie i Zakończ turę z punktacją.
+- Przy każdej akcji karta pokazuje na bieżąco, czy gracz, który ma ruch, może ją
+ teraz wykonać (np. „6 pól do wyboru”, „brakuje jedzenia”, „stać Cię: Polowanie”).
+- Opis karty dodałem w instrukcji (rozdział 4).
+- Numer wersji: 0.1.4, sw.js: nowa wersja pamięci (civitas-v18).
+Zasady gry są bez zmian. Nowych plików graficznych nie ma: wystarczy wgrać
+ponownie index.html i sw.js (dla pewności można wgrać całą paczkę).

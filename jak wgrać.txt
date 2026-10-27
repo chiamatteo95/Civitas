@@ -1,9 +1,9 @@
-CIVITAS – ANTHROPOGENESIS, WERSJA 0.1.2
+CIVITAS – ANTHROPOGENESIS, WERSJA 0.1.4
 =======================================
 
 JAK WGRAĆ NA GITHUB
 -------------------
-1. Rozpakuj plik Civitas-0.1.2.zip. W środku jest folder "Civitas" z plikami gry.
+1. Rozpakuj plik Civitas-0.1.4.zip. W środku jest folder "Civitas" z plikami gry.
 2. Otwórz swoje repozytorium: https://github.com/chiamatteo95/Civitas
 3. Kliknij "Add file" → "Upload files".
 4. Przeciągnij do okna WSZYSTKIE pliki z folderu "Civitas" (nie ma w nim podfolderów):
@@ -12,16 +12,19 @@ JAK WGRAĆ NA GITHUB
    - face1.webp … face5.webp (to Twoje dotychczasowe portrety, bez zmian),
    - icon-v4-192.png, icon-v4-512.png, icon-v4-maskable-512.png,
      apple-touch-icon-v4.png, favicon-v4.png,
-   - 4 pliki czcionek: dm-sans-latin-wght-normal.woff2, dm-sans-latin-ext-wght-normal.woff2,
+   - NOWE w 0.1.3: karta-ogien.webp, karta-schronienie.webp, karta-narzedzia.webp,
+ karta-polowanie.webp, karta-odkryc-rewers.webp,
+ ikona-jedzenie.webp, ikona-drewno.webp, ikona-kamien.webp,
+ - 4 pliki czcionek: dm-sans-latin-wght-normal.woff2, dm-sans-latin-ext-wght-normal.woff2,
      playfair-display-latin-wght-normal.woff2, playfair-display-latin-ext-wght-normal.woff2,
    - ten plik (jak wgrać.txt) – opcjonalnie.
    Pliki o tych samych nazwach (index.html, sw.js, manifest.webmanifest, cover.webp,
    corner.webp) GitHub nadpisze. Portrety face1–5.webp są takie same jak dotąd.
-5. Na dole wpisz opis, np. "Wersja 0.1.2", i kliknij "Commit changes".
+5. Na dole wpisz opis, np. "Wersja 0.1.4", i kliknij "Commit changes".
    Jeśli wcześniej wgrałeś folder "fonts", możesz go usunąć z repozytorium.
 6. Po 1–2 minutach nowa wersja będzie pod adresem https://chiamatteo95.github.io/Civitas/
    Jeśli widzisz jeszcze starą wersję, odśwież stronę dwa razy (sw.js ma nową wersję
-   pamięci "civitas-v16", więc przeglądarka sama pobierze nowe pliki).
+   pamięci "civitas-v18", więc przeglądarka sama pobierze nowe pliki).
 7. Stare pliki ikon nie są już używane i można je usunąć z repozytorium:
    icon-v3-192.png, icon-v3-512.png, icon-v3-maskable-512.png,
    apple-touch-icon-v3.png, favicon-v3.png.
@@ -36,8 +39,47 @@ Po opublikowaniu serwera na stałe podmień ten adres na stały adres serwera
 i wgraj index.html ponownie. Gra na jednym urządzeniu i z komputerem
 działa bez serwera, także offline.
 
-CO ZMIENIŁEM W WERSJI 0.1.2
+CO ZMIENIŁEM W WERSJI 0.1.4
 ---------------------------
+Karta pomocnicza (nowa):
+- Otwierasz ją przyciskiem „Karta pomocnicza: legenda i ruchy” w panelu
+ gracza, przyciskiem „Karta pomocnicza ▸” na końcu legendy pod mapą
+ albo w Menu. Zamykasz przyciskiem „Zamknij”, klawiszem Esc lub kliknięciem obok.
+- Legenda planszy: tereny i ich zbiory (z ikonami surowców), strefy I–V
+ z wymaganą fazą i portretem hominida, znaki na planszy (rewers, pulsujące
+ pole, zaznaczona grupa, kółka graczy, parantropy).
+- Akcje w turze, każda z opisem „jak / koszt / warunek / efekt”: Wędrówka,
+ Zbieraj, Osiedl, Zakup z rynku cech, Zakup karty odkryć (z miniaturami kart),
+ a także Starcie i Zakończ turę z punktacją.
+- Przy każdej akcji karta pokazuje na bieżąco, czy gracz, który ma ruch, może ją
+ teraz wykonać (np. „6 pól do wyboru”, „brakuje jedzenia”, „stać Cię: Polowanie”).
+- Opis karty dodałem w instrukcji (rozdział 4).
+- Numer wersji: 0.1.4, sw.js: nowa wersja pamięci (civitas-v18).
+Zasady gry są bez zmian. Nowych plików graficznych nie ma: wystarczy wgrać
+ponownie index.html i sw.js (dla pewności można wgrać całą paczkę).
+
+ZMIANY Z WERSJI 0.1.3
+---------------------
+---------------------------
+Karty odkryć (dawniej karty rozwoju / „Zakup narzędzi”):
+- Ogień, Schronienie, Narzędzia i Polowanie mają gotowe grafiki kart.
+- Kupione karty odkryć leżą na ręce gracza w panelu (pod bankiem surowców).
+ Kliknięcie karty ją powiększa, kliknięcie obok albo Esc zamyka podgląd.
+ Bez kart na ręce widać rewers karty odkryć.
+- Akcja nazywa się teraz „Zakup karty odkryć”, koszty pokazane ikonami.
+- Karty cech są na ręce widoczne w formie tekstowej (nazwa, punkty, liczba
+ kopii). Grafiki kart cech dojdą w kolejnej wersji.
+Ikony surowców:
+- Jedzenie, drewno i kamień mają ikony w banku surowców, w legendzie pod
+ mapą, w kosztach na liście akcji i na rynku cech oraz w instrukcji.
+Poprawki:
+- Instrukcja (rozdz. 9): próg końca gry to 40 pkt ewolucji (było 25).
+- Instrukcja: nazwa karty „Redukcja uzębienia” zgodna z grą.
+- Instrukcja: rozdziały 4, 5, 7 i 9 opisują karty odkryć i ikony.
+Zasady gry są bez zmian.
+
+ZMIANY Z WERSJI 0.1.2
+---------------------
 Zasady gry są bez zmian.
 
 Nowy wygląd (granat i złoto, dopracowane):
@@ -84,7 +126,7 @@ Gra online przez serwer (zamiast połączenia PeerJS między przeglądarkami):
 - Zaktualizowałem rozdział 10 instrukcji (Gra online).
 
 Inne:
-- Numer wersji: 0.1.2.
-- sw.js: nowa wersja pamięci (civitas-v16), nowe pliki na liście,
+- Poprawiono błąd w instrukcji: próg końca gry to 40 pkt ewolucji, nie 25.
+- sw.js: nowa wersja pamięci (civitas-v17), nowe pliki na liście,
   zapytania do serwera gry nie są zapisywane w pamięci offline.
 - manifest.webmanifest: nowe ikony i kolor motywu.

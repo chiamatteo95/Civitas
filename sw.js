@@ -1,5 +1,5 @@
 // Zwiększ numer wersji przy każdej aktualizacji gry, żeby użytkownicy dostali nową wersję.
-const V='civitas-v17';
+const V='civitas-v18';
 const FILES=['./','./index.html','./manifest.webmanifest','./icon-v4-192.png','./icon-v4-512.png','./icon-v4-maskable-512.png','./apple-touch-icon-v4.png','./favicon-v4.png','./cover.webp','./corner.webp','./face1.webp','./face2.webp','./face3.webp','./face4.webp','./face5.webp','./dm-sans-latin-ext-wght-normal.woff2','./dm-sans-latin-wght-normal.woff2','./playfair-display-latin-ext-wght-normal.woff2','./playfair-display-latin-wght-normal.woff2','./ikona-jedzenie.webp','./ikona-drewno.webp','./ikona-kamien.webp','./karta-ogien.webp','./karta-schronienie.webp','./karta-narzedzia.webp','./karta-polowanie.webp','./karta-odkryc-rewers.webp'];
 // Pomijamy serwer gry (/api) i pliki serwera deweloperskiego – zawsze idą prosto do sieci.
 const SKIP=/^\/(api|@|src\/|node_modules\/|__)/;

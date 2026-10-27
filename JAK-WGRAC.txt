@@ -96,3 +96,4 @@ Wersja 0.1.1
   - Naprawiono przycinanie ekranu na telefonie: szeroki tor ewolucji rozciągał całą planszę poza ekran.
   - Układ: u góry tytuł i panel akcji, pośrodku mapa i Rynek Cech, pod mapą tor ewolucji (na telefonie przewijany w poziomie).
   - Linia brzegowa Synaju, Morza Czerwonego i Półwyspu Arabskiego narysowana na podstawie rzeczywistych współrzędnych (przeliczonych na układ planszy).
+  - Usunięto z panelu u góry licznik faz graczy (poziom graczy widać na torze ewolucji pod mapą).

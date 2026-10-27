@@ -290,7 +290,6 @@ ${MSG?`<div class="card" role="alert" style="border-style:solid;color:${MSG[0]==
 <div class="sub1"><span onclick="this.parentNode.classList.toggle('open')">Zakup narzędzi ▸</span><div class="subm">${Object.entries(DEV).map(tool).join('')}</div></div></div></details>`}</div>
 <button class="a main" ${G.over||me!=G.cur?'disabled':''} onclick="act('end')">Zakończ turę</button>
 </div><div class="sb">
-<div class="gen" aria-label="Fazy graczy">${G.P.map((q,i)=>`<div class="gp ${i==G.cur?'cur':''}"><span class="dot" style="background:${COL[i]}"></span><span>${PN[i]}${G.ai&&G.ai[i]?' ⚙':''}</span><b>Faza ${RG[era(q.evo)]}</b><div class="gb" title="${ERA[era(q.evo)]}"><i style="width:${Math.min(100,q.evo/TRACK*100)}%;background:${COL[i]}"></i>${[5,12,20,30].map(t=>`<u style="left:${t/TRACK*100}%"></u>`).join('')}</div><span class="gv">${q.evo} pkt</span></div>`).join('')}</div>
 <div id="log">${G.log.map(l=>'<p>'+l+'</p>').join('')}</div></div>
 `;
 if(G.fight)fightUI();else document.getElementById('fight').hidden=true;

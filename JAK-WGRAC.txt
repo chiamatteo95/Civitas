@@ -143,3 +143,21 @@ Gra online przez serwer (zamiast połączenia PeerJS między przeglądarkami):
 - Pokój wygasa po 3 dniach bez ruchu.
 - Zaktualizowałem rozdział 10 instrukcji (Gra online).
 
+CO ZMIENIŁEM W WERSJI 0.1.3
+---------------------------
+Karty odkryć (dawniej karty rozwoju / „Zakup narzędzi”):
+- Ogień, Schronienie, Narzędzia i Polowanie mają gotowe grafiki kart.
+- Kupione karty odkryć leżą na ręce gracza w panelu (pod bankiem surowców).
+ Kliknięcie karty ją powiększa, kliknięcie obok albo Esc zamyka podgląd.
+ Bez kart na ręce widać rewers karty odkryć.
+- Akcja nazywa się teraz „Zakup karty odkryć”, koszty pokazane ikonami.
+- Karty cech są na ręce widoczne w formie tekstowej (nazwa, punkty, liczba
+ kopii). Grafiki kart cech dojdą w kolejnej wersji.
+Ikony surowców:
+- Jedzenie, drewno i kamień mają ikony w banku surowców, w legendzie pod
+ mapą, w kosztach na liście akcji i na rynku cech oraz w instrukcji.
+Poprawki:
+- Instrukcja (rozdz. 9): próg końca gry to 40 pkt ewolucji (było 25).
+- Instrukcja: nazwa karty „Redukcja uzębienia” zgodna z grą.
+- Instrukcja: rozdziały 4, 5, 7 i 9 opisują karty odkryć i ikony.
+Zasady gry są bez zmian.

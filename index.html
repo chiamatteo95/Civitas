@@ -16,8 +16,8 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,sans-serif}
 h1{font:700 26px/1.1 Georgia,serif;margin:0}
-.wrap{max-width:1480px;margin:0 auto;padding:16px;display:grid;gap:16px;grid-template-columns:minmax(0,3.3fr) minmax(300px,1fr)}
-@media(max-width:900px){.wrap{grid-template-columns:minmax(0,1fr)}.ph{width:84px}}
+.wrap{max-width:1360px;margin:0 auto;padding:16px;display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+@media(max-width:900px){.ph{width:84px}}
 .wrap>*{min-width:0}.tbl,.tm>*{min-width:0}
 header{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between}
 header p{margin:0;color:var(--mut)}
@@ -50,7 +50,7 @@ header{flex-wrap:nowrap;align-items:flex-start}.ht{display:flex;gap:10px;align-i
 .dd{position:relative;flex:none}.ddm{position:absolute;right:0;top:calc(100% + 6px);min-width:240px;z-index:20;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px;box-shadow:0 8px 24px #0004}.ddm[hidden]{display:none}
 .ddm button{display:block;width:100%;text-align:left;font:inherit;padding:9px 10px;border:0;border-radius:6px;background:none;color:var(--ink);cursor:pointer}.ddm button:hover{background:var(--bg)}.ddm hr{border:0;border-top:1px solid var(--line);margin:6px 0}.dl{padding:4px 10px;color:var(--mut);font-size:12px}
 
-.tbl{position:relative;border-radius:16px;overflow:hidden;border:1px solid #c9a24f66;padding:12px;display:grid;gap:12px;color:#f6e7c1;background:radial-gradient(90% 70% at 0% 0%,#f08a3caa,transparent 55%),radial-gradient(70% 60% at 100% 0%,#e0703a77,transparent 55%),linear-gradient(#162d5c,#0c2147 55%,#091a3a)}
+.tbl{position:relative;border-radius:16px;overflow:hidden;border:1px solid #c9a24f66;padding:12px;display:grid;grid-template-columns:minmax(0,1fr);gap:12px;--bg:#0f1a2e;--panel:#0f182a;--ink:#f3e8c8;--mut:#aab4c8;--line:#34476a;color:#f6e7c1;background:radial-gradient(90% 70% at 0% 0%,#f08a3caa,transparent 55%),radial-gradient(70% 60% at 100% 0%,#e0703a77,transparent 55%),linear-gradient(#162d5c,#0c2147 55%,#091a3a)}
 .tt{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
 .ttl{font-family:Georgia,serif;text-align:center;line-height:1}.ttl b{display:block;font-size:clamp(26px,3.5vw,42px);color:#ffd566;text-shadow:0 0 18px #ffb43899,0 2px 0 #7a4a08}.ttl span{display:block;font-size:clamp(15px,2vw,24px);color:#ffe3a0;text-shadow:0 0 12px #ffb43877}.ttl i{display:block;height:2px;margin:6px auto;width:90%;background:linear-gradient(90deg,transparent,#ffd566,transparent)}
 .phases{display:flex;gap:6px;overflow-x:auto;max-width:100%;padding:2px}
@@ -65,7 +65,7 @@ header{flex-wrap:nowrap;align-items:flex-start}.ht{display:flex;gap:10px;align-i
 .c.x .h2{background:repeating-linear-gradient(45deg,#26385e 0 6px,#2f4670 6px 12px)}.c.x .zn{bottom:auto;top:50%;transform:translateY(-50%);font-size:max(10px,2.6cqw);color:#dfe8ff;opacity:.95}.legend b.bk{background:repeating-linear-gradient(45deg,#26385e 0 4px,#2f4670 4px 8px)}
 .c .zn{position:absolute;left:0;right:0;bottom:12%;text-align:center;font:700 max(8px,1.8cqw) Georgia,serif;color:#1d2a33;opacity:.8;pointer-events:none}.c.occ .zn{display:none}
 
-.tt{align-items:stretch}.trk{flex:1 1 640px;min-width:0;display:grid;align-content:start;align-self:flex-start;overflow-x:auto;border:1px solid #c9a24f88;border-radius:10px;background:#0b1424e6;padding:6px 4px 4px}
+.tt{align-items:stretch}.trk{min-width:0;display:grid;align-content:start;overflow-x:auto;border:1px solid #c9a24f88;border-radius:10px;background:#0b1424e6;padding:6px 4px 4px}
 .tf{display:grid;place-items:center;padding:4px 2px;border-left:1px solid #c9a24f66}.tf:first-child{border-left:0}
 .tf img{width:min(84px,100%);aspect-ratio:1;border-radius:50%;object-fit:cover;border:2px solid #c9a24f;box-shadow:0 0 12px #ffb43866;background:#000}
 .tl{text-align:center;font:600 11px Georgia,serif;color:#ffe3a0;padding:3px 2px;border-left:1px solid #c9a24f66}.tl b{display:block;color:#ffd566}
@@ -75,6 +75,8 @@ header{flex-wrap:nowrap;align-items:flex-start}.ht{display:flex;gap:10px;align-i
 :root{-webkit-text-size-adjust:100%}html,body{max-width:100%;overflow-x:hidden}
 .wrap{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
 @media (min-aspect-ratio:17/10) and (max-height:600px){.cover{background:#0d1a2b url(cover.webp) left center/auto 100% no-repeat}#intro .menuBox{left:auto;right:max(12px,env(safe-area-inset-right));top:50%;bottom:auto;transform:translateY(-50%);width:clamp(220px,calc(100vw - 100dvh*1.4 - 24px),320px)}#intro .cover::after{display:none}.ver{left:max(12px,env(safe-area-inset-left))}}
+.tt{min-width:0}#side.panel{flex:1 1 440px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;background:#0f182acc;border-color:#c9a24f88;color:#f3e8c8}
+.sa,.sb{display:grid;gap:10px;align-content:start;min-width:0}.tbl .ddl{background:#0f182a;border-color:#c9a24f88}
 .manual{max-width:720px;max-height:92vh;overflow:auto;text-align:left;padding:0}.mh{display:flex;justify-content:space-between;align-items:center;gap:8px;position:sticky;top:0;z-index:2;background:var(--panel);padding:12px 16px;border-bottom:1px solid var(--line)}.mh h2{margin:0;font:700 20px Georgia,serif}
 .mb{padding:6px 16px 16px;font-size:14px}.mb details{border-bottom:1px solid var(--line);padding:8px 0}.mb p,.mb li{margin:6px 0;color:var(--ink)}.mb ul{padding-left:18px;margin:6px 0}.mb table{width:100%;border-collapse:collapse;margin:6px 0}.mb th,.mb td{text-align:left;padding:4px 6px;border-bottom:1px solid var(--line);vertical-align:top}.mb th{color:var(--mut);font-weight:600}.menu{display:flex;gap:6px}.lake{fill:#7fb3d1;stroke:#4d86a8;stroke-width:.4;opacity:.92}.mt{fill:#6e665a;stroke:#3d382f;stroke-width:.3;opacity:.85}.snow{fill:#fff}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .lake{fill:#245f80;stroke:#3a86ad}}
@@ -94,9 +96,9 @@ header{flex-wrap:nowrap;align-items:flex-start}.ht{display:flex;gap:10px;align-i
 .res{display:flex;gap:4px 10px;flex-wrap:wrap;align-items:baseline;font-size:14px}.res span{font-weight:600}.res em{font-style:normal;color:var(--mut)}
 .gen{display:grid;gap:4px}.gp{display:grid;grid-template-columns:10px 82px 54px 1fr 50px;align-items:center;gap:6px;font-size:13px;padding:3px 4px;border-radius:6px}.gp.cur{background:var(--bg)}.dot{width:10px;height:10px;border-radius:50%}
 .gb{position:relative;height:8px;border-radius:4px;background:var(--line)}.gb i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}.gb u{position:absolute;top:-2px;bottom:-2px;width:1px;background:var(--mut);opacity:.7}.gv{text-align:right;font-weight:600}
-.r4{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.act{position:relative}.act summary{list-style:none}.act summary::-webkit-details-marker{display:none}
+.r4{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.act{position:static}.r4{position:relative}.act summary{list-style:none}.act summary::-webkit-details-marker{display:none}
 .sm{font:inherit;padding:8px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);min-height:40px;display:inline-flex;align-items:center;cursor:pointer}.sm.off{opacity:.4;cursor:default}
-.ddl{position:absolute;left:0;top:calc(100% + 4px);min-width:280px;max-width:90vw;z-index:15;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px;box-shadow:0 8px 24px #0004}
+.ddl{position:absolute;left:0;top:calc(100% + 4px);right:0;min-width:0;max-width:none;z-index:15;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px;box-shadow:0 8px 24px #0004}
 .it{display:block;width:100%;text-align:left;font:inherit;padding:9px 10px;border:0;border-radius:6px;background:none;color:var(--ink);cursor:pointer}.it:hover:not(:disabled){background:var(--bg)}.it:disabled{opacity:.4;cursor:default}
 .sub1>span{display:block;padding:9px 10px;border-radius:6px;cursor:pointer}.sub1:hover>span,.sub1.open>span{background:var(--bg)}.subm{display:none;padding:2px 0 4px 10px}.sub1:hover>.subm,.sub1.open>.subm,.sub1:focus-within>.subm{display:block}
 .svinfo{font-size:12px;opacity:.85;margin-top:8px;color:#fff}.menuBox .a:disabled{opacity:.45}
@@ -143,11 +145,11 @@ details{font-size:14px}summary{cursor:pointer;font-weight:600}details ul{padding
 <div class="wrap">
 <header><div class="ht"><img class="logo" src="icon-v3-192.png" alt="" width="44" height="44"><h1 class="sr">Civitas – Anthropogenesis</h1></div><div class="dd"><button class="a" id="ddb" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu()">Menu ▾</button><div class="ddm" id="ddm" hidden role="menu"></div></div></header>
 <main>
-<div class="tbl"><div class="tt"><div class="ttl"><b>Civitas</b><i></i><span>Anthropogenesis</span></div><div class="trk" id="trk" aria-label="Tor ewolucji"></div></div>
-<div class="tm"><div class="bwrap"><div class="zoom"><button class="a" onclick="zoomTo(1)" aria-label="Dopasuj planszę do ekranu">⤢</button><button class="a" onclick="zoomBy(-.3)" aria-label="Pomniejsz planszę">−</button><button class="a" onclick="zoomBy(.3)" aria-label="Powiększ planszę">+</button></div><div class="bscroll" id="bs"><div class="board" id="board" role="grid" aria-label="Plansza: Afryka"></div></div></div><div class="targ" id="targ"></div></div></div>
+<div class="tbl"><div class="tt"><div class="ttl"><b>Civitas</b><i></i><span>Anthropogenesis</span></div><aside class="panel" id="side"></aside></div>
+<div class="tm"><div class="bwrap"><div class="zoom"><button class="a" onclick="zoomTo(1)" aria-label="Dopasuj planszę do ekranu">⤢</button><button class="a" onclick="zoomBy(-.3)" aria-label="Pomniejsz planszę">−</button><button class="a" onclick="zoomBy(.3)" aria-label="Powiększ planszę">+</button></div><div class="bscroll" id="bs"><div class="board" id="board" role="grid" aria-label="Plansza: Afryka"></div></div></div><div class="targ" id="targ"></div></div>
+<div class="trk" id="trk" aria-label="Tor ewolucji"></div></div>
 <div class="legend"><span><b style="background:#f2d94e"></b>sawanna (jedzenie)</span><span><b style="background:#63b95a"></b>las (drewno)</span><span><b style="background:#cfc7b4"></b>skały (kamień)</span><span><b style="box-shadow:inset 0 0 0 2px #e0a82e"></b>Strefa I (serce)</span><span><b style="box-shadow:inset 0 0 0 2px #3f7fc4"></b>II</span><span><b style="box-shadow:inset 0 0 0 2px #3fa38a"></b>III</span><span><b style="box-shadow:inset 0 0 0 2px #c4793b"></b>IV</span><span><b style="box-shadow:inset 0 0 0 2px #8e63c9"></b>V</span><span><b class="bk"></b>rewers: pole nieodkryte</span><span>Czarne kółka: parantropy (rywale)</span></div>
 </main>
-<aside class="panel" id="side"></aside>
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js" defer></script>
@@ -163,7 +165,7 @@ const nb=(r,c)=>{const o=r%2?1:0;return [[r,c-1],[r,c+1],[r-1,c-1+o],[r-1,c+o],[
 const adj=(a,b,c,d)=>ex(a,b)&&ex(c,d)&&nb(a,b).some(([x,y])=>x==c&&y==d);
 const hexp=(r,c)=>{const x=(c+(r%2?.5:0)+.5)*10,y=r*8.66+5.7735;return x+','+(y-5.7735)+' '+(x+5)+','+(y-2.887)+' '+(x+5)+','+(y+2.887)+' '+x+','+(y+5.7735)+' '+(x-5)+','+(y+2.887)+' '+(x-5)+','+(y-2.887)};
 const polys=(()=>{let s='';for(let r=0;r<16;r++)for(let c=0;c<16;c++)if(ex(r,c))s+='<polygon points="'+hexp(r,c)+'"/>';return s})();
-const AP=[[124,-14],[184,-14],[184,46.5],[176,47],[169,46],[163,47.2],[158.5,49.4],[155.4,51.6],[153.6,48.6],[151.8,44.5],[149.6,40],[147.4,35.4],[145.4,30.8],[143.6,26.2],[141.8,21.6],[140.2,17.2],[139.2,13.4],[138.2,10.4],[136.6,14],[135.4,19],[134.4,24],[133.6,29],[133.3,31.8],[131.6,27.6],[130,22],[128.8,16.4],[127.8,10.6],[126.8,5],[125.6,0]];
+const AP=[[125.5,8.7],[129.1,8.9],[130.7,8.2],[132.0,5.7],[133.2,3.5],[133.9,0.4],[136.5,-4],[137,-14],[190,-14],[190,33.5],[177.8,36.5],[172.1,39.6],[167.0,40.9],[166.0,41.4],[163.7,42.4],[156.0,44.7],[152.2,45.0],[151.8,43.7],[151.1,40.8],[150.1,36.7],[146.6,32.4],[144.7,30.5],[142.1,27.7],[141.6,25.2],[139.3,22.7],[137.3,20.9],[135.5,18.6],[133.7,16.3],[132.7,14.9],[132.7,12.5],[131.9,11.9],[130.5,12.3],[130.1,13.0],[129.8,14.1],[129.5,15.2],[129.3,15.6],[127.7,13.3],[127.4,13.0],[126.5,11.9],[126.1,11.2]];
 const smoothP=AP=>{const n=AP.length,m=(a,b)=>[(a[0]+b[0])/2,(a[1]+b[1])/2];let d='M'+m(AP[n-1],AP[0]).join(' ');for(let i=0;i<n;i++){const p=AP[i],q=m(p,AP[(i+1)%n]);d+='Q'+p.join(' ')+' '+q.join(' ')}return d+'Z'};
 const ASIA=smoothP(AP),MADA=smoothP([[159.1,94.8],[161.1,97.1],[162.5,100.5],[163.3,104.2],[162.8,108.2],[162.0,112.0],[160.8,115.7],[159.1,119.0],[156.9,121.8],[155.0,119.5],[153.8,115.8],[153.3,111.5],[153.7,107.0],[154.3,102.9],[155.2,99.5],[156.9,97.0]]);
 const HEXBG='<svg class="bgmap" viewBox="0 0 165 141.45" aria-hidden="true"><defs><filter id="g1" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 24 -3"/></filter><filter id="g2" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 30 -11"/></filter><filter id="g3" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 30 -7"/></filter></defs><g class="shelf" filter="url(#g1)">'+polys+'<path d="'+ASIA+'"/><path d="'+MADA+'"/></g><g class="foam" filter="url(#g3)">'+polys+'</g><g class="land" filter="url(#g2)">'+polys+'</g><path class="asia" d="'+ASIA+'"/><path class="asia" d="'+MADA+'"/><g class="art"><image href="corner.webp" x="-12" y="89.1" width="78" height="60.9" preserveAspectRatio="none"/></g></svg>';
@@ -276,25 +278,26 @@ const me=mySeat(),p=G.P[me],e=era(p.evo),dis=G.over||G.acts<1||me!=G.cur?'disabl
 const RG=['I','II','III','IV','V'];
 const opt=(c,i)=>`<button class="it" ${c.p&&p.f<2?'disabled':''} onclick="act('evo',${i})">${c.n} +${c.p} · ${c.p?'2 jedz.':'gratis'}</button>`;
 const tool=([k,[n,c]])=>`<button class="it" ${p.dev[k]?'disabled':''} onclick="act('dev','${k}')">${p.dev[k]?'✓ ':''}${n} · ${Object.entries(c).map(([x,v])=>v+' '+RN[x]).join(', ')}</button>`;
-document.getElementById('side').innerHTML=`
+document.getElementById('side').innerHTML=`<div class="sa">
 <h2>Tura ${G.round} · <span style="color:${COL[G.cur]};text-shadow:0 0 1px #000">${PN[G.cur]}</span></h2>
 ${NET.mode!='local'?`<div class="card">Grasz jako <b style="color:${COL[me]};text-shadow:0 0 1px #000">${PN[me]}</b>${me==G.cur?' – Twój ruch!':' – czekasz na ruch: '+PN[G.cur]}</div>`:''}
 ${G.ai&&G.ai[G.cur]&&!G.over?`<div class="card">Ruch komputera (${LVN[G.ai[G.cur]]}): ${PN[G.cur]}…</div>`:''}
 ${MSG?`<div class="card" role="alert" style="border-style:solid;color:${MSG[0]=='✓'?'var(--ink)':'var(--hot)'}">${MSG}</div>`:''}
 <div class="res"><em>Bank surowców:</em><span>Jedzenie ${p.f}</span><span>Drewno ${p.w}</span><span>Kamień ${p.s}</span></div>
-<div class="gen" aria-label="Fazy graczy">${G.P.map((q,i)=>`<div class="gp ${i==G.cur?'cur':''}"><span class="dot" style="background:${COL[i]}"></span><span>${PN[i]}${G.ai&&G.ai[i]?' ⚙':''}</span><b>Faza ${RG[era(q.evo)]}</b><div class="gb" title="${ERA[era(q.evo)]}"><i style="width:${Math.min(100,q.evo/TRACK*100)}%;background:${COL[i]}"></i>${[5,12,20,30].map(t=>`<u style="left:${t/TRACK*100}%"></u>`).join('')}</div><span class="gv">${q.evo} pkt</span></div>`).join('')}</div>
 <div class="r4"><span>Akcje: <b>${G.acts}</b></span>${dis?'<span class="sm off">Wybierz akcję ▾</span>':`<details class="act"><summary class="sm">Wybierz akcję ▾</summary><div class="ddl">
 <button class="it" onclick="act('gather')">Zbieraj</button><button class="it" onclick="act('settle')">Osiedl</button>
 <div class="sub1"><span onclick="this.parentNode.classList.toggle('open')">Zakup z rynku cech ▸</span><div class="subm">${G.mk.map(opt).join('')}</div></div>
 <div class="sub1"><span onclick="this.parentNode.classList.toggle('open')">Zakup narzędzi ▸</span><div class="subm">${Object.entries(DEV).map(tool).join('')}</div></div></div></details>`}</div>
 <button class="a main" ${G.over||me!=G.cur?'disabled':''} onclick="act('end')">Zakończ turę</button>
-<div id="log">${G.log.map(l=>'<p>'+l+'</p>').join('')}</div>
+</div><div class="sb">
+<div class="gen" aria-label="Fazy graczy">${G.P.map((q,i)=>`<div class="gp ${i==G.cur?'cur':''}"><span class="dot" style="background:${COL[i]}"></span><span>${PN[i]}${G.ai&&G.ai[i]?' ⚙':''}</span><b>Faza ${RG[era(q.evo)]}</b><div class="gb" title="${ERA[era(q.evo)]}"><i style="width:${Math.min(100,q.evo/TRACK*100)}%;background:${COL[i]}"></i>${[5,12,20,30].map(t=>`<u style="left:${t/TRACK*100}%"></u>`).join('')}</div><span class="gv">${q.evo} pkt</span></div>`).join('')}</div>
+<div id="log">${G.log.map(l=>'<p>'+l+'</p>').join('')}</div></div>
 `;
 if(G.fight)fightUI();else document.getElementById('fight').hidden=true;
 renderMenu();renderTable();
 if(NET.mode=='host')broadcast()}
 
-const VER='0.1.0';
+const VER='0.1.1';
 const NET={mode:'local',seat:0,peer:null,conns:{},conn:null,code:'',started:false};
 const lb=h=>{document.getElementById('lbox').innerHTML=h;document.getElementById('lobby').hidden=false};
 const lbErr=m=>{netClose();lb('<p>'+m+'</p><div class="start"><button class="a" onclick="openLobby()">Wróć</button></div>')};

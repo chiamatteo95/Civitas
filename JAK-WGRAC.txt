@@ -46,7 +46,7 @@ Gra online (wersja 2)
   - W części sieci (np. niektóre mobilne i firmowe) połączenie może się nie udać, bo nie ma własnego serwera TURN.
   - Rozłączony gracz nie może wrócić do tej samej partii, jego tury są pomijane.
   - Nie jest to zabezpieczone przed oszustwami: gospodarz widzi wszystko, a gracze mogą ingerować w kod w przeglądarce.
-  - Przy aktualizacji pamiętaj o zwiększeniu wersji w sw.js (teraz civitas-v13).
+  - Przy aktualizacji pamiętaj o zwiększeniu wersji w sw.js (teraz civitas-v14).
 
 Zmiana ikony na Androidzie (wersja 0.0.3)
   - Ikony mają nowe nazwy (…-v3), żeby przeglądarki nie używały starych z pamięci podręcznej.
@@ -91,3 +91,8 @@ Wersja 0.1.0
   - Półwysep Arabski i Madagaskar są wyszarzone (bez pól) i mają dokładniejszy kształt.
   - „Targ” przemianowany na „Rynek Cech”.
   - Mniejsza nazwa gry na planszy, a w rogu mapy grafika z menu głównego.
+
+Wersja 0.1.1
+  - Naprawiono przycinanie ekranu na telefonie: szeroki tor ewolucji rozciągał całą planszę poza ekran.
+  - Układ: u góry tytuł i panel akcji, pośrodku mapa i Rynek Cech, pod mapą tor ewolucji (na telefonie przewijany w poziomie).
+  - Linia brzegowa Synaju, Morza Czerwonego i Półwyspu Arabskiego narysowana na podstawie rzeczywistych współrzędnych (przeliczonych na układ planszy).

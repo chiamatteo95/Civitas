@@ -10,24 +10,7 @@ Zawartość paczki
   corner.webp              – grafika w rogu planszy (z menu głównego)
   icon-v3-*.png, apple-touch-icon-v3.png, favicon-v3.png – ikony (nowe logo)
 
-Ważne: wszystkie pliki muszą leżeć w tym samym folderze na serwerze.
-Aplikację da się zainstalować tylko przez HTTPS (lub localhost).
-
-Wariant A – GitHub Pages (za darmo)
-  1. Załóż repozytorium na github.com i wgraj wszystkie pliki z tej paczki do głównego katalogu.
-  2. Settings → Pages → Source: „Deploy from a branch”, gałąź main, folder /(root).
-  3. Po chwili gra będzie pod adresem https://TWOJA-NAZWA.github.io/NAZWA-REPOZYTORIUM/
-
-Wariant B – Netlify / Cloudflare Pages
-  Przeciągnij cały folder na stronę netlify.com/drop (albo wgraj jako projekt Pages). Dostajesz adres HTTPS.
-
-Wariant C – własny serwer
-  Wgraj pliki przez FTP/SFTP do dowolnego katalogu obsługiwanego przez HTTPS.
-
-Instalacja na Androidzie
-  1. Otwórz adres gry w Chrome.
-  2. Menu (⋮) → „Zainstaluj aplikację” (albo „Dodaj do ekranu głównego”).
-  3. Ikona pojawi się na ekranie głównym, a gra otwiera się w osobnym oknie, bez paska przeglądarki.
+Ważne: wszystkie pliki muszą leżeć w tym samym folderze na serwerze
 
 Aktualizacja gry
   Podmień index.html, a w sw.js zwiększ numer wersji (const V='civitas-v2' itd.),

@@ -1,124 +1,145 @@
 <!DOCTYPE html>
+<!-- Civitas – Anthropogenesis: gra w jednym pliku; tryb online korzysta z serwera /api/rooms -->
 <html lang="pl"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#283f6f">
+<meta name="theme-color" content="#071226">
+<meta name="description" content="Civitas – Anthropogenesis: strategiczna gra planszowa o wyjściu hominidów z serca Afryki w dolnym paleolicie. Graj z komputerem, na jednym ekranie lub online.">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" type="image/png" href="favicon-v3.png">
-<link rel="apple-touch-icon" href="apple-touch-icon-v3.png">
+<link rel="icon" type="image/png" href="favicon-v4.png">
+<link rel="apple-touch-icon" href="apple-touch-icon-v4.png">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Civitas">
 <link rel="preload" as="image" href="cover.webp">
 <title>Civitas – Anthropogenesis</title>
 <style>
-:root{--bg:#f1efe9;--panel:#fff;--ink:#1d2a33;--mut:#5d6b74;--line:#cfd3d4;--hot:#b3261e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101a21;--panel:#18262f;--ink:#e8ecee;--mut:#97a6ae;--line:#2c3e49}}
+@font-face{font-family:'Playfair Display Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url(fonts/playfair-display-latin-ext-wght-normal.woff2) format('woff2-variations');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Playfair Display Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url(fonts/playfair-display-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'DM Sans Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url(fonts/dm-sans-latin-ext-wght-normal.woff2) format('woff2-variations');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'DM Sans Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url(fonts/dm-sans-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+:root{--bg:#071226;--panel:#0E1E3D;--panel2:#14294F;--ink:#F5E6CA;--mut:#B8A383;--line:#213D6E;--gold:#C9A24F;--gold2:#FFE08A;--goldd:#8F6B28;--hot:#E55353;--ok:#3EB985;--fh:'Playfair Display Variable',Lora,Georgia,serif;--fb:'DM Sans Variable','Instrument Sans',system-ui,sans-serif;--ease:cubic-bezier(.2,.8,.2,1);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,sans-serif}
-h1{font:700 26px/1.1 Georgia,serif;margin:0}
+body{margin:0;background:radial-gradient(120% 60% at 50% -10%,#14294F 0,transparent 60%),var(--bg);background-attachment:fixed;color:var(--ink);font:15px/1.5 var(--fb);letter-spacing:.01em}
+h1{font:700 26px/1.1 var(--fh);margin:0}
+::selection{background:#C9A24F55}
+:focus-visible{outline:2px solid #E2B755;outline-offset:2px}
 .wrap{max-width:1360px;margin:0 auto;padding:16px;display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
 @media(max-width:900px){.ph{width:84px}}
 .wrap>*{min-width:0}.tbl,.tm>*{min-width:0}
 header{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between}
 header p{margin:0;color:var(--mut)}
-.bwrap{position:relative}.bscroll{overflow:auto;max-height:86vh;max-height:86dvh;border-radius:12px;-webkit-overflow-scrolling:touch}.zoom{position:absolute;right:10px;top:10px;z-index:5;display:flex;gap:6px}.zoom button{min-height:38px;min-width:38px;padding:4px 10px;background:var(--panel);font-weight:700;font-size:18px}
-.board{width:calc(100% * var(--z,1));background:repeating-radial-gradient(circle at 20% 85%,#ffffff12 0 2px,transparent 2px 24px),radial-gradient(circle at 12% 92%,#2b64b0,transparent 60%),linear-gradient(#0e3068,#0a2552);padding:calc(var(--z,1) * 4.5%);overflow:hidden;border:1px solid var(--line);border-radius:12px}
-
+.bwrap{position:relative}.bscroll{overflow:auto;max-height:86vh;max-height:86dvh;border-radius:12px;-webkit-overflow-scrolling:touch;box-shadow:0 0 0 1px #8F6B2866,0 18px 40px #02081499}.zoom{position:absolute;right:10px;top:10px;z-index:5;display:flex;gap:6px}.zoom button{min-height:38px;min-width:38px;padding:4px 10px;background:#0B1933e6;font-weight:700;font-size:18px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.board{width:calc(100% * var(--z,1));background:repeating-radial-gradient(circle at 20% 85%,#ffffff0d 0 2px,transparent 2px 26px),radial-gradient(circle at 12% 92%,#1f4f93,transparent 60%),radial-gradient(70% 50% at 70% 10%,#C9A24F1f,transparent 70%),linear-gradient(#0b2a5e,#071c42);padding:calc(var(--z,1) * 4.5%);overflow:hidden;border:1px solid #8F6B2899;border-radius:12px}
 #hx{position:relative;aspect-ratio:165/141.45;container-type:inline-size}
 .bgmap{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.bgmap{overflow:visible}.shelf{fill:#1f6fb0}.foam{fill:#8fe3ff;opacity:.8}.land{fill:#d6b665}.geo{fill:#ffe3a0;font:italic 600 3.6px Georgia,serif}.asia{fill:#7d8794;stroke:#b5cbdc;stroke-width:2;stroke-linejoin:round;paint-order:stroke;opacity:.95}
+.bgmap{overflow:visible}.shelf{fill:#1a5a9c}.foam{fill:#9fdcf5;opacity:.55}.land{fill:#c9a868}.geo{fill:#ffe3a0;font:italic 600 3.6px var(--fh)}.asia{fill:#5f6b7d;stroke:#C9A24F;stroke-width:.6;stroke-linejoin:round;paint-order:stroke;opacity:.9}
 .h,.h2{position:absolute;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
-.h{inset:2%;background:#0003}.h2{inset:9%}
-.band{z-index:3}.h2{opacity:.94}
-#intro,#fight,#man,#lobby,#notes{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(10,15,20,.85);padding:16px;overflow:auto}#intro[hidden],#fight[hidden],#man[hidden],#lobby[hidden],#notes[hidden]{display:none}
-.ibox{background:var(--panel);border:1px solid var(--line);border-radius:14px;max-width:560px;width:100%;overflow:hidden;text-align:center;padding-bottom:18px}
-.ibox h1{margin:14px 12px 2px}.ibox p{margin:6px 18px;color:var(--mut)}.ibox .sub{font-style:italic}.art{display:block;width:100%;height:auto}.ibox .start{justify-content:center;margin-top:14px}
-.ft{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left}.ft table{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}.ft td,.ft th{padding:3px 0;border-bottom:1px solid var(--line)}.ft td:last-child,.ft th:last-child{text-align:right}
-#intro{padding:0;display:block;overflow:hidden;background:#0d1a2b}
-.cover{--cf:#1a1309;position:absolute;inset:0;background:var(--cf) url(cover.webp) center 12%/cover no-repeat}
-@media(min-aspect-ratio:1/1){#intro .menuBox{left:auto;right:3%;bottom:max(20px,env(safe-area-inset-bottom));transform:none;width:min(280px,40%)}#intro .mainMenu{flex-direction:column}#intro .menuBox .a.big{width:100%}}
-@media(max-aspect-ratio:1/1){#intro .menuBox{bottom:auto;top:calc(100vw*.716 + 4px)}.cover{background:var(--cf) url(cover.webp) center top/100% auto no-repeat}.cover::after{content:"";position:absolute;left:0;right:0;top:calc(100vw*.716 - 70px);height:72px;background:linear-gradient(transparent,var(--cf))}}
+.h{inset:2%;background:#0004}.h2{inset:9%}
+.band{z-index:3}.h2{opacity:.96}
+#intro,#fight,#man,#lobby,#notes{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:#040B18d9;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);padding:16px;overflow:auto}#intro[hidden],#fight[hidden],#man[hidden],#lobby[hidden],#notes[hidden]{display:none}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes glow{0%,100%{box-shadow:0 0 0 2px #FFE08A,0 0 10px #D4AF3788}50%{box-shadow:0 0 0 2px #FFE08A,0 0 22px #D4AF37}}
+@keyframes tumble{0%{transform:rotate(0) scale(.6);opacity:0}60%{transform:rotate(380deg) scale(1.15);opacity:1}100%{transform:rotate(360deg) scale(1)}}
+@keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
+.ibox{background:linear-gradient(180deg,#102347,#0B1933);border:1px solid var(--gold);border-radius:14px;max-width:560px;width:100%;overflow:hidden;text-align:center;padding-bottom:18px;box-shadow:0 20px 50px #000c,0 0 30px #C9A24F33,inset 0 1px 0 #ffffff14;color:#F5E8D3;animation:pop .22s var(--ease)}
+.ibox h1{margin:14px 12px 2px}.ibox h2{font-family:var(--fh)!important;color:var(--gold2);letter-spacing:.04em}.ibox p{margin:6px 18px;color:var(--mut)}.ibox .sub{font-style:italic}.art{display:block;width:100%;height:auto}.ibox .start{justify-content:center;margin-top:14px}
+.ft{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left}.ft>div{background:#0E1E3D;border:1px solid var(--line);border-radius:10px;padding:10px}.ft table{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}.ft td,.ft th{padding:4px 0;border-bottom:1px solid var(--line)}.ft td:last-child,.ft th:last-child{text-align:right;font-variant-numeric:tabular-nums}.ft th:last-child{font:700 20px var(--fh);color:var(--gold2)}.ft tr:first-child td:last-child.roll{display:inline-block}
+.die{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:6px;background:linear-gradient(#FFF6DC,#E8CF8E);color:#0C1A30;font-weight:800;box-shadow:0 2px 0 #8F6B28;animation:tumble .5s var(--ease)}
+#intro{padding:0;display:block;overflow:hidden;background:#071226}
+.cover{--cf:#071226;position:absolute;inset:0;background:var(--cf) url(cover.webp) center 30%/cover no-repeat}
+.cover::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 45%,#07122699),radial-gradient(120% 80% at 50% 120%,#071226cc,transparent 60%);pointer-events:none}
+@media(min-aspect-ratio:1/1){#intro .menuBox{left:auto;right:3%;bottom:max(24px,env(safe-area-inset-bottom));transform:none;width:min(300px,40%)}#intro .mainMenu{flex-direction:column}#intro .menuBox .a.big{width:100%}}
+@media(max-aspect-ratio:1/1){#intro .menuBox{bottom:auto;top:calc(100vw*.671 + 4px)}.cover{background:var(--cf) url(cover.webp) center top/100% auto no-repeat}.cover::before{display:none}.cover::after{content:"";position:absolute;left:0;right:0;top:calc(100vw*.671 - 70px);height:72px;background:linear-gradient(transparent,var(--cf))}}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.menuBox{max-height:calc(100dvh - 24px);overflow:auto;position:absolute;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(92%,360px);background:rgba(10,18,30,.66);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:12px;text-align:center;color:#fff}
-.menuBox [hidden]{display:none}.menuBox p{margin:0 0 8px;color:#fff}
-.mainMenu,#m2 .start,#m3 .start,#m4 .start,#m5 .start{display:flex;flex-direction:column;gap:8px}.menuBox .a.big{width:100%}.ver{position:absolute;left:12px;bottom:max(10px,env(safe-area-inset-bottom));color:#fff;opacity:.85;font-size:13px;text-shadow:0 1px 3px #000}.menuBox .start{justify-content:center;margin-top:8px}
-.menuBox .a{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.35)}
-.menuBox .a.main{background:#e0a82e;color:#1d2a33;border-color:#e0a82e;font-weight:700}
-.menuBox .a:hover:not(:disabled){border-color:#fff}.a.big{min-height:48px;padding:10px 18px;font-size:16px}
-.ibox input{font:inherit;padding:8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);text-align:center;letter-spacing:.2em;text-transform:uppercase;width:8em}
-header{flex-wrap:nowrap;align-items:flex-start}.ht{display:flex;gap:10px;align-items:center;min-width:0}.ht h1{font-size:clamp(18px,5vw,26px)}.ht p{margin:2px 0 0;font-size:13px}.logo{width:44px;height:44px;border-radius:10px;flex:none}
-.dd{position:relative;flex:none}.ddm{position:absolute;right:0;top:calc(100% + 6px);min-width:240px;z-index:20;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px;box-shadow:0 8px 24px #0004}.ddm[hidden]{display:none}
-.ddm button{display:block;width:100%;text-align:left;font:inherit;padding:9px 10px;border:0;border-radius:6px;background:none;color:var(--ink);cursor:pointer}.ddm button:hover{background:var(--bg)}.ddm hr{border:0;border-top:1px solid var(--line);margin:6px 0}.dl{padding:4px 10px;color:var(--mut);font-size:12px}
-
-.tbl{position:relative;border-radius:16px;overflow:hidden;border:1px solid #c9a24f66;padding:12px;display:grid;grid-template-columns:minmax(0,1fr);gap:12px;--bg:#0f1a2e;--panel:#0f182a;--ink:#f3e8c8;--mut:#aab4c8;--line:#34476a;color:#f6e7c1;background:radial-gradient(90% 70% at 0% 0%,#f08a3caa,transparent 55%),radial-gradient(70% 60% at 100% 0%,#e0703a77,transparent 55%),linear-gradient(#162d5c,#0c2147 55%,#091a3a)}
-.tt{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
-.ttl{font-family:Georgia,serif;text-align:center;line-height:1}.ttl b{display:block;font-size:clamp(26px,3.5vw,42px);color:#ffd566;text-shadow:0 0 18px #ffb43899,0 2px 0 #7a4a08}.ttl span{display:block;font-size:clamp(15px,2vw,24px);color:#ffe3a0;text-shadow:0 0 12px #ffb43877}.ttl i{display:block;height:2px;margin:6px auto;width:90%;background:linear-gradient(90deg,transparent,#ffd566,transparent)}
-.phases{display:flex;gap:6px;overflow-x:auto;max-width:100%;padding:2px}
-.ph{flex:none;width:96px;border:1px solid #c9a24f;border-radius:8px;background:#0e1a30ee;text-align:center;padding:6px 4px;font:600 11px Georgia,serif;color:#ffe3a0;display:grid;gap:2px;align-content:start}.ph.cur{box-shadow:0 0 0 2px #ffd566,0 0 14px #ffb438aa}
-.ph svg{width:46px;height:62px;display:block;margin:0 auto}.dots{display:flex;gap:3px;justify-content:center;min-height:11px}.dots u{width:10px;height:10px;border-radius:50%;border:1px solid #000b}
-.tm{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:12px;align-items:start}
-.targ{border:1px solid #c9a24f;border-radius:12px;background:#0f182acc;padding:8px;display:grid;gap:8px}.targ h3{margin:0;text-align:center;font:700 18px Georgia,serif;color:#ffe3a0;letter-spacing:.12em}
-.slots{display:grid;gap:8px}.slot{min-height:68px;border:1px solid #c9a24f88;border-radius:8px;background:#1b2436;color:#ffe9b8;font:inherit;padding:6px 8px;text-align:center;display:grid;gap:2px;align-content:center}.slot b{font:700 13px Georgia,serif}.slot span{font-size:12px;opacity:.85}
-.slot.p3{background:linear-gradient(#4a3a12,#2a2210);border-color:#ffd566}.slot.p2{background:linear-gradient(#34384a,#1f2230);border-color:#cfd6e6}.slot.p0{opacity:.9}
-.slot.empty{display:grid;place-items:center;opacity:.5;cursor:default}.slot svg{width:28px;height:28px}
+.menuBox{max-height:calc(100dvh - 24px);overflow:auto;position:absolute;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(92%,360px);background:linear-gradient(180deg,#0E1E3Dcc,#071226e6);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid #C9A24F88;border-radius:14px;padding:14px;text-align:center;color:#fff;box-shadow:0 20px 50px #000a,inset 0 1px 0 #ffffff1a;animation:rise .5s var(--ease)}
+.menuBox::before{content:"";position:absolute;left:18px;right:18px;top:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent)}
+.menuBox [hidden]{display:none}.menuBox p{margin:0 0 10px;color:var(--gold2);font:600 12px var(--fb);letter-spacing:.12em;text-transform:uppercase}
+.mainMenu,#m2 .start,#m3 .start,#m4 .start,#m5 .start{display:flex;flex-direction:column;gap:8px}.menuBox .a.big{width:100%}.ver{position:absolute;left:14px;bottom:max(12px,env(safe-area-inset-bottom));color:var(--gold2);opacity:.8;font:600 12px var(--fb);letter-spacing:.12em;text-transform:uppercase;text-shadow:0 1px 3px #000}.menuBox .start{justify-content:center;margin-top:8px}
+.menuBox .a{background:#ffffff10;color:#F5E6CA;border-color:#C9A24F55}
+.menuBox .a:hover:not(:disabled){border-color:var(--gold2);background:#C9A24F22;color:#fff}.a.big{min-height:48px;padding:10px 18px;font-size:15px}
+.ibox input{font:600 22px var(--fh);padding:8px;border:1px solid var(--gold);border-radius:8px;background:#071226;color:var(--gold2);text-align:center;letter-spacing:.3em;text-transform:uppercase;width:7.5em;transition:border-color .2s ease,box-shadow .2s ease}.ibox input:focus{outline:none;border-color:var(--gold2);box-shadow:0 0 0 3px #C9A24F44}
+header{flex-wrap:nowrap;align-items:center}.ht{display:flex;gap:12px;align-items:center;min-width:0}.ht h1{font-size:clamp(18px,5vw,26px)}.ht p{margin:2px 0 0;font-size:13px}.logo{width:44px;height:44px;border-radius:10px;flex:none;border:1px solid var(--gold);box-shadow:0 0 14px #C9A24F55}
+.hname{font:700 20px/1 var(--fh);color:var(--gold2);letter-spacing:.04em}.hname small{display:block;font:600 11px var(--fb);color:var(--mut);letter-spacing:.14em;text-transform:uppercase;margin-top:3px}
+.dd{position:relative;flex:none}.ddm{position:absolute;right:0;top:calc(100% + 6px);min-width:240px;z-index:20;background:#0B1933;border:1px solid var(--gold);border-radius:10px;padding:6px;box-shadow:0 12px 30px #000a;animation:pop .16s var(--ease)}.ddm[hidden]{display:none}
+.ddm button{display:block;width:100%;text-align:left;font:inherit;padding:9px 10px;border:0;border-radius:6px;background:none;color:var(--ink);cursor:pointer;transition:background .15s ease,color .15s ease}.ddm button:hover{background:#C9A24F22;color:#fff}.ddm hr{border:0;border-top:1px solid var(--line);margin:6px 0}.dl{padding:4px 10px;color:var(--gold);font:600 11px var(--fb);letter-spacing:.12em;text-transform:uppercase}
+.tbl{position:relative;border-radius:16px;overflow:hidden;border:1px solid #C9A24F88;padding:14px;display:grid;grid-template-columns:minmax(0,1fr);gap:14px;color:#F5E6CA;background:radial-gradient(90% 70% at 0% 0%,#C9A24F2e,transparent 55%),radial-gradient(70% 60% at 100% 0%,#3A86FF1a,transparent 55%),linear-gradient(#11264d,#0B1933 55%,#071226);box-shadow:0 20px 50px #0209,inset 0 1px 0 #ffffff12}
+.tt{display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.ttl{font-family:var(--fh);text-align:center;line-height:1;padding:6px 10px;align-self:center}.ttl b{display:block;font-size:clamp(28px,3.6vw,46px);letter-spacing:.06em;text-transform:uppercase;background:linear-gradient(180deg,#FFF1C2,#E2B755 55%,#A87D2A);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 8px #D4AF3755)}.ttl span{display:block;font:600 clamp(11px,1.2vw,14px) var(--fb);letter-spacing:.32em;text-transform:uppercase;color:var(--gold2)}.ttl i{display:block;height:1px;margin:8px auto;width:90%;background:linear-gradient(90deg,transparent,var(--gold2),transparent)}
+.ph{flex:none;width:96px;border:1px solid var(--gold);border-radius:8px;background:#0B1933ee;text-align:center;padding:6px 4px;font:600 11px var(--fh);color:#ffe3a0;display:grid;gap:2px;align-content:start}
+.tm{display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:14px;align-items:start}
+.targ{border:1px solid #C9A24F99;border-radius:12px;background:linear-gradient(180deg,#0E1E3D,#0B1933);padding:10px;display:grid;gap:8px;box-shadow:inset 0 0 12px #A8813219}.targ h3{margin:0 0 2px;text-align:center;font:700 13px var(--fb);color:var(--gold2);letter-spacing:.18em;text-transform:uppercase}
+.slots{display:grid;gap:8px}.slot{min-height:68px;border:1px solid #33538A;border-radius:8px;background:#14294F;color:#E2E8F0;font:inherit;padding:8px;text-align:center;display:grid;gap:3px;align-content:center;position:relative;overflow:hidden;transition:transform .2s var(--ease),box-shadow .2s ease;animation:rise .35s var(--ease) both}.slot:hover{transform:translateY(-2px);box-shadow:0 8px 18px #0008}.slot b{font:700 13px/1.2 var(--fh)}.slot span{font-size:11px;letter-spacing:.06em;opacity:.85;text-transform:uppercase}
+.slot.p3{background:linear-gradient(160deg,#3a2c0c,#2A200B);border-color:#FFE08A;color:#FFE8A3;box-shadow:inset 0 0 14px #D4AF3733}.slot.p3::after{content:"";position:absolute;inset:-40% auto -40% -60%;width:40%;background:linear-gradient(100deg,transparent,#ffffff22,transparent);transform:rotate(12deg);animation:sheen 4s ease-in-out infinite}
+@keyframes sheen{0%,60%{left:-60%}100%{left:140%}}
+.slot.p2{background:linear-gradient(160deg,#243048,#192233);border-color:#CBD5E1;color:#E2E8F0}.slot.p1{border-color:#B87333;background:linear-gradient(160deg,#2a1c12,#1b1510);color:#F3D9C0}.slot.p0{opacity:.92;border-style:dashed;border-color:#3EB98599;background:#0f2430}
+.slot.empty{display:grid;place-items:center;opacity:.45;cursor:default;border-style:dashed}.slot svg{width:28px;height:28px}
 @media(max-width:900px){.tm{grid-template-columns:1fr}.slots{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}}
-.c.x .h2{background:repeating-linear-gradient(45deg,#26385e 0 6px,#2f4670 6px 12px)}.c.x .zn{bottom:auto;top:50%;transform:translateY(-50%);font-size:max(10px,2.6cqw);color:#dfe8ff;opacity:.95}.legend b.bk{background:repeating-linear-gradient(45deg,#26385e 0 4px,#2f4670 4px 8px)}
-.c .zn{position:absolute;left:0;right:0;bottom:12%;text-align:center;font:700 max(8px,1.8cqw) Georgia,serif;color:#1d2a33;opacity:.8;pointer-events:none}.c.occ .zn{display:none}
-
-.tt{align-items:stretch}.trk{min-width:0;display:grid;align-content:start;overflow-x:auto;border:1px solid #c9a24f88;border-radius:10px;background:#0b1424e6;padding:6px 4px 4px}
-.tf{display:grid;place-items:center;padding:4px 2px;border-left:1px solid #c9a24f66}.tf:first-child{border-left:0}
-.tf img{width:min(84px,100%);aspect-ratio:1;border-radius:50%;object-fit:cover;border:2px solid #c9a24f;box-shadow:0 0 12px #ffb43866;background:#000}
-.tl{text-align:center;font:600 11px Georgia,serif;color:#ffe3a0;padding:3px 2px;border-left:1px solid #c9a24f66}.tl b{display:block;color:#ffd566}
-.tn{text-align:center;font:600 10px Arial,sans-serif;color:#cdbb8a;border-left:1px solid #c9a24f2a;padding:3px 0}.tn.st{background:#c9a24f40;color:#fff;border-left:1px solid #c9a24f99}.tn.en{background:#7a1f1f99;color:#fff}
+.c.x .h2{background:repeating-linear-gradient(45deg,#13213B 0 6px,#1b2d50 6px 12px)}.c.x .zn{bottom:auto;top:50%;transform:translateY(-50%);font-size:max(10px,2.6cqw);color:#E5D1AC;opacity:.9}.legend b.bk{background:repeating-linear-gradient(45deg,#13213B 0 4px,#2a426e 4px 8px)}
+.c .zn{position:absolute;left:0;right:0;bottom:12%;text-align:center;font:700 max(8px,1.8cqw) var(--fh);color:#1A1202;opacity:.75;pointer-events:none}.c.occ .zn{display:none}.c.w .zn,.c.s .zn{color:#fff}
+.tt{align-items:stretch}.trk{min-width:0;display:grid;align-content:start;overflow-x:auto;border:1px solid #C9A24F88;border-radius:12px;background:linear-gradient(180deg,#0B1933f2,#071226f2);padding:8px 6px 6px}
+.tf{display:grid;place-items:center;padding:4px 2px;border-left:1px solid #C9A24F44}.tf:first-child{border-left:0}
+.tf img{width:min(84px,100%);aspect-ratio:1;border-radius:50%;object-fit:cover;border:2px solid var(--gold);box-shadow:0 0 12px #C9A24F66;background:#0c1c38;transition:transform .25s var(--ease),box-shadow .25s ease}.tf img:hover{transform:scale(1.06);box-shadow:0 0 20px #D4AF37aa}
+.tl{text-align:center;font:500 11px var(--fh);font-style:italic;color:#E5D1AC;padding:4px 2px;border-left:1px solid #C9A24F44}.tl b{display:block;color:var(--gold2);font:700 10px var(--fb);font-style:normal;letter-spacing:.14em;text-transform:uppercase}
+.tn{text-align:center;font:600 10px var(--fb);font-variant-numeric:tabular-nums;color:#B8A383;border-left:1px solid #C9A24F22;padding:3px 0}.tn.st{background:#C9A24F33;color:#fff;border-left:1px solid #C9A24F99}.tn.en{background:#7a1f1f99;color:#fff}
 .tk{grid-column:1/-1;position:relative;margin-top:4px}
-.tok{position:absolute;width:18px;height:18px;border-radius:50%;border:2px solid #fff;transform:translateX(-50%);transition:left .7s ease;font:700 9px/14px Arial,sans-serif;color:#111;text-align:center;box-shadow:0 1px 4px #000a}.tok.cur{box-shadow:0 0 0 2px #ffd566,0 0 10px #ffd566}
+.tok{position:absolute;width:20px;height:20px;border-radius:50%;border:2px solid #FFF6DC;transform:translateX(-50%);transition:left .7s var(--ease);font:700 9px/16px var(--fb);color:#111;text-align:center;box-shadow:0 2px 6px #000a}.tok.cur{animation:glow 1.8s ease-in-out infinite}
 :root{-webkit-text-size-adjust:100%}html,body{max-width:100%;overflow-x:hidden}
 .wrap{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
-@media (min-aspect-ratio:17/10) and (max-height:600px){.cover{background:#0d1a2b url(cover.webp) left center/auto 100% no-repeat}#intro .menuBox{left:auto;right:max(12px,env(safe-area-inset-right));top:50%;bottom:auto;transform:translateY(-50%);width:clamp(220px,calc(100vw - 100dvh*1.4 - 24px),320px)}#intro .cover::after{display:none}.ver{left:max(12px,env(safe-area-inset-left))}}
-.tt{min-width:0}#side.panel{flex:1 1 440px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;background:#0f182acc;border-color:#c9a24f88;color:#f3e8c8}
-.sa,.sb{display:grid;gap:10px;align-content:start;min-width:0}.tbl .ddl{background:#0f182a;border-color:#c9a24f88}
-.manual{max-width:720px;max-height:92vh;overflow:auto;text-align:left;padding:0}.mh{display:flex;justify-content:space-between;align-items:center;gap:8px;position:sticky;top:0;z-index:2;background:var(--panel);padding:12px 16px;border-bottom:1px solid var(--line)}.mh h2{margin:0;font:700 20px Georgia,serif}
-.mb{padding:6px 16px 16px;font-size:14px}.mb details{border-bottom:1px solid var(--line);padding:8px 0}.mb p,.mb li{margin:6px 0;color:var(--ink)}.mb ul{padding-left:18px;margin:6px 0}.mb table{width:100%;border-collapse:collapse;margin:6px 0}.mb th,.mb td{text-align:left;padding:4px 6px;border-bottom:1px solid var(--line);vertical-align:top}.mb th{color:var(--mut);font-weight:600}.menu{display:flex;gap:6px}.lake{fill:#7fb3d1;stroke:#4d86a8;stroke-width:.4;opacity:.92}.mt{fill:#6e665a;stroke:#3d382f;stroke-width:.3;opacity:.85}.snow{fill:#fff}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .lake{fill:#245f80;stroke:#3a86ad}}
+@media (min-aspect-ratio:17/10) and (max-height:600px){.cover{background:#071226 url(cover.webp) left center/auto 100% no-repeat}#intro .menuBox{left:auto;right:max(12px,env(safe-area-inset-right));top:50%;bottom:auto;transform:translateY(-50%);width:clamp(220px,calc(100vw - 100dvh*1.49 - 24px),320px)}#intro .cover::after{display:none}.ver{left:max(12px,env(safe-area-inset-left))}}
+.tt{min-width:0}#side.panel{flex:1 1 440px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.sa,.sb{display:grid;gap:10px;align-content:start;min-width:0}
+.manual{max-width:720px;max-height:92vh;overflow:auto;text-align:left;padding:0}.mh{display:flex;justify-content:space-between;align-items:center;gap:8px;position:sticky;top:0;z-index:2;background:#0B1933f2;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);padding:12px 16px;border-bottom:1px solid #C9A24F66}.mh h2{margin:0;font:700 22px var(--fh);color:var(--gold2)}
+.mb{padding:6px 16px 16px;font-size:14px}.mb details{border-bottom:1px solid var(--line);padding:10px 0}.mb summary{font:600 16px var(--fh);color:var(--gold2)}.mb p,.mb li{margin:6px 0;color:var(--ink)}.mb ul{padding-left:18px;margin:6px 0}.mb table{width:100%;border-collapse:collapse;margin:6px 0}.mb th,.mb td{text-align:left;padding:5px 6px;border-bottom:1px solid var(--line);vertical-align:top}.mb th{color:var(--gold);font:600 11px var(--fb);letter-spacing:.1em;text-transform:uppercase}.menu{display:flex;gap:6px}.lake{fill:#3d7fb0;stroke:#9fdcf5;stroke-width:.3;opacity:.9}.mt{fill:#5a5348;stroke:#2d2922;stroke-width:.3;opacity:.9}.snow{fill:#FFF6DC}
 .c svg{display:block}
-.c{position:absolute;width:6.0606%;height:8.1634%;border:0;background:none;cursor:pointer;color:#10181d;font:600 11px system-ui;padding:0;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
-.c.f .h2{background:#f2d94e}.c.w .h2{background:#63b95a}.c.s .h2{background:#cfc7b4}
-.c.R .h{background:#e0a82e}.c.N .h{background:#c4793b}.c.Z .h{background:#3fa38a}.c.E .h{background:#8e63c9}.c.S .h{background:#3f7fc4}
-.c.ok{z-index:2}.c.ok .h{background:var(--hot);inset:0}.c.ok .h2,.c.sel .h2{inset:15%}
-.c.sel{z-index:2}.c.sel .h{background:#000;inset:0}
+.c{position:absolute;width:6.0606%;height:8.1634%;border:0;background:none;cursor:pointer;color:#1A1202;font:600 11px var(--fb);padding:0;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);transition:transform .15s ease,filter .15s ease}
+.c:hover{transform:scale(1.07);filter:brightness(1.18);z-index:4}
+.c.f .h2{background:radial-gradient(circle at 40% 30%,#E8C878,#C99B45)}.c.w .h2{background:radial-gradient(circle at 40% 30%,#4E8F5A,#2E5C38)}.c.s .h2{background:radial-gradient(circle at 40% 30%,#8A93A3,#5A6272)}.c.w,.c.s{color:#F0FAF2}
+.c.R .h{background:#E2B755}.c.S .h{background:#4C9AFF}.c.Z .h{background:#2EC4B6}.c.N .h{background:#F08A3C}.c.E .h{background:#B07CFF}
+.c.ok{z-index:2}.c.ok .h{background:#FFE08A;inset:0;animation:breathe 1.2s ease-in-out infinite}.c.ok .h2,.c.sel .h2{inset:15%}
+.c.sel{z-index:2}.c.sel .h{background:#fff;inset:0}
 .c:focus-visible{outline:none}.c:focus-visible .h{background:#fff;inset:0}
 .c i{position:absolute;left:50%;top:14%;transform:translateX(-50%);font-style:normal;opacity:.7;width:34%}.c i svg{width:100%;height:auto}
-.band{position:absolute;left:50%;top:50%;transform:translate(-50%,-28%);width:46%;aspect-ratio:1/1;border-radius:50%;display:grid;place-items:center;color:#111;font-weight:700;font-size:max(9px,2.1cqw);border:2px solid #0006}
-.legend{display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--mut);font-size:13px;margin-top:8px}
-.legend b{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:4px}
-.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:12px;align-content:start}
-.panel h2{font:700 17px Georgia,serif;margin:0}
-.res{display:flex;gap:4px 10px;flex-wrap:wrap;align-items:baseline;font-size:14px}.res span{font-weight:600}.res em{font-style:normal;color:var(--mut)}
-.gen{display:grid;gap:4px}.gp{display:grid;grid-template-columns:10px 82px 54px 1fr 50px;align-items:center;gap:6px;font-size:13px;padding:3px 4px;border-radius:6px}.gp.cur{background:var(--bg)}.dot{width:10px;height:10px;border-radius:50%}
-.gb{position:relative;height:8px;border-radius:4px;background:var(--line)}.gb i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}.gb u{position:absolute;top:-2px;bottom:-2px;width:1px;background:var(--mut);opacity:.7}.gv{text-align:right;font-weight:600}
+.band{position:absolute;left:50%;top:50%;transform:translate(-50%,-28%);width:46%;aspect-ratio:1/1;border-radius:50%;display:grid;place-items:center;color:#111;font-weight:800;font-size:max(9px,2.1cqw);border:2px solid #FFF6DC;box-shadow:0 2px 4px #000a}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;color:var(--mut);font-size:13px;margin-top:10px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:#0B1933aa}
+.legend b{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:5px}
+.panel{background:radial-gradient(circle at 50% 0%,#152A52 0%,#0B1933 100%);border:1px solid #A88132;border-radius:12px;padding:14px;display:grid;gap:12px;align-content:start;box-shadow:0 10px 30px #020814b3,inset 0 1px 1px #ffffff1a}
+.panel h2{font:700 19px var(--fh);margin:0;color:#FAF1E4;letter-spacing:.02em}
+.res{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:14px}.res span{font-weight:600;padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:#071226;font-variant-numeric:tabular-nums}.res em{font-style:normal;color:var(--gold);font:600 11px var(--fb);letter-spacing:.12em;text-transform:uppercase;width:100%}
+.res .rf{border-color:#C99B45}.res .rw{border-color:#4E8F5A}.res .rs{border-color:#8A93A3}
 .r4{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.act{position:static}.r4{position:relative}.act summary{list-style:none}.act summary::-webkit-details-marker{display:none}
-.sm{font:inherit;padding:8px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);min-height:40px;display:inline-flex;align-items:center;cursor:pointer}.sm.off{opacity:.4;cursor:default}
-.ddl{position:absolute;left:0;top:calc(100% + 4px);right:0;min-width:0;max-width:none;z-index:15;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px;box-shadow:0 8px 24px #0004}
-.it{display:block;width:100%;text-align:left;font:inherit;padding:9px 10px;border:0;border-radius:6px;background:none;color:var(--ink);cursor:pointer}.it:hover:not(:disabled){background:var(--bg)}.it:disabled{opacity:.4;cursor:default}
-.sub1>span{display:block;padding:9px 10px;border-radius:6px;cursor:pointer}.sub1:hover>span,.sub1.open>span{background:var(--bg)}.subm{display:none;padding:2px 0 4px 10px}.sub1:hover>.subm,.sub1.open>.subm,.sub1:focus-within>.subm{display:block}
-.svinfo{font-size:12px;opacity:.85;margin-top:8px;color:#fff}.menuBox .a:disabled{opacity:.45}
+.sm{font:inherit;padding:8px 14px;border-radius:6px;border:1px solid #33538A;background:#102347;color:#EAD8B8;min-height:40px;display:inline-flex;align-items:center;cursor:pointer;font-weight:600;transition:background .2s ease,border-color .2s ease}.sm:hover{border-color:var(--gold);background:#183363}.sm.off{opacity:.4;cursor:default}
+.ddl{position:absolute;left:0;top:calc(100% + 4px);right:0;min-width:0;max-width:none;z-index:15;background:#0B1933;border:1px solid var(--gold);border-radius:10px;padding:6px;box-shadow:0 12px 30px #000a;animation:pop .16s var(--ease)}
+.it{display:block;width:100%;text-align:left;font:inherit;padding:9px 10px;border:0;border-radius:6px;background:none;color:var(--ink);cursor:pointer;transition:background .15s ease}.it:hover:not(:disabled){background:#C9A24F22}.it:disabled{opacity:.4;cursor:default}
+.sub1>span{display:block;padding:9px 10px;border-radius:6px;cursor:pointer}.sub1:hover>span,.sub1.open>span{background:#C9A24F22}.subm{display:none;padding:2px 0 4px 10px;border-left:1px solid #C9A24F55;margin-left:10px}.sub1:hover>.subm,.sub1.open>.subm,.sub1:focus-within>.subm{display:block}
+.svinfo{font-size:12px;opacity:.85;margin-top:10px;color:#E5D1AC}.menuBox .a:disabled{opacity:.45}
 .btns{display:flex;flex-wrap:wrap;gap:6px}
-button.a{font:inherit;padding:8px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;min-height:40px}
-button.a:hover:not(:disabled){border-color:var(--ink)}button.a:disabled{opacity:.4;cursor:default}
-button.main{background:var(--ink);color:var(--bg)}
+button.a{font:600 14px var(--fb);letter-spacing:.02em;padding:9px 16px;border-radius:6px;border:1px solid #33538A;background:#102347;color:#EAD8B8;cursor:pointer;min-height:40px;transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s var(--ease),box-shadow .2s ease}
+button.a:hover:not(:disabled){background:#183363;border-color:var(--gold);color:#fff}button.a:active:not(:disabled){transform:translateY(1px)}button.a:disabled{opacity:.4;cursor:default}
+button.a.main,.menuBox .a.main{background:linear-gradient(180deg,#DDB65D 0%,#A87D2A 100%);color:#0C1A30;border:1px solid #FFE08A;font-weight:700;text-transform:uppercase;letter-spacing:.08em;box-shadow:0 4px 14px #D4AF3740,inset 0 1px 0 #ffffff66}
+button.a.main:hover:not(:disabled),.menuBox .a.main:hover:not(:disabled){background:linear-gradient(180deg,#EAC878 0%,#BA8E35 100%);color:#0C1A30;transform:translateY(-2px);box-shadow:0 6px 20px #D4AF3766,inset 0 1px 0 #ffffff99}
 .era{display:flex;gap:3px}.era div{flex:1;height:8px;border-radius:4px;background:var(--line)}.era .on{background:var(--hot)}
 .pl{display:grid;gap:4px;font-size:14px}.pl div{display:flex;justify-content:space-between;gap:8px;padding:4px 8px;border-radius:6px;border-left:6px solid}
-.pl .cur{background:var(--bg)}
-#log{max-height:150px;overflow:auto;font-size:13px;color:var(--mut);display:grid;gap:3px}
-#log p{margin:0}#log p:first-child{color:var(--ink)}
+.pl .cur{background:#C9A24F1a}
+#log{max-height:170px;overflow:auto;font-size:13px;color:var(--mut);display:grid;gap:4px;padding:10px;border:1px solid var(--line);border-radius:10px;background:#071226aa}
+#log p{margin:0;padding-left:10px;border-left:2px solid #213D6E}#log p:first-child{color:var(--ink);border-left-color:var(--gold);animation:rise .3s var(--ease)}
 details{font-size:14px}summary{cursor:pointer;font-weight:600}details ul{padding-left:18px;margin:8px 0 0}
-.card{border:1px dashed var(--line);border-radius:8px;padding:8px;font-size:14px}
+.card{border:1px dashed #33538A;border-radius:8px;padding:8px 10px;font-size:14px;background:#071226aa}
 .start{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-@media(prefers-reduced-motion:no-preference){.c{transition:outline-color .1s}}
+.code{font:700 40px var(--fh);letter-spacing:.3em;color:var(--gold2);text-shadow:0 0 18px #D4AF3766;margin:4px 0 8px}
+.plist{display:grid;gap:6px;margin:10px 18px;text-align:left}.plist div{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#071226}.plist i{width:12px;height:12px;border-radius:50%;flex:none;border:2px solid #FFF6DC}.plist em{margin-left:auto;font-style:normal;font-size:12px;color:var(--mut)}.plist em.on{color:var(--ok)}
+.dotl{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok)}.dotl.off{background:#6b7280;box-shadow:none}
+.vol{padding:8px 10px 10px}.volh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}.volh span{color:var(--gold);font:600 11px var(--fb);letter-spacing:.12em;text-transform:uppercase}.volh b{font:600 12px var(--fb);color:var(--ink);font-variant-numeric:tabular-nums}
+.volc{display:flex;align-items:center;gap:8px}.volc button{width:36px!important;height:36px;flex:none;display:grid!important;place-items:center;padding:0!important;border:1px solid #33538A!important;background:#102347!important;border-radius:8px!important;font-size:16px;transition:border-color .15s ease,background .15s ease}.volc button:hover{border-color:var(--gold)!important;background:#183363!important}
+.vol input[type=range]{-webkit-appearance:none;appearance:none;flex:1;min-width:0;height:6px;border-radius:999px;background:linear-gradient(90deg,#C9A24F 0,#FFE08A var(--p,70%),#213D6E var(--p,70%));cursor:pointer;outline:none}
+.vol input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:linear-gradient(180deg,#FFF1C2,#C9A24F);border:2px solid #0B1933;box-shadow:0 0 0 1px #FFE08A,0 2px 6px #000a;transition:transform .15s ease}
+.vol input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:linear-gradient(180deg,#FFF1C2,#C9A24F);border:2px solid #0B1933;box-shadow:0 0 0 1px #FFE08A}
+.vol input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}.vol input[type=range]:focus-visible{box-shadow:0 0 0 3px #C9A24F55}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style></head><body>
-<div id="intro" role="dialog" aria-modal="true" aria-labelledby="it"><div class="cover"><h1 id="it" class="sr">Civitas – Anthropogenesis</h1><div class="ver" id="ver"></div>
-<div class="menuBox"><div id="m1" class="mainMenu"><button class="a main big" onclick="showMode()">Gra na tym urządzeniu</button><button class="a main big" id="ld" onclick="loadGame()">Wczytaj grę</button><button class="a main big" onclick="openLobby()">Gra online</button><button class="a big" onclick="openMan()">Instrukcja</button><button class="a big" onclick="exitGame()">Wyjście z gry</button></div><div id="svinfo" class="svinfo"></div>
-<div id="m2" hidden><p>Gra na tym urządzeniu</p><div class="start"><button class="a main big" onclick="showM('m4')">Gra z komputerem</button><button class="a main big" onclick="showPlayers()">Gra wieloosobowa</button></div><div class="start"><button class="a" onclick="showMain()">Wróć</button></div></div><div id="m4" hidden><p>Poziom trudności komputera</p><div class="start"><button class="a main big" onclick="pickLevel('easy')">Łatwy</button><button class="a main big" onclick="pickLevel('med')">Średni</button><button class="a main big" onclick="pickLevel('hard')">Trudny</button></div><div class="start"><button class="a" onclick="showMode()">Wróć</button></div></div><div id="m5" hidden><p>Ilu przeciwników?</p><div class="start"><button class="a main big" onclick="startAI(1)">1 przeciwnik</button><button class="a main big" onclick="startAI(2)">2 przeciwników</button><button class="a main big" onclick="startAI(3)">3 przeciwników</button></div><div class="start"><button class="a" onclick="showM('m4')">Wróć</button></div></div><div id="m3" hidden><p>Gra wieloosobowa na jednym ekranie. Ilu graczy?</p><div class="start"><button class="a main big" onclick="startLocal(2)">2 graczy</button><button class="a main big" onclick="startLocal(3)">3 graczy</button><button class="a main big" onclick="startLocal(4)">4 graczy</button></div><div class="start"><button class="a" onclick="showMode()">Wróć</button></div></div></div></div></div>
+<div id="intro" role="dialog" aria-modal="true" aria-labelledby="it"><div class="cover"><h1 id="it" class="sr">Civitas – Anthropogenesis</h1><div class="ver" id="ver" data-testid="version-label"></div>
+<div class="menuBox"><div id="m1" class="mainMenu"><button class="a main big" data-testid="menu-local-btn" onclick="showMode()">Gra na tym urządzeniu</button><button class="a main big" id="ld" data-testid="menu-load-btn" onclick="loadGame()">Wczytaj grę</button><button class="a main big" data-testid="menu-online-btn" onclick="openLobby()">Gra online</button><button class="a big" data-testid="menu-manual-btn" onclick="openMan()">Instrukcja</button><button class="a big" data-testid="menu-exit-btn" onclick="exitGame()">Wyjście z gry</button></div><div id="svinfo" class="svinfo" data-testid="save-info"></div>
+<div id="m2" hidden><p>Gra na tym urządzeniu</p><div class="start"><button class="a main big" data-testid="menu-vs-ai-btn" onclick="showM('m4')">Gra z komputerem</button><button class="a main big" data-testid="menu-hotseat-btn" onclick="showPlayers()">Gra wieloosobowa</button></div><div class="start"><button class="a" onclick="showMain()">Wróć</button></div></div><div id="m4" hidden><p>Poziom trudności komputera</p><div class="start"><button class="a main big" data-testid="menu-level-easy-btn" onclick="pickLevel('easy')">Łatwy</button><button class="a main big" data-testid="menu-level-med-btn" onclick="pickLevel('med')">Średni</button><button class="a main big" data-testid="menu-level-hard-btn" onclick="pickLevel('hard')">Trudny</button></div><div class="start"><button class="a" onclick="showMode()">Wróć</button></div></div><div id="m5" hidden><p>Ilu przeciwników?</p><div class="start"><button class="a main big" data-testid="menu-ai-count-1-btn" onclick="startAI(1)">1 przeciwnik</button><button class="a main big" data-testid="menu-ai-count-2-btn" onclick="startAI(2)">2 przeciwników</button><button class="a main big" data-testid="menu-ai-count-3-btn" onclick="startAI(3)">3 przeciwników</button></div><div class="start"><button class="a" onclick="showM('m4')">Wróć</button></div></div><div id="m3" hidden><p>Gra wieloosobowa na jednym ekranie. Ilu graczy?</p><div class="start"><button class="a main big" data-testid="menu-players-2-btn" onclick="startLocal(2)">2 graczy</button><button class="a main big" data-testid="menu-players-3-btn" onclick="startLocal(3)">3 graczy</button><button class="a main big" data-testid="menu-players-4-btn" onclick="startLocal(4)">4 graczy</button></div><div class="start"><button class="a" onclick="showMode()">Wróć</button></div></div></div></div></div>
 <div id="lobby" hidden role="dialog" aria-modal="true" aria-label="Gra online"><div class="ibox" id="lbox" style="padding:16px"></div></div>
 <div id="fight" hidden role="dialog" aria-modal="true" aria-label="Starcie"><div class="ibox" id="fbox" style="padding:16px"></div></div>
 <div id="notes" hidden role="dialog" aria-modal="true" aria-labelledby="nt"><div class="ibox manual"><div class="mh"><h2 id="nt">Notatki projektowe</h2><button class="a" onclick="document.getElementById('notes').hidden=true">Zamknij ✕</button></div><div class="mb"><ul>
@@ -129,33 +150,32 @@ details{font-size:14px}summary{cursor:pointer;font-weight:600}details ul{padding
 <li><b>Tempo:</b> pierwsza partia testowa (próg 25 pkt) trwała 23 tury, cel to 15–18 tur. Tor 40 pkt: symulacja daje ok. 22 tur bez uwzględnienia ruchu (parametr TRACK w kodzie).</li>
 <li><b>Do rozważenia:</b> 5 graczy, karty migracji, wydarzenia klimatyczne, rezerwa prowincji.</li>
 </ul></div></div></div>
-<div id="man" hidden role="dialog" aria-modal="true" aria-labelledby="mt"><div class="ibox manual"><div class="mh"><h2 id="mt">Instrukcja gry</h2><button class="a" onclick="document.getElementById('man').hidden=true">Zamknij ✕</button></div><div class="mb">
+<div id="man" hidden role="dialog" aria-modal="true" aria-labelledby="mt"><div class="ibox manual"><div class="mh"><h2 id="mt">Instrukcja gry</h2><button class="a" data-testid="manual-close-btn" onclick="document.getElementById('man').hidden=true">Zamknij ✕</button></div><div class="mb">
 <details open><summary>1. Cel gry</summary><p>Prowadź swoje grupy hominidów z Serca Afryki ku kolejnym regionom kontynentu w dolnym paleolicie, ok. 3 mln–300 tys. lat temu. Rozwijaj cechy ciała (ewolucja), technologie (karty rozwoju) i zajmuj nowe tereny.</p><p>Gra kończy się, gdy ktoś na koniec swojej tury ma <b>40 pkt ewolucji</b> (koniec toru) albo w grze nie zostały żadne karty punktowane. Wygrywa gracz z największą liczbą <b>punktów końcowych</b> (p. 9).</p></details>
 <details><summary>2. Przygotowanie</summary><ul><li>Gra 2–4 osób. Każdy ma kolor i zaczyna z jedną grupą w Sercu Afryki oraz z 2 jedzenia, 1 drewna i 1 kamieniem.</li><li>Na planszy stoją 4 neutralne grupy parantropów (czarne kółka). Nie ruszają się, ale bronią swoich pól.</li><li>Talia cech: tyle zestawów po 50 kart, ilu graczy (minimum 2). Odkryte jest 5 kart rynku.</li><li>Gracze wykonują tury po kolei. Licznik pokazuje numer tury, która rośnie, gdy ruch wróci do pierwszego gracza.</li></ul></details>
 <details><summary>3. Plansza i regiony</summary><p>150 sześciokątnych pól w pięciu strefach (I–V). Kolor wypełnienia to teren, a kolor obramowania to strefa. Im wyższy numer, tym dalej od serca Afryki.</p><table><tr><th>Teren</th><th>Zbiór</th></tr><tr><td>Sawanna</td><td>2 jedzenia</td></tr><tr><td>Las</td><td>1 drewno + 1 jedzenie</td></tr><tr><td>Skały</td><td>1 kamień + 1 jedzenie</td></tr></table><table><tr><th>Strefa</th><th>Pól</th><th>Wejście od fazy</th></tr><tr><td>I – Serce Afryki</td><td>35</td><td>od początku</td></tr><tr><td>II</td><td>30</td><td>Faza II (5 pkt)</td></tr><tr><td>III</td><td>30</td><td>Faza III (12 pkt)</td></tr><tr><td>IV</td><td>28</td><td>Faza IV (20 pkt)</td></tr><tr><td>V</td><td>27</td><td>Faza V (30 pkt)</td></tr></table><p><b>Tor ewolucji</b> nad planszą ma 5 faz z wizerunkami hominidów (Homo habilis, ergaster, erectus, antecessor, sapiens). Znaczniki graczy pod torem przesuwają się na bieżąco po zdobyciu punktów ewolucji. Po najechaniu na znacznik widać też aktualny wynik końcowy.</p><p><b>Rewers:</b> pola stref II–V na początku leżą zakryte (widać tylko numer strefy). Teren pola odkrywa się, gdy pierwsza grupa na nie wejdzie, i od tej chwili widzą go wszyscy. Teren jest losowany w każdej grze, a pola startowe to sawanna.</p><p>Jeziora i góry na mapie to tylko dekoracja.</p></details>
-<details><summary>4. Przebieg tury</summary><p>W swojej turze masz <b>2 akcje</b> (dowolne, można powtarzać). Gdy je wykorzystasz albo wcześniej zechcesz, kliknij <b>Zakończ turę</b>. Nie ma limitu zasobów do przechowania.</p><p><b>Gra z komputerem:</b> na ekranie startowym wybierz „Gra na tym urządzeniu” → „Gra z komputerem”, poziom trudności (Łatwy, Średni, Trudny) i liczbę przeciwników (1–3). Ty grasz czerwonymi, a komputer wykonuje swoje tury automatycznie. Komputer jest oznaczony ikoną ⚙ na liście graczy.</p><p>Akcje wybierasz z listy „Akcje”: Zbieraj, Osiedl, Zakup z rynku cech i Zakup narzędzi (podglądy rozwijają się po najechaniu lub dotknięciu). Przyciski + i − nad planszą ją powiększają. Grę na jednym urządzeniu zapiszesz w Menu, a wczytasz na ekranie startowym.</p></details>
+<details><summary>4. Przebieg tury</summary><p>W swojej turze masz <b>2 akcje</b> (dowolne, można powtarzać). Gdy je wykorzystasz albo wcześniej zechcesz, kliknij <b>Zakończ turę</b>. Nie ma limitu zasobów do przechowania.</p><p><b>Gra z komputerem:</b> na ekranie startowym wybierz „Gra na tym urządzeniu” → „Gra z komputerem”, poziom trudności (Łatwy, Średni, Trudny) i liczbę przeciwników (1–3). Ty grasz czerwonymi, a komputer wykonuje swoje tury automatycznie. Komputer jest oznaczony ikoną ⚙ na liście graczy.</p><p>Akcje wybierasz z listy „Akcje”: Zbieraj, Osiedl, Zakup z rynku cech i Zakup narzędzi (podglądy rozwijają się po najechaniu lub dotknięciu). Przyciski + i − nad planszą ją powiększają. Grę na jednym urządzeniu zapiszesz w Menu, a wczytasz na ekranie startowym.</p><p><b>Dźwięki:</b> rzut kośćmi, odkrycie pola i zmiana tury mają własne dźwięki. Głośność ustawisz suwakiem w Menu → „Głośność” (przesunięcie do zera albo kliknięcie ikony głośnika wycisza dźwięki). Ustawienie zapamiętuje się na tym urządzeniu.</p></details>
 <details><summary>5. Akcje</summary><ul><li><b>Wędrówka:</b> kliknij swoją grupę, potem podświetlone sąsiednie pole (każde pole ma 6 sąsiadów). Ruch w obrębie regionu jest darmowy, wyprawa do innego regionu kosztuje 1 jedzenia. Przesuwasz jedną grupę (wejście na pole rewersem je odkrywa). Nie wejdziesz do regionu, którego fazy jeszcze nie osiągnąłeś. Wejście na zajęte pole to starcie (p. 8).</li><li><b>Zbieraj:</b> każda Twoja grupa zbiera zasoby ze swojego pola (p. 3). Poza Sercem Afryki każda grupa zbiera o 1 więcej surowca z pola.</li><li><b>Osiedl:</b> zaznacz grupę i zapłać 2 jedzenia (1 ze Schronieniem). Nowa grupa pojawia się na tym samym polu. Maksymalnie 8 grup.</li><li><b>Rozwój:</b> kup jedną kartę rozwoju (p. 7). Każdą można mieć tylko raz.</li><li><b>Ewolucja:</b> weź kartę z rynku cech (p. 6).</li></ul><p>Pierwsze wejście do każdego regionu poza Sercem Afryki daje <b>+1 pkt ewolucji</b>.</p></details>
 <details><summary>6. Ewolucja i rynek cech</summary><p>Rynek Cech (z prawej strony planszy) pokazuje dostępne cechy, a kupujesz je z listy akcji. Cecha punktowana (1–3 pkt) kosztuje <b>2 jedzenia</b> i zostaje u Ciebie. Suma punktów (tor ma 40 pkt, a faza V trwa od 30 pkt do końca toru) wyznacza Twoją fazę:</p><table><tr><th>Faza</th><th>Gatunek</th><th>Od punktów</th></tr><tr><td>I</td><td>Homo habilis</td><td>0</td></tr><tr><td>II</td><td>Homo ergaster</td><td>5</td></tr><tr><td>III</td><td>Homo erectus</td><td>12</td></tr><tr><td>IV</td><td>Homo antecessor</td><td>20</td></tr><tr><td>V</td><td>Homo sapiens</td><td>30</td></tr></table><p><b>Adaptacje</b> (0 pkt) bierzesz za darmo. Dostajesz +1 jedzenia i +1 drewna, a karta wraca do talii. To też akcja, więc możesz w ten sposób odświeżyć rynek. Gdy więcej niż 3 z 5 kart rynku to adaptacje, rynek jest tasowany od nowa.</p><p>Zestaw: 3 pkt – Myślenie abstrakcyjne, Inteligencja, Mowa i język, Zdolności manualne, Duży mózg; 2 pkt – Planowanie ×3, Postawa wyprostowana ×3, Płaska twarz ×2, Naga skóra ×2; 1 pkt – Dwunożność, Redukcja zębów, Wysunięty podbródek, Wysklepione stopy, Rozwój mózgowia (po ×3); 0 pkt – Bieganie, Skakanie, Chodzenie, Brak ogona, Budowa miednicy (po ×4).</p></details>
 <details><summary>7. Karty rozwoju</summary><table><tr><th>Karta</th><th>Koszt</th><th>Efekt</th></tr><tr><td>Ogień</td><td>2 drewna</td><td>wyprawy do innych regionów za darmo; w starciu −1 dla przeciwnika</td></tr><tr><td>Schronienie</td><td>2 drewna, 1 kamień</td><td>osiedlenie za 1 jedzenie; +1 w obronie</td></tr><tr><td>Narzędzia</td><td>2 kamienie</td><td>+1 drewna lub kamienia przy zbiorze; +1 w starciu</td></tr><tr><td>Polowanie</td><td>1 drewno, 1 kamień, 1 jedzenie</td><td>+1 jedzenia na sawannie; +1 w ataku</td></tr></table></details>
 <details><summary>8. Starcie</summary><p>Gdy wchodzisz na pole z cudzą lub neutralną grupą, otwiera się ekran starcia. Każda strona rzuca k6 i dodaje modyfikatory:</p><ul><li>numer fazy (era, od 0 do 4),</li><li>Narzędzia +1, Polowanie +1 w ataku, Schronienie +1 w obronie,</li><li>Ogień przeciwnika −1,</li><li>wsparcie: +1 za każdą dodatkową własną grupę w tym samym polu i za każde sąsiednie pole z własną grupą (maks. +2). Parantropy mają stałe +3.</li></ul><p>Wygrywa wyższy wynik, remis wygrywa obrońca. Przegrany traci jedną grupę. Jeśli po wygranej pole jest puste, napastnik wchodzi na nie. Jedzenie za wyprawę jest wydane niezależnie od wyniku.</p></details>
 <details><summary>9. Koniec gry i punktacja</summary><p>Gra kończy się na koniec tury gracza, który ma 25+ pkt ewolucji, albo gdy zabraknął kart punktowanych. Punkty końcowe:</p><ul><li>punkty ewolucji,</li><li>+2 za każdą kartę rozwoju,</li><li>+2 za każde pole poza Sercem Afryki, na którym masz grupę,</li><li>+1 za każdą swoją grupę.</li></ul><p>Gracz, który straci wszystkie grupy, odpada z gry.</p></details>
-<details><summary>10. Gra online</summary><ul><li>Jedna osoba wybiera na ekranie startowym „Gra online” → „Załóż pokój” i podaje pozostałym 5-znakowy kod.</li><li>Pozostali (do 3 osób) otwierają tę samą stronę i wybierają „Gra online” → wpisują kod → „Dołącz”. Gospodarz klika „Start”, gdy wszyscy są połączeni.</li><li>Przeglądarka gospodarza działa jak serwer, więc jego karta musi zostać otwarta przez całą grę. Gdy zamknie grę, kończy się ona dla wszystkich.</li><li>Rzuty kośćmi i tasowanie kart losuje gospodarz, a inni nie widzą kolejności talii. Każdy działa tylko w swojej turze. Gracz, który się rozłączy, nie może wrócić do tej partii, a jego tury są pomijane.</li><li>Do połączenia potrzebny jest internet. W niektórych sieciach (np. część mobilnych lub firmowych) połączenie może się nie udać.</li></ul></details>
+<details><summary>10. Gra online</summary><ul><li>Jedna osoba wybiera na ekranie startowym „Gra online” → „Załóż pokój” i podaje pozostałym 5-znakowy kod.</li><li>Pozostali (do 3 osób) otwierają tę samą stronę i wybierają „Gra online” → wpisują kod → „Dołącz”. Założyciel klika „Start”, gdy wszyscy są w pokoju.</li><li>Stan gry przechowuje serwer, więc partia trwa, nawet gdy ktoś (także założyciel) zamknie kartę. Na tym samym urządzeniu wrócisz przyciskiem „Wróć do pokoju” w menu „Gra online”.</li><li>Każdy działa tylko w swojej turze. Rzuty kośćmi i tasowanie wykonuje przeglądarka gracza, który ma ruch. Tura gracza offline (dłużej niż ok. 10 s) jest pomijana, dopóki nie wróci.</li><li>Do gry online potrzebny jest internet. Pokój wygasa po 3 dniach bez ruchu.</li></ul></details>
 <details><summary>11. Wskazówki i uproszczenia makiety</summary><ul><li>Wczesne osiedlanie daje więcej zbiorów, ale nie zapomnij o cechach: bez nich nie wejdziesz do dalszych regionów.</li><li>Rozwój Narzędzi i Polowania opłaca się szybko, a Ogień ma sens przy wielu wyprawach.</li><li>W makiecie pominięto: rezerwę 60 prowincji, karty migracji, 5–6 graczy oraz wydarzenia klimatyczne.</li></ul></details>
 </div></div></div>
 <div class="wrap">
-<header><div class="ht"><img class="logo" src="icon-v3-192.png" alt="" width="44" height="44"><h1 class="sr">Civitas – Anthropogenesis</h1></div><div class="dd"><button class="a" id="ddb" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu()">Menu ▾</button><div class="ddm" id="ddm" hidden role="menu"></div></div></header>
+<header><div class="ht"><img class="logo" src="icon-v4-192.png" alt="" width="44" height="44"><div class="hname" aria-hidden="true">Civitas<small>Anthropogenesis</small></div><h1 class="sr">Civitas – Anthropogenesis</h1></div><div class="dd"><button class="a" id="ddb" data-testid="header-menu-btn" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu()">Menu ▾</button><div class="ddm" id="ddm" hidden role="menu"></div></div></header>
 <main>
-<div class="tbl"><div class="tt"><div class="ttl"><b>Civitas</b><i></i><span>Anthropogenesis</span></div><aside class="panel" id="side"></aside></div>
-<div class="tm"><div class="bwrap"><div class="zoom"><button class="a" onclick="zoomTo(1)" aria-label="Dopasuj planszę do ekranu">⤢</button><button class="a" onclick="zoomBy(-.3)" aria-label="Pomniejsz planszę">−</button><button class="a" onclick="zoomBy(.3)" aria-label="Powiększ planszę">+</button></div><div class="bscroll" id="bs"><div class="board" id="board" role="grid" aria-label="Plansza: Afryka"></div></div></div><div class="targ" id="targ"></div></div>
-<div class="trk" id="trk" aria-label="Tor ewolucji"></div></div>
-<div class="legend"><span><b style="background:#f2d94e"></b>sawanna (jedzenie)</span><span><b style="background:#63b95a"></b>las (drewno)</span><span><b style="background:#cfc7b4"></b>skały (kamień)</span><span><b style="box-shadow:inset 0 0 0 2px #e0a82e"></b>Strefa I (serce)</span><span><b style="box-shadow:inset 0 0 0 2px #3f7fc4"></b>II</span><span><b style="box-shadow:inset 0 0 0 2px #3fa38a"></b>III</span><span><b style="box-shadow:inset 0 0 0 2px #c4793b"></b>IV</span><span><b style="box-shadow:inset 0 0 0 2px #8e63c9"></b>V</span><span><b class="bk"></b>rewers: pole nieodkryte</span><span>Czarne kółka: parantropy (rywale)</span></div>
+<div class="tbl"><div class="tt"><div class="ttl"><b>Civitas</b><i></i><span>Anthropogenesis</span></div><aside class="panel" id="side" data-testid="side-panel"></aside></div>
+<div class="tm"><div class="bwrap"><div class="zoom"><button class="a" data-testid="zoom-fit-btn" onclick="zoomTo(1)" aria-label="Dopasuj planszę do ekranu">⤢</button><button class="a" data-testid="zoom-out-btn" onclick="zoomBy(-.3)" aria-label="Pomniejsz planszę">−</button><button class="a" data-testid="zoom-in-btn" onclick="zoomBy(.3)" aria-label="Powiększ planszę">+</button></div><div class="bscroll" id="bs"><div class="board" id="board" data-testid="game-board" role="grid" aria-label="Plansza: Afryka"></div></div></div><div class="targ" id="targ" data-testid="trait-market"></div></div>
+<div class="trk" id="trk" data-testid="evolution-track" aria-label="Tor ewolucji"></div></div>
+<div class="legend" data-testid="board-legend"><span><b style="background:#D9B45A"></b>sawanna (jedzenie)</span><span><b style="background:#3F7A4A"></b>las (drewno)</span><span><b style="background:#7A8393"></b>skały (kamień)</span><span><b style="box-shadow:inset 0 0 0 2px #E2B755"></b>Strefa I (serce)</span><span><b style="box-shadow:inset 0 0 0 2px #4C9AFF"></b>II</span><span><b style="box-shadow:inset 0 0 0 2px #2EC4B6"></b>III</span><span><b style="box-shadow:inset 0 0 0 2px #F08A3C"></b>IV</span><span><b style="box-shadow:inset 0 0 0 2px #B07CFF"></b>V</span><span><b class="bk"></b>rewers: pole nieodkryte</span><span>Czarne kółka: parantropy (rywale)</span></div>
 </main>
 
 </div>
-<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js" defer></script>
 <script>
 const ERA=['Homo habilis','Homo ergaster','Homo erectus','Homo antecessor','Homo sapiens'],TH=[0,5,12,20,30],TRACK=40;
-const COL=['#e4572e','#4fc3f7','#f2c14e','#c77dff'],PN=['Czerwoni','Niebiescy','Żółci','Fioletowi'];
+const COL=['#E63946','#48CAE4','#FFB703','#C77DFF'],PN=['Czerwoni','Niebiescy','Żółci','Fioletowi'];
 const DEV={O:['Ogień',{w:2}],S:['Schronienie',{w:2,s:1}],N:['Narzędzia',{s:2}],P:['Polowanie',{w:1,s:1,f:1}]};
 const RN={f:'jedzenie',w:'drewno',s:'kamień'},ZN={R:'Strefa I (Serce Afryki)',S:'Strefa II',Z:'Strefa III',N:'Strefa IV',E:'Strefa V'};
 const MASK=['..55555.........', '.54443333355....', '5444332223455...', '5444322223445...', '5544322222222...', '44443222111113..', '.554333211111355', '.555433211111345', '......321111144.', '.......2111113..', '.......2111113..', '.......2111113..', '.......2222224..', '.......333333...', '.......44445....', '........555.....'];
@@ -198,7 +218,7 @@ const canGo=(r,c)=>{const p=G.P[G.cur];return !!G.sel&&!G.over&&G.acts>0&&(NET.m
 function alert(t){if(AIRUN)return;MSG=t;draw()}
 function start(n){
 const xs=n==2?[6,10]:n==3?[6,8,10]:[6,7,9,10];
-G={n,round:1,cur:0,acts:2,sel:null,over:false,deck:deck(Math.max(2,n)),disc:[],mk:[],log:[],
+G={gid:Math.random().toString(36).slice(2,9),n,round:1,cur:0,acts:2,sel:null,over:false,deck:deck(Math.max(2,n)),disc:[],mk:[],log:[],
 P:xs.map((x,i)=>({f:2,w:1,s:1,evo:0,dev:{},hand:[],seen:{}})),
 B:xs.map((x,i)=>({r:x,c:10,o:i})).concat([[4,8],[11,9],[12,11],[2,6]].map(([r,c])=>({r,c,o:-1})))};
 initMap();refill();say('Gra się zaczyna. Tura 1: '+PN[0]+'. Zaznacz swoją grupę, potem kliknij sąsiednie pole.');showMain();document.getElementById('intro').hidden=true;draw();centerHeart()}
@@ -225,16 +245,16 @@ if(G.P[G.cur].dev.O)D.push(['Ogień napastnika: strach',-1]);
 if(o>=0&&G.P[o].dev.O)A.push(['Ogień obrońcy: strach',-1]);
 G.fight={sr,sc,r,c,o,A,D,done:0};fightUI()}
 function fightUI(){const F=G.fight,nm=o=>o<0?'Parantropy':PN[o],col=o=>o<0?'#555':COL[o];
-const tb=(t,L,o)=>`<div><b style="color:${col(o)};text-shadow:0 0 1px #000">${t}: ${nm(o)}</b><table>${L.map(([n,v])=>`<tr><td>${n}</td><td>${v>0?'+':''}${v}</td></tr>`).join('')}<tr><th>Razem</th><th>${F.done?sum(L):'?'}</th></tr></table></div>`;
-document.getElementById('fbox').innerHTML=`<h2 style="font:700 20px Georgia,serif;margin:0 0 10px">Starcie</h2><div class="ft">${tb('Atak',F.A,G.cur)}${tb('Obrona',F.D,F.o)}</div><p>${F.done?(F.win?'Napastnik wygrywa: obrońca traci grupę.':'Obrońca wygrywa (remis też): napastnik traci grupę.'):'Wynik = k6 + modyfikatory. Remis wygrywa obrońca.'}</p>${NET.mode=='local'||NET.seat==G.cur?`<button class="a main" onclick="${F.done?'endFight()':'rollFight()'}">${F.done?'Dalej':'Rzuć kośćmi'}</button>`:'<p>Czekaj na gracza: '+PN[G.cur]+'</p>'}`;
+const tb=(t,L,o)=>`<div><b style="color:${col(o)};text-shadow:0 0 1px #000">${t}: ${nm(o)}</b><table>${L.map(([n,v])=>`<tr><td>${n}</td><td>${n=='Rzut k6'?'<span class="die">'+v+'</span>':(v>0?'+':'')+v}</td></tr>`).join('')}<tr><th>Razem</th><th>${F.done?sum(L):'?'}</th></tr></table></div>`;
+document.getElementById('fbox').innerHTML=`<h2 style="font:700 22px var(--fh);margin:0 0 10px">Starcie</h2><div class="ft">${tb('Atak',F.A,G.cur)}${tb('Obrona',F.D,F.o)}</div><p data-testid="fight-result">${F.done?(F.win?'Napastnik wygrywa: obrońca traci grupę.':'Obrońca wygrywa (remis też): napastnik traci grupę.'):'Wynik = k6 + modyfikatory. Remis wygrywa obrońca.'}</p>${NET.mode=='local'||NET.seat==G.cur?`<button class="a main" data-testid="${F.done?'fight-continue-btn':'fight-roll-btn'}" onclick="${F.done?'endFight()':'rollFight()'}">${F.done?'Dalej':'Rzuć kośćmi'}</button>`:'<p>Czekaj na gracza: '+PN[G.cur]+'</p>'}`;
 document.getElementById('fight').hidden=false}
-function rollFight(){if(NET.mode=='guest')return send(['roll']);if(NET.mode=='host'&&NET.seat!=G.cur)return;if(G.ai&&G.ai[G.cur]&&!AIRUN)return;const F=G.fight;if(!F||F.done)return;F.A.unshift(['Rzut k6',d6()]);F.D.unshift(['Rzut k6',d6()]);F.done=1;F.win=sum(F.A)>sum(F.D);fightUI()}
-function endFight(){if(NET.mode=='guest')return send(['endf']);if(NET.mode=='host'&&NET.seat!=G.cur)return;if(G.ai&&G.ai[G.cur]&&!AIRUN)return;if(!G.fight)return;const F=G.fight,{sr,sc,r,c,o}=F,mine=at(sr,sc).find(b=>b.o==G.cur),who=o<0?'parantropami':PN[o],res=sum(F.A)+':'+sum(F.D);
+function rollFight(){if(NET.mode=='online'&&NET.seat!=G.cur)return;if(G.ai&&G.ai[G.cur]&&!AIRUN)return;const F=G.fight;if(!F||F.done)return;F.A.unshift(['Rzut k6',d6()]);F.D.unshift(['Rzut k6',d6()]);F.done=1;F.win=sum(F.A)>sum(F.D);fightUI()}
+function endFight(){if(NET.mode=='online'&&NET.seat!=G.cur)return;if(G.ai&&G.ai[G.cur]&&!AIRUN)return;if(!G.fight)return;const F=G.fight,{sr,sc,r,c,o}=F,mine=at(sr,sc).find(b=>b.o==G.cur),who=o<0?'parantropami':PN[o],res=sum(F.A)+':'+sum(F.D);
 if(F.win){G.B.splice(G.B.indexOf(at(r,c)[0]),1);say(PN[G.cur]+': starcie z '+who+' ('+res+') – wygrana.');if(!at(r,c).length){mine.r=r;mine.c=c;G.sel=[r,c];reveal(r,c);discover(zone(r,c))}}
 else{G.B.splice(G.B.indexOf(mine),1);G.sel=null;say(PN[G.cur]+': starcie z '+who+' ('+res+') – grupa przepadła.')}
 G.fight=null;G.acts--;document.getElementById('fight').hidden=true;draw()}
 function click(r,c){
-if(NET.mode=='guest')return send(['click',r,c]);if(NET.mode=='host'&&NET.seat!=G.cur)return;if(G.ai&&G.ai[G.cur]&&!AIRUN)return;
+if(NET.mode=='online'&&NET.seat!=G.cur)return;if(G.ai&&G.ai[G.cur]&&!AIRUN)return;
 MSG='';if(G.over||G.fight)return;const o=owner(r,c);
 if(o===G.cur){G.sel=[r,c];return draw()}
 if(!G.sel||G.acts<1)return;
@@ -247,7 +267,7 @@ if(o===null||o===G.cur){mine.r=r;mine.c=c;G.sel=[r,c];say(PN[G.cur]+' wędrują 
 else{startFight(sr,sc,r,c,o);return}
 G.acts--;draw()}
 function act(k,x){
-if(NET.mode=='guest')return send(['act',k,x]);if(NET.mode=='host'&&NET.seat!=G.cur)return;if(G.ai&&G.ai[G.cur]&&!AIRUN)return;
+if(NET.mode=='online'&&NET.seat!=G.cur)return;if(G.ai&&G.ai[G.cur]&&!AIRUN)return;
 MSG='';const p=G.P[G.cur];if(G.over||G.fight)return;
 if(k=='end')return endTurn();
 if(G.acts<1)return;
@@ -262,10 +282,11 @@ function endTurn(){
 if(G.P.some(p=>p.evo>=TRACK)||!left()){G.over=true;const s=G.P.map((_,i)=>score(i)),w=s.indexOf(Math.max(...s));say('Koniec gry! Wygrywają: '+PN[w]+' ('+s[w]+' pkt) po '+G.round+' turach.');return draw()}
 if(G.ai&&!G.B.some(b=>b.o==0)){G.over=true;say('Wszystkie Twoje grupy przepadły. Koniec gry.');return draw()}
 if(G.P.every((q,i)=>q.gone||!G.B.some(b=>b.o==i))){G.over=true;say('Koniec gry: nikt nie został.');return draw()}
+if(NET.mode=='online')G.P.forEach((q,i)=>{q.gone=!NET.online.includes(i)});
 G.cur=(G.cur+1)%G.n;if(G.cur==0)G.round++;G.acts=2;G.sel=null;
 if(!G.B.some(b=>b.o==G.cur)||G.P[G.cur].gone){say(PN[G.cur]+(G.P[G.cur].gone?' odeszli.':' wymarli.'));return endTurn()}
 say('Tura '+G.round+': '+PN[G.cur]+'.');if(G.ai&&G.ai[G.cur]&&!G.over)aiSchedule();draw()}
-function draw(){
+function draw(noPush){
 const bd=document.getElementById('board');bd.innerHTML='';const hx=document.createElement('div');hx.id='hx';hx.innerHTML=HEXBG+DECOR;bd.appendChild(hx);
 for(let r=0;r<16;r++)for(let c=0;c<16;c++){if(!ex(r,c))continue;
 const z=zone(r,c),rv=isRev(r,c),t=rv?ter(r,c):'x',b=at(r,c),o=b.length?b[0].o:null,
@@ -273,81 +294,101 @@ ok=canGo(r,c),sel=G.sel&&G.sel[0]==r&&G.sel[1]==c;
 const el=document.createElement('button');el.className='c '+t+' '+z+(ok?' ok':'')+(sel?' sel':'')+(o!==null?' occ':'');el.style.left=(c+(r%2?.5:0))/16.5*100+'%';el.style.top=r*8.66/141.447*100+'%';
 el.setAttribute('aria-label',ZN[z]+', '+(rv?RN[t]:'nieodkryte')+(o===null?'':o<0?', parantropy':', '+PN[o]+' x'+b.length));
 el.innerHTML='<span class="h"></span><span class="h2"></span>'+(rv?'<i><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">'+IC[t]+'</svg></i>':'')+'<b class="zn">'+['','I','II','III','IV','V'][+MASK[r][c]]+'</b>'+(o===null?'':'<span class="band" style="background:'+(o<0?'#111;color:#fff':COL[o])+'">'+b.length+'</span>');
-el.onclick=()=>click(r,c);hx.appendChild(el)}
+el.dataset.testid='hex-'+r+'-'+c;el.onclick=()=>click(r,c);hx.appendChild(el)}
+const keepOpen=!!noPush&&!!document.querySelector('#side details.act[open]');
 const me=mySeat(),p=G.P[me],e=era(p.evo),dis=G.over||G.acts<1||me!=G.cur?'disabled':'';
 const RG=['I','II','III','IV','V'];
-const opt=(c,i)=>`<button class="it" ${c.p&&p.f<2?'disabled':''} onclick="act('evo',${i})">${c.n} +${c.p} · ${c.p?'2 jedz.':'gratis'}</button>`;
-const tool=([k,[n,c]])=>`<button class="it" ${p.dev[k]?'disabled':''} onclick="act('dev','${k}')">${p.dev[k]?'✓ ':''}${n} · ${Object.entries(c).map(([x,v])=>v+' '+RN[x]).join(', ')}</button>`;
+const opt=(c,i)=>`<button class="it" data-testid="buy-trait-${i}" ${c.p&&p.f<2?'disabled':''} onclick="act('evo',${i})">${c.n} +${c.p} · ${c.p?'2 jedz.':'gratis'}</button>`;
+const tool=([k,[n,c]])=>`<button class="it" data-testid="buy-tool-${k}" ${p.dev[k]?'disabled':''} onclick="act('dev','${k}')">${p.dev[k]?'✓ ':''}${n} · ${Object.entries(c).map(([x,v])=>v+' '+RN[x]).join(', ')}</button>`;
 document.getElementById('side').innerHTML=`<div class="sa">
-<h2>Tura ${G.round} · <span style="color:${COL[G.cur]};text-shadow:0 0 1px #000">${PN[G.cur]}</span></h2>
-${NET.mode!='local'?`<div class="card">Grasz jako <b style="color:${COL[me]};text-shadow:0 0 1px #000">${PN[me]}</b>${me==G.cur?' – Twój ruch!':' – czekasz na ruch: '+PN[G.cur]}</div>`:''}
+<h2 data-testid="turn-indicator">Tura ${G.round} · <span style="color:${COL[G.cur]};text-shadow:0 0 1px #000">${PN[G.cur]}</span></h2>
+${NET.mode!='local'?`<div class="card" data-testid="online-status">Pokój <b>${NET.code}</b> · grasz jako <b style="color:${COL[me]};text-shadow:0 0 1px #000">${PN[me]}</b>${me==G.cur?' – Twój ruch!':' – czekasz na ruch: '+PN[G.cur]}<br>${G.P.map((_,i)=>`<span style="margin-right:10px;white-space:nowrap"><i class="dotl${NET.online.includes(i)?'':' off'}"></i>${PN[i]}</span>`).join('')}</div>`:''}
 ${G.ai&&G.ai[G.cur]&&!G.over?`<div class="card">Ruch komputera (${LVN[G.ai[G.cur]]}): ${PN[G.cur]}…</div>`:''}
 ${MSG?`<div class="card" role="alert" style="border-style:solid;color:${MSG[0]=='✓'?'var(--ink)':'var(--hot)'}">${MSG}</div>`:''}
-<div class="res"><em>Bank surowców:</em><span>Jedzenie ${p.f}</span><span>Drewno ${p.w}</span><span>Kamień ${p.s}</span></div>
-<div class="r4"><span>Akcje: <b>${G.acts}</b></span>${dis?'<span class="sm off">Wybierz akcję ▾</span>':`<details class="act"><summary class="sm">Wybierz akcję ▾</summary><div class="ddl">
-<button class="it" onclick="act('gather')">Zbieraj</button><button class="it" onclick="act('settle')">Osiedl</button>
-<div class="sub1"><span onclick="this.parentNode.classList.toggle('open')">Zakup z rynku cech ▸</span><div class="subm">${G.mk.map(opt).join('')}</div></div>
-<div class="sub1"><span onclick="this.parentNode.classList.toggle('open')">Zakup narzędzi ▸</span><div class="subm">${Object.entries(DEV).map(tool).join('')}</div></div></div></details>`}</div>
-<button class="a main" ${G.over||me!=G.cur?'disabled':''} onclick="act('end')">Zakończ turę</button>
+<div class="res" data-testid="resource-bank"><em>Bank surowców</em><span class="rf">Jedzenie ${p.f}</span><span class="rw">Drewno ${p.w}</span><span class="rs">Kamień ${p.s}</span></div>
+<div class="r4"><span data-testid="actions-left">Akcje: <b>${G.acts}</b></span>${dis?'<span class="sm off">Wybierz akcję ▾</span>':`<details class="act"><summary class="sm" data-testid="actions-dropdown">Wybierz akcję ▾</summary><div class="ddl">
+<button class="it" data-testid="action-gather" onclick="act('gather')">Zbieraj</button><button class="it" data-testid="action-settle" onclick="act('settle')">Osiedl</button>
+<div class="sub1"><span data-testid="action-market" onclick="this.parentNode.classList.toggle('open')">Zakup z rynku cech ▸</span><div class="subm">${G.mk.map(opt).join('')}</div></div>
+<div class="sub1"><span data-testid="action-tools" onclick="this.parentNode.classList.toggle('open')">Zakup narzędzi ▸</span><div class="subm">${Object.entries(DEV).map(tool).join('')}</div></div></div></details>`}</div>
+<button class="a main" data-testid="end-turn-btn" ${G.over||me!=G.cur?'disabled':''} onclick="act('end')">Zakończ turę</button>
 </div><div class="sb">
-<div id="log">${G.log.map(l=>'<p>'+l+'</p>').join('')}</div></div>
+<div id="log" data-testid="game-log">${G.log.map(l=>'<p>'+l+'</p>').join('')}</div></div>
 `;
+if(keepOpen){const d=document.querySelector('#side details.act');if(d)d.open=true}
 if(G.fight)fightUI();else document.getElementById('fight').hidden=true;
 renderMenu();renderTable();
-if(NET.mode=='host')broadcast()}
+sndCheck();
+if(!noPush)push()}
 
-const VER='0.1.1';
-const NET={mode:'local',seat:0,peer:null,conns:{},conn:null,code:'',started:false};
-const lb=h=>{document.getElementById('lbox').innerHTML=h;document.getElementById('lobby').hidden=false};
-const lbErr=m=>{netClose();lb('<p>'+m+'</p><div class="start"><button class="a" onclick="openLobby()">Wróć</button></div>')};
-function netClose(){try{if(NET.peer)NET.peer.destroy()}catch(e){}NET.peer=null;NET.conns={};NET.conn=null;NET.mode='local';NET.seat=0;NET.code='';NET.started=false}
+const VER='0.1.2';
+// Dźwięki: syntezowane w przeglądarce (Web Audio), bez plików – działają też offline.
+// Głośność 0–100 (0 = wyciszone), zapamiętywana na urządzeniu.
+const SND={vol:70,prev:70,ctx:null,master:null,last:null};
+try{const v=localStorage.getItem('civitas-volume');if(v!==null&&v!==''&&!isNaN(+v))SND.vol=Math.max(0,Math.min(100,Math.round(+v)));else if(localStorage.getItem('civitas-sound')==='off')SND.vol=0}catch(e){}
+if(SND.vol)SND.prev=SND.vol;
+const gainOf=v=>Math.pow(v/100,2);
+function actx(){if(!SND.ctx){const A=window.AudioContext||window.webkitAudioContext;if(!A)return null;SND.ctx=new A();SND.master=SND.ctx.createGain();SND.master.gain.value=gainOf(SND.vol);SND.master.connect(SND.ctx.destination)}if(SND.ctx.state=='suspended')SND.ctx.resume().catch(()=>{});return SND.ctx}
+document.addEventListener('pointerdown',()=>{if(SND.vol)actx()},{passive:true});
+function tone(f,t0,dur,type,vol,f2){const c=SND.ctx,o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.setValueAtTime(f,t0);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t0+dur);g.gain.setValueAtTime(0.0001,t0);g.gain.exponentialRampToValueAtTime(vol,t0+.012);g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);o.connect(g).connect(SND.master);o.start(t0);o.stop(t0+dur+.05)}
+function knock(t0,vol){const c=SND.ctx,n=Math.floor(c.sampleRate*.05),b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,3);const s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();s.buffer=b;f.type='bandpass';f.frequency.value=1800+Math.random()*1400;f.Q.value=2.5;g.gain.value=vol;s.connect(f).connect(g).connect(SND.master);s.start(t0)}
+function play(k){if(!SND.vol)return;const c=actx();if(!c||c.state!='running')return;const t=c.currentTime+.01;
+if(k=='dice'){[0,.07,.13,.2,.26,.36,.47].forEach((d,i)=>knock(t+d+Math.random()*.02,.9-i*.1));tone(140,t+.47,.12,'sine',.25)}
+else if(k=='reveal'){tone(523,t,.35,'sine',.18);tone(784,t+.09,.45,'sine',.15);tone(1046,t+.18,.5,'triangle',.06)}
+else if(k=='turn'){tone(392,t,1.1,'triangle',.16);tone(588,t,.9,'sine',.07);tone(196,t,1.2,'sine',.1)}}
+function sndCheck(){if(!G)return;const rv=G.rev?Object.keys(G.rev).length:0,sig={gid:G.gid,roll:G.fight&&G.fight.done?1:0,rev:rv,turn:G.cur+'-'+G.round};const L=SND.last;SND.last=sig;
+if(!L||L.gid!==sig.gid)return;
+if(sig.roll&&!L.roll)play('dice');
+if(sig.rev>L.rev)setTimeout(()=>play('reveal'),sig.roll?500:0);
+if(sig.turn!==L.turn&&!G.over)setTimeout(()=>play('turn'),sig.rev>L.rev?350:0)}
+function setVolume(v,preview){v=Math.max(0,Math.min(100,Math.round(+v)||0));SND.vol=v;if(v)SND.prev=v;try{localStorage.setItem('civitas-volume',String(v))}catch(e){}
+if(v){const c=actx();if(c&&SND.master)SND.master.gain.setTargetAtTime(gainOf(v),c.currentTime,.02)}
+const r=document.getElementById('volr'),l=document.getElementById('voll'),b=document.getElementById('volb');if(r&&r.value!=String(v))r.value=String(v);if(r)r.style.setProperty('--p',v+'%');if(l)l.textContent=v?v+'%':'wyciszone';if(b){b.textContent=v?(v<40?'🔈':'🔊'):'🔇';b.setAttribute('aria-label',v?'Wycisz dźwięki':'Włącz dźwięki');b.setAttribute('aria-pressed',String(!v))}
+if(preview&&v)setTimeout(()=>play('reveal'),30)}
+function toggleMute(){setVolume(SND.vol?0:(SND.prev||70),true)}
+function volRow(){const v=SND.vol;return `<div class="vol" data-testid="menu-volume"><div class="volh"><span>Głośność</span><b id="voll" data-testid="menu-volume-value">${v?v+'%':'wyciszone'}</b></div><div class="volc"><button id="volb" type="button" data-testid="menu-volume-mute-btn" aria-pressed="${!v}" aria-label="${v?'Wycisz dźwięki':'Włącz dźwięki'}" onclick="toggleMute()">${v?(v<40?'🔈':'🔊'):'🔇'}</button><input id="volr" type="range" min="0" max="100" step="5" value="${v}" style="--p:${v}%" data-testid="menu-volume-slider" aria-label="Głośność dźwięków" oninput="setVolume(this.value)" onchange="setVolume(this.value,true)"></div></div>`}
+
+// Adres serwera pokoi online. Na GitHub Pages gra łączy się z tym serwerem; na serwerze gry – z własnym /api.
+const SERVER='https://game-edits.preview.emergentagent.com';
+const API_BASE=location.hostname.endsWith('github.io')||location.protocol=='file:'?SERVER:'';
+// Online: serwer (/api/rooms) przechowuje stan gry. Gracz, który ma ruch, liczy go u siebie i wysyła nowy stan; pozostali odpytują serwer.
+const NET={mode:'local',seat:0,code:'',token:'',ver:-1,online:[],players:[],started:false,poll:null,applying:false,busy:false,again:false,deputyT:null,booting:false,last:''};
+const RKEY='civitas-room';
+async function api(path,body){const r=await fetch(API_BASE+'/api/rooms'+path,body?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:{cache:'no-store'});let b=null;try{b=await r.json()}catch(e){}
+if(!r.ok){const e=new Error(b&&typeof b.detail=='string'?b.detail:'Błąd serwera ('+r.status+').');e.status=r.status;throw e}return b}
+const lb=h=>{if(NET.last===h)return;NET.last=h;document.getElementById('lbox').innerHTML=h;document.getElementById('lobby').hidden=false};
+const lbErr=m=>{netClose();lb('<h2 style="font:700 20px var(--fh);margin:0 0 8px">Gra online</h2><p data-testid="lobby-error">'+m+'</p><div class="start"><button class="a" data-testid="lobby-error-back-btn" onclick="openLobby()">Wróć</button></div>')};
+function savedRoom(){try{const d=JSON.parse(localStorage.getItem(RKEY));return d&&d.code&&d.token?d:null}catch(e){return null}}
+function netClose(){clearInterval(NET.poll);clearTimeout(NET.deputyT);Object.assign(NET,{mode:'local',seat:0,code:'',token:'',ver:-1,online:[],players:[],started:false,poll:null,applying:false,busy:false,again:false,deputyT:null,booting:false,last:''})}
 function startLocal(n){netClose();document.getElementById('lobby').hidden=true;start(n)}
-function netLeave(){netClose();start(3);document.getElementById('intro').hidden=false}
-function send(a){if(NET.conn&&NET.conn.open)NET.conn.send({t:'i',a})}
-function snap(){const o=Object.assign({},G);o.T=Array.from({length:256},(_,i)=>G.rev&&!G.rev[i]?null:(G.T?G.T[i]:null));o.deck=G.deck.length;o.disc=G.disc.length;return JSON.stringify(o)}
-function broadcast(){if(!NET.started)return;const s=snap();Object.values(NET.conns).forEach(c=>{try{c.send({t:'state',s})}catch(e){}})}
-function openLobby(){document.getElementById('intro').hidden=true;
-lb('<h2 style="font:700 20px Georgia,serif;margin:0 0 8px">Gra online</h2><p>Jedna osoba zakłada pokój i podaje kod pozostałym (2–4 graczy). Wszyscy muszą mieć otwartą tę stronę.</p><div class="start"><button class="a main" onclick="hostRoom()">Załóż pokój</button></div><p>albo wpisz kod pokoju:</p><div class="start"><input id="jc" maxlength="5" aria-label="Kod pokoju"><button class="a main" onclick="joinRoom()">Dołącz</button></div><div class="start"><button class="a" onclick="closeLobby()">Wróć</button></div>')}
+function netLeave(){const {code,token}=NET;if(code)api('/'+code+'/leave',{token}).catch(()=>{});try{localStorage.removeItem(RKEY)}catch(e){}netClose();document.getElementById('lobby').hidden=true;start(3);document.getElementById('intro').hidden=false}
+function openLobby(){document.getElementById('intro').hidden=true;const s=savedRoom();NET.last='';
+lb('<h2 style="font:700 22px var(--fh);margin:0 0 8px">Gra online</h2><p>Jedna osoba zakłada pokój i podaje kod pozostałym (2–4 graczy). Stan gry trzyma serwer, więc każdy może zamknąć kartę i wrócić.</p>'+(s?'<div class="start"><button class="a main" data-testid="lobby-rejoin-btn" onclick="rejoin()">Wróć do pokoju '+s.code+'</button></div>':'')+'<div class="start"><button class="a main" data-testid="lobby-create-room-btn" onclick="hostRoom()">Załóż pokój</button></div><p>albo wpisz kod pokoju:</p><div class="start"><input id="jc" data-testid="lobby-code-input" maxlength="5" aria-label="Kod pokoju" autocomplete="off"><button class="a main" data-testid="lobby-join-btn" onclick="joinRoom()">Dołącz</button></div><div class="start"><button class="a" data-testid="lobby-back-btn" onclick="closeLobby()">Wróć</button></div>')}
 function closeLobby(){netClose();document.getElementById('lobby').hidden=true;showMain();document.getElementById('intro').hidden=false}
-function lobbyHost(){if(NET.mode!='host'||NET.started)return;const k=Object.keys(NET.conns).length;
-lb(`<h2 style="font:700 20px Georgia,serif;margin:0 0 8px">Pokój online</h2><p>Kod pokoju:</p><p style="font:700 34px Georgia,serif;letter-spacing:.2em;color:var(--ink)">${NET.code}</p><p>Pozostali otwierają tę stronę, wybierają „Gra online” i wpisują ten kod.</p><p>Połączeni: ${k+1} z 4 (Ty + ${k}).</p><div class="start"><button class="a main" ${k<1?'disabled':''} onclick="startOnline()">Start (${k+1} graczy)</button><button class="a" onclick="closeLobby()">Anuluj</button></div>`)}
-function hostRoom(){if(typeof Peer=='undefined')return lbErr('Nie wczytano biblioteki sieciowej (PeerJS). Potrzebny jest internet. Odśwież stronę i spróbuj ponownie.');
-netClose();const code=Math.random().toString(36).slice(2,7).toUpperCase().padEnd(5,'X');
-NET.mode='host';NET.seat=0;NET.code=code;const peer=new Peer('civitas-'+code);NET.peer=peer;
-peer.on('open',lobbyHost);
-peer.on('error',e=>{if(e.type=='unavailable-id')hostRoom();else lbErr('Błąd sieci: '+e.type)});
-peer.on('connection',c=>{const free=[1,2,3].find(s=>!NET.conns[s]);
-if(NET.started||!free){c.on('open',()=>{c.send({t:'full'});setTimeout(()=>c.close(),400)});return}
-c.seat=free;NET.conns[free]=c;
-c.on('open',()=>{c.send({t:'seat',seat:c.seat});lobbyHost()});
-c.on('data',m=>{if(m&&m.t=='i')onIntent(c.seat,m.a)});
-c.on('close',()=>{if(NET.conns[c.seat]===c)delete NET.conns[c.seat];
-if(NET.started){G.P[c.seat].gone=true;say(PN[c.seat]+' rozłączyli się.');if(G.cur==c.seat&&!G.over)endTurn();else draw()}else lobbyHost()})})}
-function startOnline(){const es=Object.keys(NET.conns).map(Number).sort();if(!es.length)return;const old=NET.conns;NET.conns={};
-es.forEach((s,i)=>{const c=old[s];c.seat=i+1;NET.conns[i+1]=c;c.send({t:'seat',seat:i+1})});
-NET.started=true;document.getElementById('lobby').hidden=true;start(es.length+1)}
-function onIntent(seat,a){if(!NET.started||!G||G.over||!Array.isArray(a)||seat!=G.cur)return;
-const [f,x,y]=a,I=Number.isInteger,keep=NET.seat;NET.seat=seat;
-try{if(f=='click'&&I(x)&&I(y)&&ex(x,y))click(x,y);
-else if(f=='act'&&['gather','settle','dev','evo','end'].includes(x)&&(x!='evo'||I(y))&&(x!='dev'||DEV[y]))act(x,y);
-else if(f=='roll'&&G.fight)rollFight();
-else if(f=='endf'&&G.fight&&G.fight.done)endFight()}
-finally{NET.seat=keep}
-if(MSG){const m=MSG;MSG='';const c=NET.conns[seat];if(c)c.send({t:'msg',m});draw()}}
-function joinRoom(){const code=document.getElementById('jc').value.trim().toUpperCase();if(!code)return;
-if(typeof Peer=='undefined')return lbErr('Nie wczytano biblioteki sieciowej (PeerJS). Potrzebny jest internet. Odśwież stronę i spróbuj ponownie.');
-netClose();NET.mode='guest';NET.code=code;lb('<p>Łączenie z pokojem '+code+'…</p>');
-const peer=new Peer();NET.peer=peer;
-peer.on('error',e=>lbErr(e.type=='peer-unavailable'?'Nie znaleziono pokoju '+code+'. Sprawdź kod.':'Błąd sieci: '+e.type));
-peer.on('open',()=>{const c=peer.connect('civitas-'+code,{reliable:true});NET.conn=c;
-const to=setTimeout(()=>{if(!c.open)lbErr('Nie udało się połączyć z pokojem '+code+'. Spróbuj ponownie.')},12000);
-c.on('open',()=>{clearTimeout(to);lb('<p>Połączono z pokojem '+code+'. Czekaj, aż gospodarz rozpocznie grę…</p>')});
-c.on('data',m=>{if(!m)return;
-if(m.t=='seat')NET.seat=m.seat;
-else if(m.t=='full')lbErr('Pokój jest pełny albo gra już trwa.');
-else if(m.t=='state'){const o=JSON.parse(m.s);o.deck=new Array(o.deck).fill(0);o.disc=new Array(o.disc).fill(0);G=o;MSG='';document.getElementById('lobby').hidden=true;document.getElementById('intro').hidden=true;draw()}
-else if(m.t=='msg'){MSG=m.m;draw()}});
-c.on('close',()=>{if(NET.mode=='guest')lbErr('Połączenie z gospodarzem zostało przerwane.')})})}
+function enterRoom(r){netClose();Object.assign(NET,{mode:'online',code:r.code,token:r.token,seat:r.seat});try{localStorage.setItem(RKEY,JSON.stringify({code:r.code,token:r.token}))}catch(e){}
+lb('<p data-testid="lobby-connecting">Łączenie z pokojem '+r.code+'…</p>');pollOnce();NET.poll=setInterval(pollOnce,1200)}
+async function hostRoom(){lb('<p>Zakładanie pokoju…</p>');try{enterRoom(await api('',{}))}catch(e){lbErr(e.message)}}
+async function joinRoom(){const code=(document.getElementById('jc').value||'').trim().toUpperCase();if(!code)return;lb('<p>Łączenie z pokojem '+code+'…</p>');try{enterRoom(await api('/'+code+'/join',{}))}catch(e){lbErr(e.status==404?'Nie znaleziono pokoju '+code+'. Sprawdź kod.':e.message)}}
+function rejoin(){const s=savedRoom();if(!s)return openLobby();enterRoom({code:s.code,token:s.token,seat:0})}
+function lobbyView(v){const host=NET.seat==0,k=v.players.length;
+const rows=v.players.map(s=>`<div data-testid="lobby-player-${s}"><i style="background:${COL[s]}"></i><b>${PN[s]}</b>${s==0?' · założyciel':''}${s==NET.seat?' (Ty)':''}<em class="${v.online.includes(s)?'on':''}">${v.online.includes(s)?'online':'offline'}</em></div>`).join('');
+lb(`<h2 style="font:700 22px var(--fh);margin:0 0 4px">Pokój online</h2><p>Kod pokoju:</p><div class="code" data-testid="lobby-room-code">${NET.code}</div><p>${host?'Pozostali otwierają tę stronę, wybierają „Gra online” i wpisują ten kod.':'Połączono. Czekaj, aż założyciel rozpocznie grę…'}</p><div class="plist" data-testid="lobby-players">${rows}</div><p>Graczy: ${k} z 4</p><div class="start">${host?`<button class="a main" data-testid="lobby-start-btn" ${k<2?'disabled':''} onclick="startOnline()">Start (${k} graczy)</button>`:''}<button class="a" data-testid="lobby-leave-btn" onclick="netLeave()">${host?'Anuluj':'Opuść pokój'}</button></div>`)}
+async function startOnline(){try{const v=await api('/'+NET.code+'/start',{token:NET.token});NET.seat=v.seat;pollOnce()}catch(e){alertLobby(e.message)}}
+function alertLobby(m){NET.last='';document.getElementById('lbox').insertAdjacentHTML('beforeend','<p style="color:var(--hot)">'+m+'</p>')}
+async function pollOnce(){if(NET.mode!='online')return;const code=NET.code;let v;
+try{v=await api('/'+code+'?token='+encodeURIComponent(NET.token)+(NET.ver>=0?'&since='+NET.ver:''))}catch(e){if(NET.code!==code)return;if(e.status==404||e.status==403){try{localStorage.removeItem(RKEY)}catch(x){}lbErr(e.status==404?'Pokój '+code+' już nie istnieje.':'Nie należysz do pokoju '+code+'.')}return}
+if(NET.mode!='online'||NET.code!==code)return;
+NET.seat=v.seat;NET.online=v.online;NET.players=v.players;NET.started=v.started;
+if(!v.started)return lobbyView(v);
+if(v.state&&v.ver>NET.ver&&!NET.busy){applyState(v.state,v.ver)}
+else if(!v.state&&v.ver==0){NET.ver=0;if(NET.seat==0&&!NET.booting){NET.booting=true;document.getElementById('lobby').hidden=true;NET.okey=NET.online.join(',');NET.last='';start(v.n)}else if(NET.seat!=0)lb('<p data-testid="lobby-preparing">Założyciel rozkłada planszę…</p>')}
+else{const ok=v.online.join(',');if(G&&NET.ver==v.ver&&ok!==NET.okey){NET.okey=ok;draw(true)}}
+deputy(v)}
+function applyState(s,ver){let o;try{o=JSON.parse(s)}catch(e){return}NET.applying=true;try{G=o;NET.ver=ver;NET.okey=NET.online.join(',');MSG='';document.getElementById('lobby').hidden=true;NET.last='';document.getElementById('intro').hidden=true;draw()}finally{NET.applying=false}}
+function push(){if(NET.mode!='online'||!NET.started||NET.applying||!G)return;if(NET.busy){NET.again=true;return}NET.busy=true;
+api('/'+NET.code+'/state',{token:NET.token,ver:NET.ver,state:JSON.stringify(G)}).then(r=>{NET.ver=r.ver}).catch(e=>{if(e.status==409)NET.ver=-1}).finally(()=>{NET.busy=false;if(NET.again){NET.again=false;push()}})}
+// Gdy gracz, który ma ruch, jest offline, najniższe obecne miejsce pomija jego turę.
+function deputy(v){if(!G||G.over||v.cur==null||v.online.includes(v.cur)||v.online[0]!==NET.seat||NET.ver!=v.ver){clearTimeout(NET.deputyT);NET.deputyT=null;return}
+if(NET.deputyT)return;NET.deputyT=setTimeout(()=>{NET.deputyT=null;if(NET.mode!='online'||!G||G.over||NET.online.includes(G.cur)||NET.online[0]!==NET.seat)return;G.fight=null;say(PN[G.cur]+' są offline – tura pominięta.');endTurn()},1500)}
 try{const z=parseFloat(localStorage.getItem('civitas-zoom'));ZOOM=z>=1&&z<=2.8?z:(typeof innerWidth!='undefined'&&innerWidth<700?1.35:1)}catch(e){if(typeof innerWidth!='undefined'&&innerWidth<700)ZOOM=1.35}
 applyZoom(false);
 start(3);document.getElementById('intro').hidden=false;showMain();document.getElementById('ver').textContent='Wersja '+VER;
@@ -363,8 +404,8 @@ function loadGame(){let d=null;try{d=JSON.parse(localStorage.getItem('civitas-sa
 function exitGame(){try{window.close()}catch(e){}setTimeout(()=>{document.getElementById('svinfo').textContent='Aby wyjść, zamknij kartę przeglądarki lub aplikację.'},300)}
 function toggleMenu(){const m=document.getElementById('ddm');m.hidden=!m.hidden;document.getElementById('ddb').setAttribute('aria-expanded',String(!m.hidden))}
 function closeMenu(){document.getElementById('ddm').hidden=true;document.getElementById('ddb').setAttribute('aria-expanded','false')}
-function mi(t,f){return `<button role="menuitem" onclick="closeMenu();${f}">${t}</button>`}
-function renderMenu(){document.getElementById('ddm').innerHTML=mi('Instrukcja','openMan()')+mi('Notatki projektowe',"document.getElementById('notes').hidden=false")+'<hr>'+(NET.mode=='local'?'<div class="dl">Nowa gra</div>'+mi('Z komputerem…',"showM('m4');document.getElementById('intro').hidden=false")+[2,3,4].map(n=>mi(n+' graczy (wieloosobowa)','startLocal('+n+')')).join(''):'<div class="dl">Pokój online: '+NET.code+'</div>'+mi('Opuść grę','netLeave()'))+(NET.mode=='local'?mi('Zapisz grę','saveGame()'):'')+'<hr>'+mi('Ekran startowy',"showMain();document.getElementById('intro').hidden=false")+'<div class="dl">Wersja '+VER+'</div>'}
+function mi(t,f){return `<button role="menuitem" data-testid="menu-item-${t.toLowerCase().replace(/[^a-z0-9]+/g,'-')}" onclick="closeMenu();${f}">${t}</button>`}
+function renderMenu(){document.getElementById('ddm').innerHTML=mi('Instrukcja','openMan()')+mi('Notatki projektowe',"document.getElementById('notes').hidden=false")+'<hr>'+(NET.mode=='local'?'<div class="dl">Nowa gra</div>'+mi('Z komputerem…',"showM('m4');document.getElementById('intro').hidden=false")+[2,3,4].map(n=>mi(n+' graczy (wieloosobowa)','startLocal('+n+')')).join(''):'<div class="dl">Pokój online: '+NET.code+'</div>'+mi('Opuść grę','netLeave()'))+(NET.mode=='local'?mi('Zapisz grę','saveGame()'):'')+'<hr>'+volRow()+mi('Ekran startowy',"showMain();document.getElementById('intro').hidden=false")+'<div class="dl">Wersja '+VER+'</div>'}
 const LEAF='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19C5 9 11 4 20 4c0 9-5 15-13 15M5 19l8-8" fill="none" stroke="#c9a24f" stroke-width="1.6" stroke-linecap="round"/></svg>';
 function renderTrack(){const t=document.getElementById('trk'),R5=['I','II','III','IV','V'];
 if(t.dataset.k!=String(TRACK)){const PH=TH.map((st,i)=>[st,(TH[i+1]!=null?TH[i+1]:TRACK+1)-st]);let h='';
@@ -377,7 +418,7 @@ if(tk.dataset.n!=String(G.n)){tk.dataset.n=String(G.n);tk.style.height=(G.n*20+4
 G.P.forEach((q,i)=>{const e=document.getElementById('tok'+i);if(!e)return;e.style.left=((Math.min(q.evo,TRACK)+.5)/(TRACK+1)*100)+'%';e.title=PN[i]+': '+q.evo+' pkt ewolucji, wynik '+score(i);e.className='tok'+(i==G.cur?' cur':'');e.textContent=q.evo})}
 function renderTable(){const me=mySeat(),p=G.P[me],can=!G.over&&G.acts>0&&me==G.cur,R6=['I','II','III','IV','V'];
 renderTrack();
-document.getElementById('targ').innerHTML='<h3>Rynek Cech</h3><div class="slots">'+[0,1,2,3,4].map(i=>{const c=G.mk[i];return c?`<div class="slot p${c.p}"><b>${c.n}</b><span>+${c.p} pkt · ${c.p?'2 jedz.':'gratis'}</span></div>`:`<div class="slot empty">${LEAF}</div>`}).join('')+'</div>'}
+document.getElementById('targ').innerHTML='<h3>Rynek Cech</h3><div class="slots">'+[0,1,2,3,4].map(i=>{const c=G.mk[i];return c?`<div class="slot p${c.p}" data-testid="market-slot-${i}" style="animation-delay:${i*50}ms"><b>${c.n}</b><span>+${c.p} pkt · ${c.p?'2 jedz.':'gratis'}</span></div>`:`<div class="slot empty">${LEAF}</div>`}).join('')+'</div>'}
 const LVN={easy:'Łatwy',med:'Średni',hard:'Trudny'};
 function mySeat(){return NET.mode!='local'?NET.seat:(G.ai?0:G.cur)}
 function aiSchedule(){clearTimeout(AIT);AIT=setTimeout(aiStep,650)}

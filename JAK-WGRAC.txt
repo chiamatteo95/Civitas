@@ -180,3 +180,16 @@ Karta pomocnicza (nowa):
 - Numer wersji: 0.1.4, sw.js: nowa wersja pamięci (civitas-v18).
 Zasady gry są bez zmian. Nowych plików graficznych nie ma: wystarczy wgrać
 ponownie index.html i sw.js (dla pewności można wgrać całą paczkę).
+
+CO ZMIENIŁEM W WERSJI 0.1.5
+---------------------------
+Karty cech:
+- Nowa karta „Smukła sylwetka” (2 pkt). W grupie 2 pkt jest teraz 5 kart po 2 egzemplarze
+  (Planowanie, Postawa wyprostowana, Płaska twarz, Naga skóra, Smukła sylwetka), więc zestaw
+  nadal ma 50 kart i 50 pkt, a łącznie jest 20 różnych kart (po 5 w każdej grupie punktowej).
+Parantropy:
+- Liczba parantropów zależy od liczby graczy: 2 graczy = 4, 3 graczy = 6, 4 graczy = 8.
+- Pokonanie parantropów daje +1 pkt ewolucji (przesuwa znacznik na torze).
+- Komputer bardziej chętnie atakuje parantropy.
+- Instrukcja i karta pomocnicza opisują nowe zasady.
+- Numer wersji: 0.1.5, sw.js: civitas-v19. Wgraj ponownie index.html i sw.js.

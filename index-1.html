@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<!-- Civitas – Anthropogenesis: gra w jednym pliku; tryb online korzysta z serwera /api/rooms -->
+<html lang="pl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#071226">
+<meta name="description" content="Civitas – Anthropogenesis: strategiczna gra planszowa o wyjściu hominidów z serca Afryki w dolnym paleolicie. Graj z komputerem, na jednym ekranie lub online.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="favicon-v4.png">
+<link rel="apple-touch-icon" href="apple-touch-icon-v4.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Civitas">
+<link rel="preload" as="image" href="cover.webp">
+<title>Civitas – Anthropogenesis</title>
+<style>
+@font-face{font-family:'Playfair Display Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url(playfair-display-latin-ext-wght-normal.woff2) format('woff2-variations');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'Playfair Display Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url(playfair-display-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'DM Sans Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url(dm-sans-latin-ext-wght-normal.woff2) format('woff2-variations');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:'DM Sans Variable';font-style:normal;font-display:swap;font-weight:100 900;src:url(dm-sans-latin-wght-normal.woff2) format('woff2-variations');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+:root{--bg:#071226;--panel:#0E1E3D;--panel2:#14294F;--ink:#F5E6CA;--mut:#B8A383;--line:#213D6E;--gold:#C9A24F;--gold2:#FFE08A;--goldd:#8F6B28;--hot:#E55353;--ok:#3EB985;--fh:'Playfair Display Variable',Lora,Georgia,serif;--fb:'DM Sans Variable','Instrument Sans',system-ui,sans-serif;--ease:cubic-bezier(.2,.8,.2,1);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(120% 60% at 50% -10%,#14294F 0,transparent 60%),var(--bg);background-attachment:fixed;color:var(--ink);font:15px/1.5 var(--fb);letter-spacing:.01em}
+h1{font:700 26px/1.1 var(--fh);margin:0}
+::selection{background:#C9A24F55}
+:focus-visible{outline:2px solid #E2B755;outline-offset:2px}
+.wrap{max-width:1360px;margin:0 auto;padding:16px;display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}
+@media(max-width:900px){.ph{width:84px}}
+.wrap>*{min-width:0}.tbl,.tm>*{min-width:0}
+header{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between}
+header p{margin:0;color:var(--mut)}
+.bwrap{position:relative}.bscroll{overflow:auto;max-height:86vh;max-height:86dvh;border-radius:12px;-webkit-overflow-scrolling:touch;box-shadow:0 0 0 1px #8F6B2866,0 18px 40px #02081499}.zoom{position:absolute;right:10px;top:10px;z-index:5;display:flex;gap:6px}.zoom button{min-height:38px;min-width:38px;padding:4px 10px;background:#0B1933e6;font-weight:700;font-size:18px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.board{width:calc(100% * var(--z,1));background:repeating-radial-gradient(circle at 20% 85%,#ffffff0d 0 2px,transparent 2px 26px),radial-gradient(circle at 12% 92%,#1f4f93,transparent 60%),radial-gradient(70% 50% at 70% 10%,#C9A24F1f,transparent 70%),linear-gradient(#0b2a5e,#071c42);padding:calc(var(--z,1) * 4.5%);overflow:hidden;border:1px solid #8F6B2899;border-radius:12px}
+#hx{position:relative;aspect-ratio:165/141.45;container-type:inline-size}
+.bgmap{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.bgmap{overflow:visible}.shelf{fill:#1a5a9c}.foam{fill:#9fdcf5;opacity:.55}.land{fill:#c9a868}.geo{fill:#ffe3a0;font:italic 600 3.6px var(--fh)}.asia{fill:#5f6b7d;stroke:#C9A24F;stroke-width:.6;stroke-linejoin:round;paint-order:stroke;opacity:.9}
+.h,.h2{position:absolute;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+.h{inset:2%;background:#0004}.h2{inset:9%}
+.band{z-index:3}.h2{opacity:.96}
+#intro,#fight,#man,#lobby,#notes,#cardv,#aid{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:#040B18d9;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);padding:16px;overflow:auto}#intro[hidden],#fight[hidden],#man[hidden],#lobby[hidden],#notes[hidden],#cardv[hidden],#aid[hidden]{display:none}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes glow{0%,100%{box-shadow:0 0 0 2px #FFE08A,0 0 10px #D4AF3788}50%{box-shadow:0 0 0 2px #FFE08A,0 0 22px #D4AF37}}
+@keyframes tumble{0%{transform:rotate(0) scale(.6);opacity:0}60%{transform:rotate(380deg) scale(1.15);opacity:1}100%{transform:rotate(360deg) scale(1)}}
+@keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
+.ibox{background:linear-gradient(180deg,#102347,#0B1933);border:1px solid var(--gold);border-radius:14px;max-width:560px;width:100%;overflow:hidden;text-align:center;padding-bottom:18px;box-shadow:0 20px 50px #000c,0 0 30px #C9A24F33,inset 0 1px 0 #ffffff14;color:#F5E8D3;animation:pop .22s var(--ease)}
+.ibox h1{margin:14px 12px 2px}.ibox h2{font-family:var(--fh)!important;color:var(--gold2);letter-spacing:.04em}.ibox p{margin:6px 18px;color:var(--mut)}.ibox .sub{font-style:italic}.art{display:block;width:100%;height:auto}.ibox .start{justify-content:center;margin-top:14px}
+.ft{display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:left}.ft>div{background:#0E1E3D;border:1px solid var(--line);border-radius:10px;padding:10px}.ft table{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}.ft td,.ft th{padding:4px 0;border-bottom:1px solid var(--line)}.ft td:last-child,.ft th:last-child{text-align:right;font-variant-numeric:tabular-nums}.ft th:last-child{font:700 20px var(--fh);color:var(--gold2)}.ft tr:first-child td:last-child.roll{display:inline-block}
+.die{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:6px;background:linear-gradient(#FFF6DC,#E8CF8E);color:#0C1A30;font-weight:800;box-shadow:0 2px 0 #8F6B28;animation:tumble .5s var(--ease)}
+#intro{padding:0;display:block;overflow:hidden;background:#071226}
+.cover{--cf:#071226;position:absolute;inset:0;background:var(--cf) url(cover.webp) center 30%/cover no-repeat}
+.cover::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 45%,#07122699),radial-gradient(120% 80% at 50% 120%,#071226cc,transparent 60%);pointer-events:none}
+@media(min-aspect-ratio:1/1){#intro .menuBox{left:auto;right:3%;bottom:max(24px,env(safe-area-inset-bottom));transform:none;width:min(300px,40%)}#intro .mainMenu{flex-direction:column}#intro .menuBox .a.big{width:100%}}
+@media(max-aspect-ratio:1/1){#intro .menuBox{bottom:auto;top:calc(100vw*.671 + 4px)}.cover{background:var(--cf) url(cover.webp) center top/100% auto no-repeat}.cover::before{display:none}.cover::after{content:"";position:absolute;left:0;right:0;top:calc(100vw*.671 - 70px);height:72px;background:linear-gradient(transparent,var(--cf))}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.menuBox{max-height:calc(100dvh - 24px);overflow:auto;position:absolute;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(92%,360px);background:linear-gradient(180deg,#0E1E3Dcc,#071226e6);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid #C9A24F88;border-radius:14px;padding:14px;text-align:center;color:#fff;box-shadow:0 20px 50px #000a,inset 0 1px 0 #ffffff1a;animation:rise .5s var(--ease)}
+.menuBox::before{content:"";position:absolute;left:18px;right:18px;top:0;height:1px;background:linear-gradient(90deg,transparent,var(--gold2),transparent)}
+.menuBox [hidden]{display:none}.menuBox p{margin:0 0 10px;color:var(--gold2);font:600 12px var(--fb);letter-spacing:.12em;text-transform:uppercase}
+.mainMenu,#m2 .start,#m3 .start,#m4 .start,#m5 .start{display:flex;flex-direction:column;gap:8px}.menuBox .a.big{width:100%}.ver{position:absolute;left:14px;bottom:max(12px,env(safe-area-inset-bottom));color:var(--gold2);opacity:.8;font:600 12px var(--fb);letter-spacing:.12em;text-transform:uppercase;text-shadow:0 1px 3px #000}.menuBox .start{justify-content:center;margin-top:8px}
+.menuBox .a{background:#ffffff10;color:#F5E6CA;border-color:#C9A24F55}
+.menuBox .a:hover:not(:disabled){border-color:var(--gold2);background:#C9A24F22;color:#fff}.a.big{min-height:48px;padding:10px 18px;font-size:15px}
+.ibox input{font:600 22px var(--fh);padding:8px;border:1px solid var(--gold);border-radius:8px;background:#071226;color:var(--gold2);text-align:center;letter-spacing:.3em;text-transform:uppercase;width:7.5em;transition:border-color .2s ease,box-shadow .2s ease}.ibox input:focus{outline:none;border-color:var(--gold2);box-shadow:0 0 0 3px #C9A24F44}
+header{flex-wrap:nowrap;align-items:center}.ht{display:flex;gap:12px;align-items:center;min-width:0}.ht h1{font-size:clamp(18px,5vw,26px)}.ht p{margin:2px 0 0;font-size:13px}.logo{width:44px;height:44px;border-radius:10px;flex:none;border:1px solid var(--gold);box-shadow:0 0 14px #C9A24F55}
+.hname{font:700 20px/1 var(--fh);color:var(--gold2);letter-spacing:.04em}.hname small{display:block;font:600 11px var(--fb);color:var(--mut);letter-spacing:.14em;text-transform:uppercase;margin-top:3px}
+.dd{position:relative;flex:none}.ddm{position:absolute;right:0;top:calc(100% + 6px);min-width:240px;z-index:20;background:#0B1933;border:1px solid var(--gold);border-radius:10px;padding:6px;box-shadow:0 12px 30px #000a;animation:pop .16s var(--ease)}.ddm[hidden]{display:none}
+.ddm button{display:block;width:100%;text-align:left;font:inherit;padding:9px 10px;border:0;border-radius:6px;background:none;color:var(--ink);cursor:pointer;transition:background .15s ease,color .15s ease}.ddm button:hover{background:#C9A24F22;color:#fff}.ddm hr{border:0;border-top:1px solid var(--line);margin:6px 0}.dl{padding:4px 10px;color:var(--gold);font:600 11px var(--fb);letter-spacing:.12em;text-transform:uppercase}
+.tbl{position:relative;border-radius:16px;overflow:hidden;border:1px solid #C9A24F88;padding:14px;display:grid;grid-template-columns:minmax(0,1fr);gap:14px;color:#F5E6CA;background:radial-gradient(90% 70% at 0% 0%,#C9A24F2e,transparent 55%),radial-gradient(70% 60% at 100% 0%,#3A86FF1a,transparent 55%),linear-gradient(#11264d,#0B1933 55%,#071226);box-shadow:0 20px 50px #0209,inset 0 1px 0 #ffffff12}
+.tt{display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.ttl{font-family:var(--fh);text-align:center;line-height:1;padding:6px 10px;align-self:center}.ttl b{display:block;font-size:clamp(28px,3.6vw,46px);letter-spacing:.06em;text-transform:uppercase;background:linear-gradient(180deg,#FFF1C2,#E2B755 55%,#A87D2A);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 8px #D4AF3755)}.ttl span{display:block;font:600 clamp(11px,1.2vw,14px) var(--fb);letter-spacing:.32em;text-transform:uppercase;color:var(--gold2)}.ttl i{display:block;height:1px;margin:8px auto;width:90%;background:linear-gradient(90deg,transparent,var(--gold2),transparent)}
+.ph{flex:none;width:96px;border:1px solid var(--gold);border-radius:8px;background:#0B1933ee;text-align:center;padding:6px 4px;font:600 11px var(--fh);color:#ffe3a0;display:grid;gap:2px;align-content:start}
+.tm{display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:14px;align-items:start}
+.targ{border:1px solid #C9A24F99;border-radius:12px;background:linear-gradient(180deg,#0E1E3D,#0B1933);padding:10px;display:grid;gap:8px;box-shadow:inset 0 0 12px #A8813219}.targ h3{margin:0 0 2px;text-align:center;font:700 13px var(--fb);color:var(--gold2);letter-spacing:.18em;text-transform:uppercase}
+.slots{display:grid;gap:8px}.slot{min-height:68px;border:1px solid #33538A;border-radius:8px;background:#14294F;color:#E2E8F0;font:inherit;padding:8px;text-align:center;display:grid;gap:3px;align-content:center;position:relative;overflow:hidden;transition:transform .2s var(--ease),box-shadow .2s ease;animation:rise .35s var(--ease) both}.slot:hover{transform:translateY(-2px);box-shadow:0 8px 18px #0008}.slot b{font:700 13px/1.2 var(--fh)}.slot span{font-size:11px;letter-spacing:.06em;opacity:.85;text-transform:uppercase}
+.slot.p3{background:linear-gradient(160deg,#3a2c0c,#2A200B);border-color:#FFE08A;color:#FFE8A3;box-shadow:inset 0 0 14px #D4AF3733}.slot.p3::after{content:"";position:absolute;inset:-40% auto -40% -60%;width:40%;background:linear-gradient(100deg,transparent,#ffffff22,transparent);transform:rotate(12deg);animation:sheen 4s ease-in-out infinite}
+@keyframes sheen{0%,60%{left:-60%}100%{left:140%}}
+.slot.p2{background:linear-gradient(160deg,#243048,#192233);border-color:#CBD5E1;color:#E2E8F0}.slot.p1{border-color:#B87333;background:linear-gradient(160deg,#2a1c12,#1b1510);color:#F3D9C0}.slot.p0{opacity:.92;border-style:dashed;border-color:#3EB98599;background:#0f2430}
+.slot.empty{display:grid;place-items:center;opacity:.45;cursor:default;border-style:dashed}.slot svg{width:28px;height:28px}
+@media(max-width:900px){.tm{grid-template-columns:1fr}.slots{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}}
+.c.x .h2{background:repeating-linear-gradient(45deg,#13213B 0 6px,#1b2d50 6px 12px)}.c.x .zn{bottom:auto;top:50%;transform:translateY(-50%);font-size:max(10px,2.6cqw);color:#E5D1AC;opacity:.9}.legend b.bk{background:repeating-linear-gradient(45deg,#13213B 0 4px,#2a426e 4px 8px)}
+.c .zn{position:absolute;left:0;right:0;bottom:12%;text-align:center;font:700 max(8px,1.8cqw) var(--fh);color:#1A1202;opacity:.75;pointer-events:none}.c.occ .zn{display:none}.c.w .zn,.c.s .zn{color:#fff}
+.tt{align-items:stretch}.trk{min-width:0;display:grid;align-content:start;overflow-x:auto;border:1px solid #C9A24F88;border-radius:12px;background:linear-gradient(180deg,#0B1933f2,#071226f2);padding:8px 6px 6px}
+.tf{display:grid;place-items:center;padding:4px 2px;border-left:1px solid #C9A24F44}.tf:first-child{border-left:0}
+.tf img{width:min(84px,100%);aspect-ratio:1;border-radius:50%;object-fit:cover;border:2px solid var(--gold);box-shadow:0 0 12px #C9A24F66;background:#0c1c38;transition:transform .25s var(--ease),box-shadow .25s ease}.tf img:hover{transform:scale(1.06);box-shadow:0 0 20px #D4AF37aa}
+.tl{text-align:center;font:500 11px var(--fh);font-style:italic;color:#E5D1AC;padding:4px 2px;border-left:1px solid #C9A24F44}.tl b{display:block;color:var(--gold2);font:700 10px var(--fb);font-style:normal;letter-spacing:.14em;text-transform:uppercase}
+.tn{text-align:center;font:600 10px var(--fb);font-variant-numeric:tabular-nums;color:#B8A383;border-left:1px solid #C9A24F22;padding:3px 0}.tn.st{background:#C9A24F33;color:#fff;border-left:1px solid #C9A24F99}.tn.en{background:#7a1f1f99;color:#fff}
+.tk{grid-column:1/-1;position:relative;margin-top:4px}
+.tok{position:absolute;width:20px;height:20px;border-radius:50%;border:2px solid #FFF6DC;transform:translateX(-50%);transition:left .7s var(--ease);font:700 9px/16px var(--fb);color:#111;text-align:center;box-shadow:0 2px 6px #000a}.tok.cur{animation:glow 1.8s ease-in-out infinite}
+:root{-webkit-text-size-adjust:100%}html,body{max-width:100%;overflow-x:hidden}
+.wrap{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+.mus{position:absolute;top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));display:flex;align-items:center;gap:8px;max-width:calc(100vw - 24px);flex-wrap:wrap;justify-content:flex-end;background:rgba(7,18,38,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid #ffffff30;border-radius:12px;padding:6px 10px;color:#fff;font:600 12px var(--fb)}.mus button{background:none;border:0;color:#fff;font-size:18px;line-height:1;cursor:pointer;padding:2px 4px}.mus input{width:96px;accent-color:#e0a82e}.mus span{opacity:.9;letter-spacing:.04em}
+@media (min-aspect-ratio:17/10) and (max-height:600px){.cover{background:#071226 url(cover.webp) left center/auto 100% no-repeat}#intro .menuBox{left:auto;right:max(12px,env(safe-area-inset-right));top:50%;bottom:auto;transform:translateY(-50%);width:clamp(220px,calc(100vw - 100dvh*1.49 - 24px),320px)}#intro .cover::after{display:none}.ver{left:max(12px,env(safe-area-inset-left))}}
+.tt{min-width:0}#side.panel{flex:1 1 440px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.sa,.sb{display:grid;gap:10px;align-content:start;min-width:0}
+.manual{max-width:720px;max-height:92vh;overflow:auto;text-align:left;padding:0}.mh{display:flex;justify-content:space-between;align-items:center;gap:8px;position:sticky;top:0;z-index:2;background:#0B1933f2;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);padding:12px 16px;border-bottom:1px solid #C9A24F66}.mh h2{margin:0;font:700 22px var(--fh);color:var(--gold2)}
+.mb{padding:6px 16px 16px;font-size:14px}.mb details{border-bottom:1px solid var(--line);padding:10px 0}.mb summary{font:600 16px var(--fh);color:var(--gold2)}.mb p,.mb li{margin:6px 0;color:var(--ink)}.mb ul{padding-left:18px;margin:6px 0}.mb table{width:100%;border-collapse:collapse;margin:6px 0}.mb th,.mb td{text-align:left;padding:5px 6px;border-bottom:1px solid var(--line);vertical-align:top}.mb th{color:var(--gold);font:600 11px var(--fb);letter-spacing:.1em;text-transform:uppercase}.menu{display:flex;gap:6px}.lake{fill:#3d7fb0;stroke:#9fdcf5;stroke-width:.3;opacity:.9}.mt{fill:#5a5348;stroke:#2d2922;stroke-width:.3;opacity:.9}.snow{fill:#FFF6DC}
+.c svg{display:block}
+.c{position:absolute;width:6.0606%;height:8.1634%;border:0;background:none;cursor:pointer;color:#1A1202;font:600 11px var(--fb);padding:0;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);transition:transform .15s ease,filter .15s ease}
+.c:hover{transform:scale(1.07);filter:brightness(1.18);z-index:4}
+.c.f .h2{background:radial-gradient(circle at 40% 30%,#E8C878,#C99B45)}.c.w .h2{background:radial-gradient(circle at 40% 30%,#4E8F5A,#2E5C38)}.c.s .h2{background:radial-gradient(circle at 40% 30%,#8A93A3,#5A6272)}.c.w,.c.s{color:#F0FAF2}
+.c.R .h{background:#E2B755}.c.S .h{background:#4C9AFF}.c.Z .h{background:#2EC4B6}.c.N .h{background:#F08A3C}.c.E .h{background:#B07CFF}
+.c.ok{z-index:2}.c.ok .h{background:#FFE08A;inset:0;animation:breathe 1.2s ease-in-out infinite}.c.ok .h2,.c.sel .h2{inset:15%}
+.c.sel{z-index:2}.c.sel .h{background:#fff;inset:0}
+.c:focus-visible{outline:none}.c:focus-visible .h{background:#fff;inset:0}
+.c i{position:absolute;left:50%;top:14%;transform:translateX(-50%);font-style:normal;opacity:.7;width:34%}.c i svg{width:100%;height:auto}
+.band{position:absolute;left:50%;top:50%;transform:translate(-50%,-28%);width:46%;aspect-ratio:1/1;border-radius:50%;display:grid;place-items:center;color:#111;font-weight:800;font-size:max(9px,2.1cqw);border:2px solid #FFF6DC;box-shadow:0 2px 4px #000a}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;color:var(--mut);font-size:13px;margin-top:10px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:#0B1933aa}
+.legend b{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:5px}
+.panel{background:radial-gradient(circle at 50% 0%,#152A52 0%,#0B1933 100%);border:1px solid #A88132;border-radius:12px;padding:14px;display:grid;gap:12px;align-content:start;box-shadow:0 10px 30px #020814b3,inset 0 1px 1px #ffffff1a}
+.panel h2{font:700 19px var(--fh);margin:0;color:#FAF1E4;letter-spacing:.02em}
+.res{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:14px}.res span{font-weight:600;padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:#071226;font-variant-numeric:tabular-nums}.res em{font-style:normal;color:var(--gold);font:600 11px var(--fb);letter-spacing:.12em;text-transform:uppercase;width:100%}
+.res .rf{border-color:#C99B45}.res .rw{border-color:#4E8F5A}.res .rs{border-color:#8A93A3}
+.ri{width:20px;height:20px;object-fit:contain;vertical-align:-5px;margin:0 2px;filter:drop-shadow(0 1px 1px #0008)}.legend .ri{width:18px;height:18px;vertical-align:-4px}
+.res span{display:inline-flex;align-items:center;gap:4px}.res span .ri{margin:0}
+.hand{display:grid;gap:8px;border:1px solid #C9A24F66;border-radius:10px;padding:10px;background:#071226aa}.hand em{font-style:normal;color:var(--gold);font:600 11px var(--fb);letter-spacing:.12em;text-transform:uppercase}
+.dcards{display:flex;gap:8px;flex-wrap:wrap}.dcard{flex:none;width:84px;padding:0;border:1px solid var(--gold);border-radius:8px;overflow:hidden;background:#0B1933;cursor:zoom-in;box-shadow:0 4px 12px #0008;transition:transform .2s var(--ease),box-shadow .2s ease;animation:rise .35s var(--ease) both}.dcard:hover{transform:translateY(-4px) rotate(-1deg);box-shadow:0 10px 20px #000a,0 0 12px #C9A24F55}.dcard img{display:block;width:100%;height:auto;aspect-ratio:500/693}
+.dcard.none{cursor:default;opacity:.6;position:relative;border-style:dashed}.dcard.none:hover{transform:none;box-shadow:0 4px 12px #0008}.dcard.none span{position:absolute;left:0;right:0;bottom:6px;text-align:center;font:600 10px/1.2 var(--fb);color:#F5E6CA;text-shadow:0 1px 2px #000}
+.tcards{display:flex;gap:6px;flex-wrap:wrap}.tcard{display:grid;gap:1px;min-width:92px;padding:6px 8px;border:1px solid #33538A;border-radius:6px;background:#14294F;font-size:12px;line-height:1.25}.tcard b{font:700 12px/1.2 var(--fh)}.tcard small{font-size:10px;letter-spacing:.06em;text-transform:uppercase;opacity:.85}.tcard.p3{border-color:#FFE08A;background:#2A200B;color:#FFE8A3}.tcard.p2{border-color:#CBD5E1;background:#192233}.tcard.p1{border-color:#B87333;background:#1b1510;color:#F3D9C0}.hand .none{color:var(--mut);font-size:13px}
+#cardv{cursor:zoom-out}#cardv img{width:min(380px,86vw,calc(86dvh*500/693));height:auto;border-radius:16px;border:1px solid var(--gold);box-shadow:0 20px 50px #000c,0 0 30px #C9A24F44;animation:pop .22s var(--ease)}
+.it .ri{width:18px;height:18px;vertical-align:-4px}
+.aidc{max-width:1000px;max-height:94vh;max-height:94dvh;overflow:auto;text-align:left;padding:0;position:relative;outline:1px solid #C9A24F55;outline-offset:-7px}
+.aidc .mh{flex-wrap:wrap}.aidc .mh small{display:block;font:600 11px var(--fb);letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-top:2px}
+.aidb{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:14px;padding:14px 16px 18px}@media(max-width:760px){.aidb{grid-template-columns:1fr}}
+.aids{display:grid;gap:10px;align-content:start}.aids h3{margin:0;font:700 13px var(--fb);letter-spacing:.18em;text-transform:uppercase;color:var(--gold2)}
+.aidg{border:1px solid var(--line);border-radius:10px;background:#071226aa;padding:10px;display:grid;gap:7px}.aidg h4{margin:0 0 2px;font:600 15px var(--fh);color:var(--gold2)}
+.aidr{display:grid;grid-template-columns:30px minmax(0,1fr);gap:8px;align-items:center;font-size:14px;line-height:1.35}.aidr p{margin:0}.aidr small{color:var(--mut);font-size:12px}
+.hx{width:24px;height:27px;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);background:var(--z,#33538A);display:grid;place-items:center;justify-self:center}.hx::after{content:"";width:18px;height:20px;clip-path:inherit;background:var(--t,#13213B)}
+.hx.rv::after{background:repeating-linear-gradient(45deg,#13213B 0 3px,#2a426e 3px 6px)}.hx.ok{background:#FFE08A;animation:breathe 1.2s ease-in-out infinite}.hx.sel{background:#fff}
+.dot{width:22px;height:22px;border-radius:50%;border:2px solid #FFF6DC;display:grid;place-items:center;font:800 10px var(--fb);color:#111;justify-self:center;box-shadow:0 2px 4px #000a}
+.aidf{width:28px;height:28px;border-radius:50%;border:1px solid var(--gold);object-fit:cover;justify-self:center}
+.aida{border:1px solid #33538A;border-radius:10px;background:linear-gradient(180deg,#102347,#0B1933);padding:10px 12px;display:grid;gap:5px;font-size:14px;line-height:1.4}
+.aida header{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.aida h4{margin:0;font:700 16px var(--fh);color:#FAF1E4}.aida ul{margin:0;padding-left:18px}.aida li{margin:2px 0}
+.aida .k{color:var(--gold);font:600 11px var(--fb);letter-spacing:.1em;text-transform:uppercase;margin-right:4px}
+.st{font:600 11px var(--fb);letter-spacing:.06em;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:var(--mut);white-space:nowrap}.st.y{border-color:#3EB985;color:#9FF0C9;background:#3EB98522}.st.n{border-color:#E5535388;color:#F3B0B0}
+.aidd{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.aidd div{display:grid;grid-template-columns:62px minmax(0,1fr);gap:10px;align-items:start;font-size:13px;line-height:1.35}.aidd img.cv{width:62px;transition:transform .2s var(--ease);height:auto;border-radius:4px;border:1px solid var(--gold);cursor:zoom-in}.aidd b{display:block;font:700 13px var(--fh);color:var(--gold2)}
+.aidn{font-size:13px;color:var(--mut);margin:0}
+.legend .lb{margin-left:auto;font:600 12px var(--fb);padding:4px 10px;min-height:30px}
+.r4{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.act{position:static}.r4{position:relative}.act summary{list-style:none}.act summary::-webkit-details-marker{display:none}
+.sm{font:inherit;padding:8px 14px;border-radius:6px;border:1px solid #33538A;background:#102347;color:#EAD8B8;min-height:40px;display:inline-flex;align-items:center;cursor:pointer;font-weight:600;transition:background .2s ease,border-color .2s ease}.sm:hover{border-color:var(--gold);background:#183363}.sm.off{opacity:.4;cursor:default}
+.ddl{position:absolute;left:0;top:calc(100% + 4px);right:0;min-width:0;max-width:none;z-index:15;background:#0B1933;border:1px solid var(--gold);border-radius:10px;padding:6px;box-shadow:0 12px 30px #000a;animation:pop .16s var(--ease)}
+.it{display:block;width:100%;text-align:left;font:inherit;padding:9px 10px;border:0;border-radius:6px;background:none;color:var(--ink);cursor:pointer;transition:background .15s ease}.it:hover:not(:disabled){background:#C9A24F22}.it:disabled{opacity:.4;cursor:default}
+.sub1>span{display:block;padding:9px 10px;border-radius:6px;cursor:pointer}.sub1:hover>span,.sub1.open>span{background:#C9A24F22}.subm{display:none;padding:2px 0 4px 10px;border-left:1px solid #C9A24F55;margin-left:10px}.sub1:hover>.subm,.sub1.open>.subm,.sub1:focus-within>.subm{display:block}
+.svinfo{font-size:12px;opacity:.85;margin-top:10px;color:#E5D1AC}.menuBox .a:disabled{opacity:.45}
+.btns{display:flex;flex-wrap:wrap;gap:6px}
+button.a{font:600 14px var(--fb);letter-spacing:.02em;padding:9px 16px;border-radius:6px;border:1px solid #33538A;background:#102347;color:#EAD8B8;cursor:pointer;min-height:40px;transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s var(--ease),box-shadow .2s ease}
+button.a:hover:not(:disabled){background:#183363;border-color:var(--gold);color:#fff}button.a:active:not(:disabled){transform:translateY(1px)}button.a:disabled{opacity:.4;cursor:default}
+button.a.main,.menuBox .a.main{background:linear-gradient(180deg,#DDB65D 0%,#A87D2A 100%);color:#0C1A30;border:1px solid #FFE08A;font-weight:700;text-transform:uppercase;letter-spacing:.08em;box-shadow:0 4px 14px #D4AF3740,inset 0 1px 0 #ffffff66}
+button.a.main:hover:not(:disabled),.menuBox .a.main:hover:not(:disabled){background:linear-gradient(180deg,#EAC878 0%,#BA8E35 100%);color:#0C1A30;transform:translateY(-2px);box-shadow:0 6px 20px #D4AF3766,inset 0 1px 0 #ffffff99}
+.era{display:flex;gap:3px}.era div{flex:1;height:8px;border-radius:4px;background:var(--line)}.era .on{background:var(--hot)}
+.pl{display:grid;gap:4px;font-size:14px}.pl div{display:flex;justify-content:space-between;gap:8px;padding:4px 8px;border-radius:6px;border-left:6px solid}
+.pl .cur{background:#C9A24F1a}
+#log{max-height:170px;overflow:auto;font-size:13px;color:var(--mut);display:grid;gap:4px;padding:10px;border:1px solid var(--line);border-radius:10px;background:#071226aa}
+#log p{margin:0;padding-left:10px;border-left:2px solid #213D6E}#log p:first-child{color:var(--ink);border-left-color:var(--gold);animation:rise .3s var(--ease)}
+details{font-size:14px}summary{cursor:pointer;font-weight:600}details ul{padding-left:18px;margin:8px 0 0}
+.card{border:1px dashed #33538A;border-radius:8px;padding:8px 10px;font-size:14px;background:#071226aa}
+.start{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.code{font:700 40px var(--fh);letter-spacing:.3em;color:var(--gold2);text-shadow:0 0 18px #D4AF3766;margin:4px 0 8px}
+.plist{display:grid;gap:6px;margin:10px 18px;text-align:left}.plist div{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#071226}.plist i{width:12px;height:12px;border-radius:50%;flex:none;border:2px solid #FFF6DC}.plist em{margin-left:auto;font-style:normal;font-size:12px;color:var(--mut)}.plist em.on{color:var(--ok)}
+.dotl{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok)}.dotl.off{background:#6b7280;box-shadow:none}
+.vol{padding:8px 10px 10px}.volh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}.volh span{color:var(--gold);font:600 11px var(--fb);letter-spacing:.12em;text-transform:uppercase}.volh b{font:600 12px var(--fb);color:var(--ink);font-variant-numeric:tabular-nums}
+.volc{display:flex;align-items:center;gap:8px}.volc button{width:36px!important;height:36px;flex:none;display:grid!important;place-items:center;padding:0!important;border:1px solid #33538A!important;background:#102347!important;border-radius:8px!important;font-size:16px;transition:border-color .15s ease,background .15s ease}.volc button:hover{border-color:var(--gold)!important;background:#183363!important}
+.vol input[type=range]{-webkit-appearance:none;appearance:none;flex:1;min-width:0;height:6px;border-radius:999px;background:linear-gradient(90deg,#C9A24F 0,#FFE08A var(--p,70%),#213D6E var(--p,70%));cursor:pointer;outline:none}
+.vol input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:linear-gradient(180deg,#FFF1C2,#C9A24F);border:2px solid #0B1933;box-shadow:0 0 0 1px #FFE08A,0 2px 6px #000a;transition:transform .15s ease}
+.vol input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:linear-gradient(180deg,#FFF1C2,#C9A24F);border:2px solid #0B1933;box-shadow:0 0 0 1px #FFE08A}
+.vol input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}.vol input[type=range]:focus-visible{box-shadow:0 0 0 3px #C9A24F55}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style></head><body>
+<div id="intro" role="dialog" aria-modal="true" aria-labelledby="it"><div class="cover"><h1 id="it" class="sr">Civitas – Anthropogenesis</h1><div class="ver" id="ver" data-testid="version-label"></div><div class="mus" id="mus" data-testid="music-control"><button id="musb" type="button" onclick="toggleMute()" aria-label="Wycisz muzykę">🔊</button><input id="musr" type="range" min="0" max="100" step="5" value="70" aria-label="Głośność muzyki" oninput="setVolume(this.value)"><span id="musl">♪ Ritual Pulse</span></div>
+<div class="menuBox"><div id="m1" class="mainMenu"><button class="a main big" data-testid="menu-local-btn" onclick="showMode()">Gra na tym urządzeniu</button><button class="a main big" id="ld" data-testid="menu-load-btn" onclick="loadGame()">Wczytaj grę</button><button class="a main big" data-testid="menu-online-btn" onclick="openLobby()">Gra online</button><button class="a big" data-testid="menu-manual-btn" onclick="openMan()">Instrukcja</button><button class="a big" data-testid="menu-exit-btn" onclick="exitGame()">Wyjście z gry</button></div><div id="svinfo" class="svinfo" data-testid="save-info"></div>
+<div id="m2" hidden><p>Gra na tym urządzeniu</p><div class="start"><button class="a main big" data-testid="menu-vs-ai-btn" onclick="showM('m4')">Gra z komputerem</button><button class="a main big" data-testid="menu-hotseat-btn" onclick="showPlayers()">Gra wieloosobowa</button></div><div class="start"><button class="a" onclick="showMain()">Wróć</button></div></div><div id="m4" hidden><p>Poziom trudności komputera</p><div class="start"><button class="a main big" data-testid="menu-level-easy-btn" onclick="pickLevel('easy')">Łatwy</button><button class="a main big" data-testid="menu-level-med-btn" onclick="pickLevel('med')">Średni</button><button class="a main big" data-testid="menu-level-hard-btn" onclick="pickLevel('hard')">Trudny</button></div><div class="start"><button class="a" onclick="showMode()">Wróć</button></div></div><div id="m5" hidden><p>Ilu przeciwników?</p><div class="start"><button class="a main big" data-testid="menu-ai-count-1-btn" onclick="startAI(1)">1 przeciwnik</button><button class="a main big" data-testid="menu-ai-count-2-btn" onclick="startAI(2)">2 przeciwników</button><button class="a main big" data-testid="menu-ai-count-3-btn" onclick="startAI(3)">3 przeciwników</button></div><div class="start"><button class="a" onclick="showM('m4')">Wróć</button></div></div><div id="m3" hidden><p>Gra wieloosobowa na jednym ekranie. Ilu graczy?</p><div class="start"><button class="a main big" data-testid="menu-players-2-btn" onclick="startLocal(2)">2 graczy</button><button class="a main big" data-testid="menu-players-3-btn" onclick="startLocal(3)">3 graczy</button><button class="a main big" data-testid="menu-players-4-btn" onclick="startLocal(4)">4 graczy</button></div><div class="start"><button class="a" onclick="showMode()">Wróć</button></div></div></div></div></div>
+<div id="lobby" hidden role="dialog" aria-modal="true" aria-label="Gra online"><div class="ibox" id="lbox" style="padding:16px"></div></div>
+<div id="fight" hidden role="dialog" aria-modal="true" aria-label="Starcie"><div class="ibox" id="fbox" style="padding:16px"></div></div>
+<div id="cardv" hidden role="dialog" aria-modal="true" aria-label="Karta odkryć" onclick="this.hidden=true"><img id="cardvi" src="karta-odkryc-rewers.webp" alt=""></div>
+<div id="aid" hidden role="dialog" aria-modal="true" aria-labelledby="aidt" onclick="if(event.target===this)this.hidden=true"><div class="ibox aidc" id="aidbox"></div></div>
+<div id="notes" hidden role="dialog" aria-modal="true" aria-labelledby="nt"><div class="ibox manual"><div class="mh"><h2 id="nt">Notatki projektowe</h2><button class="a" onclick="document.getElementById('notes').hidden=true">Zamknij ✕</button></div><div class="mb"><ul>
+<li><b>Cel:</b> pierwszy do 40 pkt ewolucji (koniec toru) kończy grę, wygrywa najwięcej punktów końcowych (ewolucja + 2 za kartę odkryć + 2 za pole poza strefą I + liczba grup).</li>
+<li><b>Plansza:</b> 150 pól w strefach I–V według projektu planszy. Numer strefy to wymagana faza (I–V). Pola stref II–V leżą rewersem (widać tylko numer strefy) i odkrywają się, gdy pierwsza grupa na nie wejdzie. Strefa I to serce Afryki z miejscami startu.</li>
+<li><b>Rynek cech:</b> 5 odkrytych kart, cecha punktowana kosztuje 2 jedzenia, adaptacje są darmowe. Gdy więcej niż 3 karty rynku to adaptacje, rynek jest tasowany. Zestawy kart: tyle co graczy (min. 2).</li>
+<li><b>Starcie:</b> k6 + era + efekty kart odkryć (Narzędzia, Polowanie, Schronienie, Ogień) + wsparcie grup. Remis wygrywa obrońca.</li>
+<li><b>Tempo:</b> pierwsza partia testowa (próg 25 pkt) trwała 23 tury, cel to 15–18 tur. Tor 40 pkt: symulacja daje ok. 22 tur bez uwzględnienia ruchu (parametr TRACK w kodzie).</li>
+<li><b>Do rozważenia:</b> 5 graczy, karty migracji, wydarzenia klimatyczne, rezerwa prowincji.</li>
+</ul></div></div></div>
+<div id="man" hidden role="dialog" aria-modal="true" aria-labelledby="mt"><div class="ibox manual"><div class="mh"><h2 id="mt">Instrukcja gry</h2><button class="a" data-testid="manual-close-btn" onclick="document.getElementById('man').hidden=true">Zamknij ✕</button></div><div class="mb">
+<details open><summary>1. Cel gry</summary><p>Prowadź swoje grupy hominidów z Serca Afryki ku kolejnym regionom kontynentu w dolnym paleolicie, ok. 3 mln–300 tys. lat temu. Rozwijaj cechy ciała (ewolucja), technologie (karty odkryć) i zajmuj nowe tereny.</p><p>Gra kończy się, gdy ktoś na koniec swojej tury ma <b>40 pkt ewolucji</b> (koniec toru) albo w grze nie zostały żadne karty punktowane. Wygrywa gracz z największą liczbą <b>punktów końcowych</b> (p. 9).</p></details>
+<details><summary>2. Przygotowanie</summary><ul><li>Gra 2–4 osób. Każdy ma kolor i zaczyna z jedną grupą w Sercu Afryki oraz z 2 jedzenia, 1 drewna i 1 kamieniem.</li><li>Na planszy stoją neutralne grupy parantropów (czarne kółka): 4 przy 2 graczach, 6 przy 3 i 8 przy 4. Nie ruszają się, ale bronią swoich pól.</li><li>Talia cech: tyle zestawów po 50 kart, ilu graczy (minimum 2). Odkryte jest 5 kart rynku.</li><li>Gracze wykonują tury po kolei. Licznik pokazuje numer tury, która rośnie, gdy ruch wróci do pierwszego gracza.</li></ul></details>
+<details><summary>3. Plansza i regiony</summary><p>150 sześciokątnych pól w pięciu strefach (I–V). Kolor wypełnienia to teren, a kolor obramowania to strefa. Im wyższy numer, tym dalej od serca Afryki.</p><table><tr><th>Teren</th><th>Zbiór</th></tr><tr><td>Sawanna</td><td>2<img class="ri" src="ikona-jedzenie.webp" alt="jedzenie" width="18" height="18"> jedzenia</td></tr><tr><td>Las</td><td>1<img class="ri" src="ikona-drewno.webp" alt="drewno" width="18" height="18"> drewno + 1<img class="ri" src="ikona-jedzenie.webp" alt="jedzenie" width="18" height="18"> jedzenie</td></tr><tr><td>Skały</td><td>1<img class="ri" src="ikona-kamien.webp" alt="kamień" width="18" height="18"> kamień + 1<img class="ri" src="ikona-jedzenie.webp" alt="jedzenie" width="18" height="18"> jedzenie</td></tr></table><table><tr><th>Strefa</th><th>Pól</th><th>Wejście od fazy</th></tr><tr><td>I – Serce Afryki</td><td>35</td><td>od początku</td></tr><tr><td>II</td><td>30</td><td>Faza II (5 pkt)</td></tr><tr><td>III</td><td>30</td><td>Faza III (12 pkt)</td></tr><tr><td>IV</td><td>28</td><td>Faza IV (20 pkt)</td></tr><tr><td>V</td><td>27</td><td>Faza V (30 pkt)</td></tr></table><p><b>Tor ewolucji</b> nad planszą ma 5 faz z wizerunkami hominidów (Homo habilis, ergaster, erectus, antecessor, sapiens). Znaczniki graczy pod torem przesuwają się na bieżąco po zdobyciu punktów ewolucji. Po najechaniu na znacznik widać też aktualny wynik końcowy.</p><p><b>Rewers:</b> pola stref II–V na początku leżą zakryte (widać tylko numer strefy). Teren pola odkrywa się, gdy pierwsza grupa na nie wejdzie, i od tej chwili widzą go wszyscy. Teren jest losowany w każdej grze, a pola startowe to sawanna.</p><p>Jeziora i góry na mapie to tylko dekoracja.</p></details>
+<details><summary>4. Przebieg tury</summary><p>W swojej turze masz <b>2 akcje</b> (dowolne, można powtarzać). Gdy je wykorzystasz albo wcześniej zechcesz, kliknij <b>Zakończ turę</b>. Nie ma limitu zasobów do przechowania. Bank surowców w panelu gracza pokazuje jedzenie, drewno i kamień z ich ikonami (te same ikony są w legendzie pod mapą). Pod bankiem jest Twoja ręka: karty odkryć jako grafiki i karty cech jako tekst. <b>Karta pomocnicza</b> (przycisk w panelu gracza, pod legendą i w Menu) zbiera w jednym miejscu legendę planszy i szczegóły wszystkich akcji, a przy każdej akcji pokazuje, czy możesz ją teraz wykonać.</p><p><b>Gra z komputerem:</b> na ekranie startowym wybierz „Gra na tym urządzeniu” → „Gra z komputerem”, poziom trudności (Łatwy, Średni, Trudny) i liczbę przeciwników (1–3). Ty grasz czerwonymi, a komputer wykonuje swoje tury automatycznie. Komputer jest oznaczony ikoną ⚙ na liście graczy.</p><p>Akcje wybierasz z listy „Akcje”: Zbieraj, Osiedl, Zakup z rynku cech i Zakup karty odkryć (podglądy rozwijają się po najechaniu lub dotknięciu). Przyciski + i − nad planszą ją powiększają. Grę na jednym urządzeniu zapiszesz w Menu, a wczytasz na ekranie startowym.</p><p><b>Dźwięki:</b> rzut kośćmi, odkrycie pola i zmiana tury mają własne dźwięki. Głośność ustawisz suwakiem w Menu → „Głośność” (przesunięcie do zera albo kliknięcie ikony głośnika wycisza dźwięki). Ustawienie zapamiętuje się na tym urządzeniu.</p></details>
+<details><summary>5. Akcje</summary><ul><li><b>Wędrówka:</b> kliknij swoją grupę, potem podświetlone sąsiednie pole (każde pole ma 6 sąsiadów). Ruch w obrębie regionu jest darmowy, wyprawa do innego regionu kosztuje 1 jedzenia. Przesuwasz jedną grupę (wejście na pole rewersem je odkrywa). Nie wejdziesz do regionu, którego fazy jeszcze nie osiągnąłeś. Wejście na zajęte pole to starcie (p. 8).</li><li><b>Zbieraj:</b> każda Twoja grupa zbiera zasoby ze swojego pola (p. 3). Poza Sercem Afryki każda grupa zbiera o 1 więcej surowca z pola.</li><li><b>Osiedl:</b> zaznacz grupę i zapłać 2 jedzenia (1 ze Schronieniem). Nowa grupa pojawia się na tym samym polu. Maksymalnie 8 grup.</li><li><b>Odkrycie:</b> kup jedną kartę odkryć (p. 7). Każdą można mieć tylko raz.</li><li><b>Ewolucja:</b> weź kartę z rynku cech (p. 6).</li></ul><p>Pierwsze wejście do każdego regionu poza Sercem Afryki daje <b>+1 pkt ewolucji</b>.</p></details>
+<details><summary>6. Ewolucja i rynek cech</summary><p>Rynek Cech (z prawej strony planszy) pokazuje dostępne cechy, a kupujesz je z listy akcji. Cecha punktowana (1–3 pkt) kosztuje <b>2 jedzenia</b> i zostaje u Ciebie. Suma punktów (tor ma 40 pkt, a faza V trwa od 30 pkt do końca toru) wyznacza Twoją fazę:</p><table><tr><th>Faza</th><th>Gatunek</th><th>Od punktów</th></tr><tr><td>I</td><td>Homo habilis</td><td>0</td></tr><tr><td>II</td><td>Homo ergaster</td><td>5</td></tr><tr><td>III</td><td>Homo erectus</td><td>12</td></tr><tr><td>IV</td><td>Homo antecessor</td><td>20</td></tr><tr><td>V</td><td>Homo sapiens</td><td>30</td></tr></table><p><b>Adaptacje</b> (0 pkt) bierzesz za darmo. Dostajesz +1 jedzenia i +1 drewna, a karta wraca do talii. To też akcja, więc możesz w ten sposób odświeżyć rynek. Gdy więcej niż 3 z 5 kart rynku to adaptacje, rynek jest tasowany od nowa.</p><p>Zestaw: 3 pkt – Myślenie abstrakcyjne, Inteligencja, Mowa i język, Zdolności manualne, Duży mózg; 2 pkt – Planowanie, Postawa wyprostowana, Płaska twarz, Naga skóra, Smukła sylwetka (po ×2); 1 pkt – Dwunożność, Redukcja uzębienia, Wysunięty podbródek, Wysklepione stopy, Rozwój mózgowia (po ×3); 0 pkt – Bieganie, Skakanie, Chodzenie, Brak ogona, Budowa miednicy (po ×4).</p></details>
+<details><summary>7. Karty odkryć</summary><p>Kupione karty odkryć leżą na Twojej ręce w panelu gracza. Kliknij kartę, żeby ją powiększyć. Każdą kartę można mieć tylko raz. Twoje karty cech są na ręce widoczne w formie tekstowej.</p><table><tr><th>Karta</th><th>Koszt</th><th>Efekt</th></tr><tr><td>Ogień</td><td>2<img class="ri" src="ikona-drewno.webp" alt="drewno" width="18" height="18"></td><td>wyprawy do innych regionów za darmo; w starciu −1 dla przeciwnika</td></tr><tr><td>Schronienie</td><td>2<img class="ri" src="ikona-drewno.webp" alt="drewno" width="18" height="18"> 1<img class="ri" src="ikona-kamien.webp" alt="kamień" width="18" height="18"></td><td>osiedlenie za 1 jedzenie; +1 w obronie</td></tr><tr><td>Narzędzia</td><td>2<img class="ri" src="ikona-kamien.webp" alt="kamień" width="18" height="18"></td><td>+1 drewna lub kamienia przy zbiorze; +1 w starciu</td></tr><tr><td>Polowanie</td><td>1<img class="ri" src="ikona-drewno.webp" alt="drewno" width="18" height="18"> 1<img class="ri" src="ikona-kamien.webp" alt="kamień" width="18" height="18"> 1<img class="ri" src="ikona-jedzenie.webp" alt="jedzenie" width="18" height="18"></td><td>+1 jedzenia na sawannie; +1 w ataku</td></tr></table></details>
+<details><summary>8. Starcie</summary><p>Gdy wchodzisz na pole z cudzą lub neutralną grupą, otwiera się ekran starcia. Każda strona rzuca k6 i dodaje modyfikatory:</p><ul><li>numer fazy (era, od 0 do 4),</li><li>Narzędzia +1, Polowanie +1 w ataku, Schronienie +1 w obronie,</li><li>Ogień przeciwnika −1,</li><li>wsparcie: +1 za każdą dodatkową własną grupę w tym samym polu i za każde sąsiednie pole z własną grupą (maks. +2). Parantropy mają stałe +3.</li></ul><p>Wygrywa wyższy wynik, remis wygrywa obrońca. Przegrany traci jedną grupę. Jeśli po wygranej pole jest puste, napastnik wchodzi na nie. Jedzenie za wyprawę jest wydane niezależnie od wyniku. <b>Pokonanie parantropów daje zwycięzcy +1 pkt ewolucji.</b></p></details>
+<details><summary>9. Koniec gry i punktacja</summary><p>Gra kończy się na koniec tury gracza, który ma 40+ pkt ewolucji, albo gdy zabraknął kart punktowanych. Punkty końcowe:</p><ul><li>punkty ewolucji,</li><li>+2 za każdą kartę odkryć,</li><li>+2 za każde pole poza Sercem Afryki, na którym masz grupę,</li><li>+1 za każdą swoją grupę.</li></ul><p>Gracz, który straci wszystkie grupy, odpada z gry.</p></details>
+<details><summary>10. Gra online</summary><ul><li>Jedna osoba wybiera na ekranie startowym „Gra online” → „Załóż pokój” i podaje pozostałym 5-znakowy kod.</li><li>Pozostali (do 3 osób) otwierają tę samą stronę i wybierają „Gra online” → wpisują kod → „Dołącz”. Założyciel klika „Start”, gdy wszyscy są w pokoju.</li><li>Stan gry przechowuje serwer, więc partia trwa, nawet gdy ktoś (także założyciel) zamknie kartę. Na tym samym urządzeniu wrócisz przyciskiem „Wróć do pokoju” w menu „Gra online”.</li><li>Każdy działa tylko w swojej turze. Rzuty kośćmi i tasowanie wykonuje przeglądarka gracza, który ma ruch. Tura gracza offline (dłużej niż ok. 10 s) jest pomijana, dopóki nie wróci.</li><li>Do gry online potrzebny jest internet. Pokój wygasa po 3 dniach bez ruchu.</li></ul></details>
+<details><summary>11. Wskazówki i uproszczenia makiety</summary><ul><li>Wczesne osiedlanie daje więcej zbiorów, ale nie zapomnij o cechach: bez nich nie wejdziesz do dalszych regionów.</li><li>Odkrycie Narzędzi i Polowania opłaca się szybko, a Ogień ma sens przy wielu wyprawach.</li><li>W makiecie pominięto: rezerwę 60 prowincji, karty migracji, 5–6 graczy oraz wydarzenia klimatyczne.</li></ul></details>
+</div></div></div>
+<div class="wrap">
+<header><div class="ht"><img class="logo" src="icon-v4-192.png" alt="" width="44" height="44"><div class="hname" aria-hidden="true">Civitas<small>Anthropogenesis</small></div><h1 class="sr">Civitas – Anthropogenesis</h1></div><div class="dd"><button class="a" id="ddb" data-testid="header-menu-btn" aria-haspopup="true" aria-expanded="false" onclick="toggleMenu()">Menu ▾</button><div class="ddm" id="ddm" hidden role="menu"></div></div></header>
+<main>
+<div class="tbl"><div class="tt"><div class="ttl"><b>Civitas</b><i></i><span>Anthropogenesis</span></div><aside class="panel" id="side" data-testid="side-panel"></aside></div>
+<div class="tm"><div class="bwrap"><div class="zoom"><button class="a" data-testid="zoom-fit-btn" onclick="zoomTo(1)" aria-label="Dopasuj planszę do ekranu">⤢</button><button class="a" data-testid="zoom-out-btn" onclick="zoomBy(-.3)" aria-label="Pomniejsz planszę">−</button><button class="a" data-testid="zoom-in-btn" onclick="zoomBy(.3)" aria-label="Powiększ planszę">+</button></div><div class="bscroll" id="bs"><div class="board" id="board" data-testid="game-board" role="grid" aria-label="Plansza: Afryka"></div></div></div><div class="targ" id="targ" data-testid="trait-market"></div></div>
+<div class="trk" id="trk" data-testid="evolution-track" aria-label="Tor ewolucji"></div></div>
+<div class="legend" data-testid="board-legend"><span><b style="background:#D9B45A"></b>sawanna: <img class="ri" src="ikona-jedzenie.webp" alt="" width="18" height="18">jedzenie</span><span><b style="background:#3F7A4A"></b>las: <img class="ri" src="ikona-drewno.webp" alt="" width="18" height="18">drewno</span><span><b style="background:#7A8393"></b>skały: <img class="ri" src="ikona-kamien.webp" alt="" width="18" height="18">kamień</span><span><b style="box-shadow:inset 0 0 0 2px #E2B755"></b>Strefa I (serce)</span><span><b style="box-shadow:inset 0 0 0 2px #4C9AFF"></b>II</span><span><b style="box-shadow:inset 0 0 0 2px #2EC4B6"></b>III</span><span><b style="box-shadow:inset 0 0 0 2px #F08A3C"></b>IV</span><span><b style="box-shadow:inset 0 0 0 2px #B07CFF"></b>V</span><span><b class="bk"></b>rewers: pole nieodkryte</span><span>Czarne kółka: parantropy (rywale)</span><button type="button" class="a lb" data-testid="legend-aid-btn" onclick="openAid()">Karta pomocnicza ▸</button></div>
+</main>
+
+</div>
+<script>
+const ERA=['Homo habilis','Homo ergaster','Homo erectus','Homo antecessor','Homo sapiens'],TH=[0,5,12,20,30],TRACK=40;
+const COL=['#E63946','#48CAE4','#FFB703','#C77DFF'],PN=['Czerwoni','Niebiescy','Żółci','Fioletowi'];
+const DEV={O:['Ogień',{w:2}],S:['Schronienie',{w:2,s:1}],N:['Narzędzia',{s:2}],P:['Polowanie',{w:1,s:1,f:1}]};
+const RIMG={f:'ikona-jedzenie.webp',w:'ikona-drewno.webp',s:'ikona-kamien.webp'},DIMG={O:'karta-ogien.webp',S:'karta-schronienie.webp',N:'karta-narzedzia.webp',P:'karta-polowanie.webp'};
+const RN={f:'jedzenie',w:'drewno',s:'kamień'},ZN={R:'Strefa I (Serce Afryki)',S:'Strefa II',Z:'Strefa III',N:'Strefa IV',E:'Strefa V'};
+const MASK=['..55555.........', '.54443333355....', '5444332223455...', '5444322223445...', '5544322222222...', '44443222111113..', '.554333211111355', '.555433211111345', '......321111144.', '.......2111113..', '.......2111113..', '.......2111113..', '.......2222224..', '.......333333...', '.......44445....', '........555.....'];
+const zone=(r,c)=>'RSZNE'[+MASK[r][c]-1];
+const ex=(r,c)=>r>=0&&r<16&&c>=0&&c<16&&MASK[r][c]!='.';
+const nb=(r,c)=>{const o=r%2?1:0;return [[r,c-1],[r,c+1],[r-1,c-1+o],[r-1,c+o],[r+1,c-1+o],[r+1,c+o]]};
+const adj=(a,b,c,d)=>ex(a,b)&&ex(c,d)&&nb(a,b).some(([x,y])=>x==c&&y==d);
+const hexp=(r,c)=>{const x=(c+(r%2?.5:0)+.5)*10,y=r*8.66+5.7735;return x+','+(y-5.7735)+' '+(x+5)+','+(y-2.887)+' '+(x+5)+','+(y+2.887)+' '+x+','+(y+5.7735)+' '+(x-5)+','+(y+2.887)+' '+(x-5)+','+(y-2.887)};
+const polys=(()=>{let s='';for(let r=0;r<16;r++)for(let c=0;c<16;c++)if(ex(r,c))s+='<polygon points="'+hexp(r,c)+'"/>';return s})();
+const AP=[[125.5,8.7],[129.1,8.9],[130.7,8.2],[132.0,5.7],[133.2,3.5],[133.9,0.4],[136.5,-4],[137,-14],[190,-14],[190,33.5],[177.8,36.5],[172.1,39.6],[167.0,40.9],[166.0,41.4],[163.7,42.4],[156.0,44.7],[152.2,45.0],[151.8,43.7],[151.1,40.8],[150.1,36.7],[146.6,32.4],[144.7,30.5],[142.1,27.7],[141.6,25.2],[139.3,22.7],[137.3,20.9],[135.5,18.6],[133.7,16.3],[132.7,14.9],[132.7,12.5],[131.9,11.9],[130.5,12.3],[130.1,13.0],[129.8,14.1],[129.5,15.2],[129.3,15.6],[127.7,13.3],[127.4,13.0],[126.5,11.9],[126.1,11.2]];
+const smoothP=AP=>{const n=AP.length,m=(a,b)=>[(a[0]+b[0])/2,(a[1]+b[1])/2];let d='M'+m(AP[n-1],AP[0]).join(' ');for(let i=0;i<n;i++){const p=AP[i],q=m(p,AP[(i+1)%n]);d+='Q'+p.join(' ')+' '+q.join(' ')}return d+'Z'};
+const ASIA=smoothP(AP),MADA=smoothP([[159.1,94.8],[161.1,97.1],[162.5,100.5],[163.3,104.2],[162.8,108.2],[162.0,112.0],[160.8,115.7],[159.1,119.0],[156.9,121.8],[155.0,119.5],[153.8,115.8],[153.3,111.5],[153.7,107.0],[154.3,102.9],[155.2,99.5],[156.9,97.0]]);
+const HEXBG='<svg class="bgmap" viewBox="0 0 165 141.45" aria-hidden="true"><defs><filter id="g1" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 24 -3"/></filter><filter id="g2" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.5"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 30 -11"/></filter><filter id="g3" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 30 -7"/></filter></defs><g class="shelf" filter="url(#g1)">'+polys+'<path d="'+ASIA+'"/><path d="'+MADA+'"/></g><g class="foam" filter="url(#g3)">'+polys+'</g><g class="land" filter="url(#g2)">'+polys+'</g><path class="asia" d="'+ASIA+'"/><path class="asia" d="'+MADA+'"/><g class="art"><image href="corner.webp" x="-12" y="89.1" width="78" height="60.9" preserveAspectRatio="none"/></g></svg>';
+const px=(r,c)=>[(c+.75)*10,r*8.66+5.77];
+const LK=[[3,8.6,3,2.2],[5.6,13,1.6,3],[8.4,9.8,4.5,3.5],[10.2,8.6,1.3,4.5],[11.6,9.8,1.4,5]];
+const MT=[[1.4,3.6,1],[1.2,4.7,1],[1.3,5.8,1],[1.5,6.9,1],[1.7,8,1],[3.4,5.9,1.1],[3.6,6.6,.9],[3.4,9.4,1.1],[3.7,9.9,.9],[6.4,13.1,1.2],[6.8,13.8,1.2],[6.1,13.9,1],[6.7,12.4,1],[6.2,3.4,1],[9.6,11.2,1.4],[13.2,10.4,1.1],[13.9,10,1.1],[14.4,9.4,1]];
+const tri=(x,y,s)=>`<polygon class="mt" points="${x-2.4*s},${y+1.8*s} ${x},${y-2.6*s} ${x+2.4*s},${y+1.8*s}"/><polygon class="snow" points="${x-.8*s},${y-.9*s} ${x},${y-2.6*s} ${x+.8*s},${y-.9*s}"/>`;
+const DECOR='<svg class="bgmap decor" viewBox="0 0 165 141.45" aria-hidden="true">'+LK.map(([r,c,rx,ry])=>{const [x,y]=px(r,c);return `<ellipse class="lake" cx="${x}" cy="${y}" rx="${rx}" ry="${ry}"/>`}).join('')+MT.map(([r,c,s])=>{const [x,y]=px(r,c);return tri(x,y,s)}).join('')+'</svg>';
+const IC={f:'<path d="M3 14c0-5 1-8 3-10M8 14V3M13 14c0-5-1-8-3-10" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>',w:'<path d="M8 1l5 7H3zM8 6l6 7H2z" fill="currentColor"/>',s:'<path d="M1 14L6 4l3 5 2-3 4 8z" fill="currentColor"/>'};
+const ter=(r,c)=>(G&&G.T&&G.T[r*16+c])||['f','w','s','f','w'][(r*7+c*3+((r*c)%4))%5];
+const isRev=(r,c)=>!G.rev||!!G.rev[r*16+c];
+const TN={f:'sawanna',w:'las',s:'skały'};
+function initMap(){G.T=[];G.rev={};for(let r=0;r<16;r++)for(let c=0;c<16;c++)if(ex(r,c)){const i=r*16+c,x=Math.random();G.T[i]=x<.4?'f':x<.8?'w':'s';if(zone(r,c)=='R')G.rev[i]=1}for(let r=6;r<=10;r++)G.T[r*16+10]='f'}
+function reveal(r,c){const i=r*16+c;if(G.rev&&!G.rev[i]){G.rev[i]=1;say(PN[G.cur]+' odkrywają pole: '+TN[ter(r,c)]+' ('+ZN[zone(r,c)]+').')}}
+const era=p=>TH.reduce((a,t,i)=>p>=t?i:a,0);
+let G,MSG='',ZOOM=1,AIRUN=false,AIT=null,AIFAIL=0,LV='med';
+function deck(sets){const d=[];
+['Myślenie abstrakcyjne','Inteligencja','Mowa i język','Zdolności manualne','Duży mózg'].forEach(n=>d.push({n,p:3}));
+['Planowanie','Postawa wyprostowana','Płaska twarz','Naga skóra','Smukła sylwetka'].forEach(n=>{for(let i=0;i<2;i++)d.push({n,p:2})});
+['Dwunożność','Redukcja uzębienia','Wysunięty podbródek','Wysklepione stopy','Rozwój mózgowia'].forEach(n=>{for(let i=0;i<3;i++)d.push({n,p:1})});
+['Bieganie','Skakanie','Chodzenie','Brak ogona','Budowa miednicy'].forEach(n=>{for(let i=0;i<4;i++)d.push({n,p:0})});
+const all=[];for(let s=0;s<sets;s++)d.forEach(x=>all.push({...x}));for(let i=all.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[all[i],all[j]]=[all[j],all[i]]}return all}
+const shuf=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function refill(){const fill=()=>{while(G.mk.length<5){if(!G.deck.length&&G.disc.length){G.deck=shuf(G.disc);G.disc=[]}if(!G.deck.length)break;G.mk.push(G.deck.pop())}};let k=0;
+for(let t=0;t<20;t++){fill();if(G.mk.filter(c=>!c.p).length<=3||!G.deck.concat(G.disc,G.mk).some(c=>c.p))break;G.deck=shuf(G.deck.concat(G.disc,G.mk));G.disc=[];G.mk=[];k++}
+fill();if(k)say('Rynek przetasowany: za dużo adaptacji.')}
+const left=()=>G.deck.concat(G.mk).some(c=>c.p>0);
+const GATE={R:0,S:1,Z:2,N:3,E:4};
+const canGo=(r,c)=>{const p=G.P[G.cur];return !!G.sel&&!G.over&&G.acts>0&&(NET.mode=='local'||NET.seat==G.cur)&&adj(G.sel[0],G.sel[1],r,c)&&owner(r,c)!==G.cur&&era(p.evo)>=GATE[zone(r,c)]&&(p.dev.O||p.f>0||zone(G.sel[0],G.sel[1])==zone(r,c))};
+function alert(t){if(AIRUN)return;MSG=t;draw()}
+const PARA=[[4,8],[11,9],[12,11],[2,6],[13,9],[7,14],[3,3],[11,13]];
+function start(n){
+const xs=n==2?[6,10]:n==3?[6,8,10]:[6,7,9,10];
+G={gid:Math.random().toString(36).slice(2,9),n,round:1,cur:0,acts:2,sel:null,over:false,deck:deck(Math.max(2,n)),disc:[],mk:[],log:[],
+P:xs.map((x,i)=>({f:2,w:1,s:1,evo:0,dev:{},hand:[],seen:{}})),
+B:xs.map((x,i)=>({r:x,c:10,o:i})).concat(PARA.slice(0,2*n).map(([r,c])=>({r,c,o:-1})))};
+initMap();refill();say('Gra się zaczyna. Tura 1: '+PN[0]+'. Zaznacz swoją grupę, potem kliknij sąsiednie pole.');showMain();document.getElementById('intro').hidden=true;draw();centerHeart()}
+const at=(r,c)=>G.B.filter(b=>b.r==r&&b.c==c);
+const owner=(r,c)=>{const b=at(r,c)[0];return b?b.o:null};
+const say=t=>{G.log.unshift(t);G.log=G.log.slice(0,30)};
+const can=(p,cost)=>Object.entries(cost).every(([k,v])=>G.P[p][k]>=v);
+const pay=(p,cost)=>Object.entries(cost).forEach(([k,v])=>G.P[p][k]-=v);
+const d6=()=>1+Math.floor(Math.random()*6);
+function discover(z){const p=G.P[G.cur];if(z!='R'&&!p.seen[z]){p.seen[z]=1;p.evo+=1;say(PN[G.cur]+' odkrywają region: '+ZN[z]+' (+1 pkt ewolucji).')}}
+function parts(o,att,sr,sc,r,c){const L=[];
+if(o<0)L.push(['Siła parantropów',3]);
+else{const q=G.P[o],e=era(q.evo);L.push(['Era: '+ERA[e],e]);
+if(q.dev.N)L.push(['Narzędzia',1]);
+if(att&&q.dev.P)L.push(['Polowanie: zasadzka',1]);
+if(!att&&q.dev.S)L.push(['Schronienie: obrona',1]);
+const x=att?sr:r,y=att?sc:c;
+const s=Math.min(2,Math.max(0,at(x,y).filter(b=>b.o==o).length-1)+nb(x,y).filter(([i,j])=>ex(i,j)&&at(i,j).some(b=>b.o==o)).length);
+if(s)L.push(['Wsparcie grupy',s])}
+return L}
+const sum=L=>L.reduce((a,x)=>a+x[1],0);
+function startFight(sr,sc,r,c,o){const A=parts(G.cur,1,sr,sc,r,c),D=parts(o,0,sr,sc,r,c);
+if(G.P[G.cur].dev.O)D.push(['Ogień napastnika: strach',-1]);
+if(o>=0&&G.P[o].dev.O)A.push(['Ogień obrońcy: strach',-1]);
+G.fight={sr,sc,r,c,o,A,D,done:0};fightUI()}
+function fightUI(){const F=G.fight,nm=o=>o<0?'Parantropy':PN[o],col=o=>o<0?'#555':COL[o];
+const tb=(t,L,o)=>`<div><b style="color:${col(o)};text-shadow:0 0 1px #000">${t}: ${nm(o)}</b><table>${L.map(([n,v])=>`<tr><td>${n}</td><td>${n=='Rzut k6'?'<span class="die">'+v+'</span>':(v>0?'+':'')+v}</td></tr>`).join('')}<tr><th>Razem</th><th>${F.done?sum(L):'?'}</th></tr></table></div>`;
+document.getElementById('fbox').innerHTML=`<h2 style="font:700 22px var(--fh);margin:0 0 10px">Starcie</h2><div class="ft">${tb('Atak',F.A,G.cur)}${tb('Obrona',F.D,F.o)}</div><p data-testid="fight-result">${F.done?(F.win?'Napastnik wygrywa: obrońca traci grupę.':'Obrońca wygrywa (remis też): napastnik traci grupę.'):'Wynik = k6 + modyfikatory. Remis wygrywa obrońca.'}</p>${NET.mode=='local'||NET.seat==G.cur?`<button class="a main" data-testid="${F.done?'fight-continue-btn':'fight-roll-btn'}" onclick="${F.done?'endFight()':'rollFight()'}">${F.done?'Dalej':'Rzuć kośćmi'}</button>`:'<p>Czekaj na gracza: '+PN[G.cur]+'</p>'}`;
+document.getElementById('fight').hidden=false}
+function rollFight(){if(NET.mode=='online'&&NET.seat!=G.cur)return;if(G.ai&&G.ai[G.cur]&&!AIRUN)return;const F=G.fight;if(!F||F.done)return;F.A.unshift(['Rzut k6',d6()]);F.D.unshift(['Rzut k6',d6()]);F.done=1;F.win=sum(F.A)>sum(F.D);fightUI()}
+function endFight(){if(NET.mode=='online'&&NET.seat!=G.cur)return;if(G.ai&&G.ai[G.cur]&&!AIRUN)return;if(!G.fight)return;const F=G.fight,{sr,sc,r,c,o}=F,mine=at(sr,sc).find(b=>b.o==G.cur),who=o<0?'parantropami':PN[o],res=sum(F.A)+':'+sum(F.D);
+if(F.win){G.B.splice(G.B.indexOf(at(r,c)[0]),1);say(PN[G.cur]+': starcie z '+who+' ('+res+') – wygrana.');if(o<0){G.P[G.cur].evo+=1;say(PN[G.cur]+' zyskują +1 pkt ewolucji za pokonanie parantropów.')}if(!at(r,c).length){mine.r=r;mine.c=c;G.sel=[r,c];reveal(r,c);discover(zone(r,c))}}
+else{G.B.splice(G.B.indexOf(mine),1);G.sel=null;say(PN[G.cur]+': starcie z '+who+' ('+res+') – grupa przepadła.')}
+G.fight=null;G.acts--;document.getElementById('fight').hidden=true;draw()}
+function click(r,c){
+if(NET.mode=='online'&&NET.seat!=G.cur)return;if(G.ai&&G.ai[G.cur]&&!AIRUN)return;
+MSG='';if(G.over||G.fight)return;const o=owner(r,c);
+if(o===G.cur){G.sel=[r,c];return draw()}
+if(!G.sel||G.acts<1)return;
+const [sr,sc]=G.sel;if(!adj(sr,sc,r,c))return;
+const p=G.P[G.cur],e=era(p.evo),z=zone(r,c);
+if(e<GATE[z])return alert(ZN[z]+' wymaga fazy '+['I','II','III','IV','V'][GATE[z]]+': '+ERA[GATE[z]]+'.');
+if(!p.dev.O&&z!=zone(sr,sc)){if(p.f<1)return alert('Wyprawa do innego regionu kosztuje 1 jedzenia.');p.f--}
+const mine=at(sr,sc).find(b=>b.o==G.cur);
+if(o===null||o===G.cur){mine.r=r;mine.c=c;G.sel=[r,c];say(PN[G.cur]+' wędrują na pole: '+ZN[z]+'.');reveal(r,c);discover(z)}
+else{startFight(sr,sc,r,c,o);return}
+G.acts--;draw()}
+function act(k,x){
+if(NET.mode=='online'&&NET.seat!=G.cur)return;if(G.ai&&G.ai[G.cur]&&!AIRUN)return;
+MSG='';const p=G.P[G.cur];if(G.over||G.fight)return;
+if(k=='end')return endTurn();
+if(G.acts<1)return;
+if(k=='gather'){G.B.filter(b=>b.o==G.cur).forEach(b=>{const t=ter(b.r,b.c),x=zone(b.r,b.c)!='R'?1:0;if(t=='f')p.f+=2+(p.dev.P?1:0)+x;else{p[t]+=1+(p.dev.N?1:0)+x;p.f+=1}});say(PN[G.cur]+' zbierają surowce.')}
+if(k=='settle'){if(!G.sel)return alert('Zaznacz swoją grupę.');const cost={f:p.dev.S?1:2};if(!can(G.cur,cost)||G.B.filter(b=>b.o==G.cur).length>=8)return alert('Brak jedzenia lub limit 8 grup.');pay(G.cur,cost);G.B.push({r:G.sel[0],c:G.sel[1],o:G.cur});say(PN[G.cur]+' powiększają grupę.')}
+if(k=='dev'){if(p.dev[x]||!can(G.cur,DEV[x][1]))return alert('Brakuje surowców.');pay(G.cur,DEV[x][1]);p.dev[x]=1;say(PN[G.cur]+' odkrywają: '+DEV[x][0]+'.')}
+if(k=='evo'){const c=G.mk[x],cost=c&&c.p?2:0;if(!c||p.f<cost)return alert('Cecha punktowana kosztuje 2 jedzenia.');p.f-=cost;G.mk.splice(x,1);p.evo+=c.p;if(c.p)p.hand.push(c);else{p.f++;p.w++;G.disc.push(c)}refill();say(PN[G.cur]+' zdobywają cechę: '+c.n+' (+'+c.p+' pkt).')}
+G.acts--;draw()}
+function handH(p,me){const own=Object.keys(DEV).filter(k=>p.dev[k]),T={};(p.hand||[]).forEach(c=>{const t=T[c.n]||(T[c.n]={n:c.n,p:c.p,k:0});t.k++});const tl=Object.values(T).sort((a,b)=>b.p-a.p||a.n.localeCompare(b.n,'pl'));
+return `<div class="hand" data-testid="player-hand"><em>Ręka · <span style="color:${COL[me]};text-shadow:0 0 1px #000">${PN[me]}</span> · karty odkryć</em><div class="dcards">${own.length?own.map((k,i)=>`<button type="button" class="dcard" style="animation-delay:${i*60}ms" data-testid="hand-discovery-${k}" onclick="showCard('${k}')" aria-label="Karta odkryć: ${DEV[k][0]} (powiększ)"><img src="${DIMG[k]}" alt="" width="84" height="116" loading="lazy"></button>`).join(''):`<div class="dcard none"><img src="karta-odkryc-rewers.webp" alt="" width="84" height="116"><span>Brak kart odkryć</span></div>`}</div><em>Karty cech</em><div class="tcards" data-testid="hand-traits">${tl.length?tl.map(t=>`<div class="tcard p${t.p}"><b>${t.n}${t.k>1?' ×'+t.k:''}</b><small>+${t.p} pkt</small></div>`).join(''):'<span class="none">Brak kart cech</span>'}</div></div>`}
+function score(i){const p=G.P[i],cells=new Set(G.B.filter(b=>b.o==i&&zone(b.r,b.c)!='R').map(b=>b.r+'-'+b.c));
+return p.evo+2*Object.keys(p.dev).length+2*cells.size+G.B.filter(b=>b.o==i).length}
+function endTurn(){
+if(G.P.some(p=>p.evo>=TRACK)||!left()){G.over=true;const s=G.P.map((_,i)=>score(i)),w=s.indexOf(Math.max(...s));say('Koniec gry! Wygrywają: '+PN[w]+' ('+s[w]+' pkt) po '+G.round+' turach.');return draw()}
+if(G.ai&&!G.B.some(b=>b.o==0)){G.over=true;say('Wszystkie Twoje grupy przepadły. Koniec gry.');return draw()}
+if(G.P.every((q,i)=>q.gone||!G.B.some(b=>b.o==i))){G.over=true;say('Koniec gry: nikt nie został.');return draw()}
+if(NET.mode=='online')G.P.forEach((q,i)=>{q.gone=!NET.online.includes(i)});
+G.cur=(G.cur+1)%G.n;if(G.cur==0)G.round++;G.acts=2;G.sel=null;
+if(!G.B.some(b=>b.o==G.cur)||G.P[G.cur].gone){say(PN[G.cur]+(G.P[G.cur].gone?' odeszli.':' wymarli.'));return endTurn()}
+say('Tura '+G.round+': '+PN[G.cur]+'.');if(G.ai&&G.ai[G.cur]&&!G.over)aiSchedule();draw()}
+function draw(noPush){
+const bd=document.getElementById('board');bd.innerHTML='';const hx=document.createElement('div');hx.id='hx';hx.innerHTML=HEXBG+DECOR;bd.appendChild(hx);
+for(let r=0;r<16;r++)for(let c=0;c<16;c++){if(!ex(r,c))continue;
+const z=zone(r,c),rv=isRev(r,c),t=rv?ter(r,c):'x',b=at(r,c),o=b.length?b[0].o:null,
+ok=canGo(r,c),sel=G.sel&&G.sel[0]==r&&G.sel[1]==c;
+const el=document.createElement('button');el.className='c '+t+' '+z+(ok?' ok':'')+(sel?' sel':'')+(o!==null?' occ':'');el.style.left=(c+(r%2?.5:0))/16.5*100+'%';el.style.top=r*8.66/141.447*100+'%';
+el.setAttribute('aria-label',ZN[z]+', '+(rv?RN[t]:'nieodkryte')+(o===null?'':o<0?', parantropy':', '+PN[o]+' x'+b.length));
+el.innerHTML='<span class="h"></span><span class="h2"></span>'+(rv?'<i><svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">'+IC[t]+'</svg></i>':'')+'<b class="zn">'+['','I','II','III','IV','V'][+MASK[r][c]]+'</b>'+(o===null?'':'<span class="band" style="background:'+(o<0?'#111;color:#fff':COL[o])+'">'+b.length+'</span>');
+el.dataset.testid='hex-'+r+'-'+c;el.onclick=()=>click(r,c);hx.appendChild(el)}
+const keepOpen=!!noPush&&!!document.querySelector('#side details.act[open]');
+const me=mySeat(),p=G.P[me],e=era(p.evo),dis=G.over||G.acts<1||me!=G.cur?'disabled':'';
+const RG=['I','II','III','IV','V'];
+const opt=(c,i)=>`<button class="it" data-testid="buy-trait-${i}" ${c.p&&p.f<2?'disabled':''} onclick="act('evo',${i})">${c.n} +${c.p} · ${c.p?'2'+ri('f'):'gratis'}</button>`;
+const tool=([k,[n,c]])=>`<button class="it" data-testid="buy-tool-${k}" ${p.dev[k]?'disabled':''} onclick="act('dev','${k}')">${p.dev[k]?'✓ ':''}${n} · ${costH(c)}</button>`;
+document.getElementById('side').innerHTML=`<div class="sa">
+<h2 data-testid="turn-indicator">Tura ${G.round} · <span style="color:${COL[G.cur]};text-shadow:0 0 1px #000">${PN[G.cur]}</span></h2>
+${NET.mode!='local'?`<div class="card" data-testid="online-status">Pokój <b>${NET.code}</b> · grasz jako <b style="color:${COL[me]};text-shadow:0 0 1px #000">${PN[me]}</b>${me==G.cur?' – Twój ruch!':' – czekasz na ruch: '+PN[G.cur]}<br>${G.P.map((_,i)=>`<span style="margin-right:10px;white-space:nowrap"><i class="dotl${NET.online.includes(i)?'':' off'}"></i>${PN[i]}</span>`).join('')}</div>`:''}
+${G.ai&&G.ai[G.cur]&&!G.over?`<div class="card">Ruch komputera (${LVN[G.ai[G.cur]]}): ${PN[G.cur]}…</div>`:''}
+${MSG?`<div class="card" role="alert" style="border-style:solid;color:${MSG[0]=='✓'?'var(--ink)':'var(--hot)'}">${MSG}</div>`:''}
+<div class="res" data-testid="resource-bank"><em>Bank surowców</em><span class="rf" data-testid="res-food">${ri('f')}Jedzenie ${p.f}</span><span class="rw" data-testid="res-wood">${ri('w')}Drewno ${p.w}</span><span class="rs" data-testid="res-stone">${ri('s')}Kamień ${p.s}</span></div>
+${handH(p,me)}
+<div class="r4"><span data-testid="actions-left">Akcje: <b>${G.acts}</b></span>${dis?'<span class="sm off">Wybierz akcję ▾</span>':`<details class="act"><summary class="sm" data-testid="actions-dropdown">Wybierz akcję ▾</summary><div class="ddl">
+<button class="it" data-testid="action-gather" onclick="act('gather')">Zbieraj</button><button class="it" data-testid="action-settle" onclick="act('settle')">Osiedl</button>
+<div class="sub1"><span data-testid="action-market" onclick="this.parentNode.classList.toggle('open')">Zakup z rynku cech ▸</span><div class="subm">${G.mk.map(opt).join('')}</div></div>
+<div class="sub1"><span data-testid="action-tools" onclick="this.parentNode.classList.toggle('open')">Zakup karty odkryć ▸</span><div class="subm">${Object.entries(DEV).map(tool).join('')}</div></div></div></details>`}</div>
+<button type="button" class="sm" data-testid="aid-btn" onclick="openAid()" style="justify-self:start">Karta pomocnicza: legenda i ruchy</button>
+<button class="a main" data-testid="end-turn-btn" ${G.over||me!=G.cur?'disabled':''} onclick="act('end')">Zakończ turę</button>
+</div><div class="sb">
+<div id="log" data-testid="game-log">${G.log.map(l=>'<p>'+l+'</p>').join('')}</div></div>
+`;
+if(keepOpen){const d=document.querySelector('#side details.act');if(d)d.open=true}
+if(G.fight)fightUI();else document.getElementById('fight').hidden=true;
+renderMenu();renderTable();
+if(!document.getElementById('aid').hidden)renderAid();
+sndCheck();
+if(!noPush)push()}
+
+const VER='0.1.6';
+// Dźwięki: syntezowane w przeglądarce (Web Audio), bez plików – działają też offline.
+// Głośność 0–100 (0 = wyciszone), zapamiętywana na urządzeniu.
+const SND={vol:70,prev:70,ctx:null,master:null,last:null};
+try{const v=localStorage.getItem('civitas-volume');if(v!==null&&v!==''&&!isNaN(+v))SND.vol=Math.max(0,Math.min(100,Math.round(+v)));else if(localStorage.getItem('civitas-sound')==='off')SND.vol=0}catch(e){}
+if(SND.vol)SND.prev=SND.vol;
+const gainOf=v=>Math.pow(v/100,2);
+function actx(){if(!SND.ctx){const A=window.AudioContext||window.webkitAudioContext;if(!A)return null;SND.ctx=new A();SND.master=SND.ctx.createGain();SND.master.gain.value=gainOf(SND.vol);SND.master.connect(SND.ctx.destination)}if(SND.ctx.state=='suspended')SND.ctx.resume().catch(()=>{});return SND.ctx}
+document.addEventListener('pointerdown',()=>{if(SND.vol)actx()},{passive:true});
+function tone(f,t0,dur,type,vol,f2){const c=SND.ctx,o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.setValueAtTime(f,t0);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t0+dur);g.gain.setValueAtTime(0.0001,t0);g.gain.exponentialRampToValueAtTime(vol,t0+.012);g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);o.connect(g).connect(SND.master);o.start(t0);o.stop(t0+dur+.05)}
+function knock(t0,vol){const c=SND.ctx,n=Math.floor(c.sampleRate*.05),b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,3);const s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();s.buffer=b;f.type='bandpass';f.frequency.value=1800+Math.random()*1400;f.Q.value=2.5;g.gain.value=vol;s.connect(f).connect(g).connect(SND.master);s.start(t0)}
+function play(k){if(!SND.vol)return;const c=actx();if(!c||c.state!='running')return;const t=c.currentTime+.01;
+if(k=='dice'){[0,.07,.13,.2,.26,.36,.47].forEach((d,i)=>knock(t+d+Math.random()*.02,.9-i*.1));tone(140,t+.47,.12,'sine',.25)}
+else if(k=='reveal'){tone(523,t,.35,'sine',.18);tone(784,t+.09,.45,'sine',.15);tone(1046,t+.18,.5,'triangle',.06)}
+else if(k=='turn'){tone(392,t,1.1,'triangle',.16);tone(588,t,.9,'sine',.07);tone(196,t,1.2,'sine',.1)}}
+function sndCheck(){if(!G)return;const rv=G.rev?Object.keys(G.rev).length:0,sig={gid:G.gid,roll:G.fight&&G.fight.done?1:0,rev:rv,turn:G.cur+'-'+G.round};const L=SND.last;SND.last=sig;
+if(!L||L.gid!==sig.gid)return;
+if(sig.roll&&!L.roll)play('dice');
+if(sig.rev>L.rev)setTimeout(()=>play('reveal'),sig.roll?500:0);
+if(sig.turn!==L.turn&&!G.over)setTimeout(()=>play('turn'),sig.rev>L.rev?350:0)}
+function setVolume(v,preview){v=Math.max(0,Math.min(100,Math.round(+v)||0));SND.vol=v;if(v)SND.prev=v;try{localStorage.setItem('civitas-volume',String(v))}catch(e){}
+if(v){const c=actx();if(c&&SND.master)SND.master.gain.setTargetAtTime(gainOf(v),c.currentTime,.02)}
+const r=document.getElementById('volr'),l=document.getElementById('voll'),b=document.getElementById('volb');if(r&&r.value!=String(v))r.value=String(v);if(r)r.style.setProperty('--p',v+'%');if(l)l.textContent=v?v+'%':'wyciszone';if(b){b.textContent=v?(v<40?'🔈':'🔊'):'🔇';b.setAttribute('aria-label',v?'Wycisz dźwięki':'Włącz dźwięki');b.setAttribute('aria-pressed',String(!v))}
+musSync();if(preview&&v)setTimeout(()=>play('reveal'),30)}
+function toggleMute(){setVolume(SND.vol?0:(SND.prev||70),true)}
+function volRow(){const v=SND.vol;return `<div class="vol" data-testid="menu-volume"><div class="volh"><span>Głośność</span><b id="voll" data-testid="menu-volume-value">${v?v+'%':'wyciszone'}</b></div><div class="volc"><button id="volb" type="button" data-testid="menu-volume-mute-btn" aria-pressed="${!v}" aria-label="${v?'Wycisz dźwięki':'Włącz dźwięki'}" onclick="toggleMute()">${v?(v<40?'🔈':'🔊'):'🔇'}</button><input id="volr" type="range" min="0" max="100" step="5" value="${v}" style="--p:${v}%" data-testid="menu-volume-slider" aria-label="Głośność dźwięków" oninput="setVolume(this.value)" onchange="setVolume(this.value,true)"></div></div>`}
+
+// Muzyka w menu głównym (ritual-pulse.mp3). Korzysta z tej samej głośności co dźwięki; gra, gdy widać ekran startowy lub poczekalnię online.
+const MUS={el:null,t:null,k:.6};
+const musEl=()=>{if(!MUS.el){const a=new Audio('ritual-pulse.mp3');a.loop=true;a.preload='auto';MUS.el=a}return MUS.el};
+function musWanted(){const i=document.getElementById('intro'),l=document.getElementById('lobby');return !!((i&&!i.hidden)||(l&&!l.hidden))&&!document.hidden}
+function musLabel(t){const e=document.getElementById('musl');if(e)e.textContent=t}
+function musUi(){const b=document.getElementById('musb'),r=document.getElementById('musr'),v=SND.vol;if(b){b.textContent=v?(v<40?'🔈':'🔊'):'🔇';b.setAttribute('aria-label',v?'Wycisz muzykę':'Włącz muzykę')}if(r){if(r.value!=String(v))r.value=String(v);r.style.setProperty('--p',v+'%')}}
+function musFade(to,pause){clearInterval(MUS.t);const a=MUS.el;if(!a)return;const target=to?Math.min(1,gainOf(SND.vol)*MUS.k):0,step=(target-a.volume)/12;let n=0;MUS.t=setInterval(()=>{n++;a.volume=Math.max(0,Math.min(1,a.volume+step));if(n>=12){clearInterval(MUS.t);a.volume=target;if(pause)a.pause()}},60)}
+function musSync(){musUi();const a=MUS.el;
+if(!musWanted()||!SND.vol){if(a&&!a.paused)musFade(0,true);musLabel(SND.vol?'♪ Ritual Pulse':'♪ Muzyka wyciszona');return}
+const e=musEl();if(!e.paused){clearInterval(MUS.t);e.volume=Math.min(1,gainOf(SND.vol)*MUS.k);return}
+e.volume=0;const p=e.play();if(p&&p.then)p.then(()=>{musFade(1);musLabel('♪ Ritual Pulse')}).catch(()=>musLabel('♪ Dotknij ekranu, aby włączyć muzykę'))}
+document.addEventListener('pointerdown',musSync,{passive:true});document.addEventListener('keydown',musSync);document.addEventListener('visibilitychange',musSync);
+if(window.MutationObserver){const mo=new MutationObserver(musSync);['intro','lobby'].forEach(id=>{const e=document.getElementById(id);if(e)mo.observe(e,{attributes:true,attributeFilter:['hidden']})})}
+setTimeout(musSync,0);
+
+// Adres serwera pokoi online. Na GitHub Pages gra łączy się z tym serwerem; na serwerze gry – z własnym /api.
+const SERVER='https://game-edits.preview.emergentagent.com';
+const API_BASE=location.hostname.endsWith('github.io')||location.protocol=='file:'?SERVER:'';
+// Online: serwer (/api/rooms) przechowuje stan gry. Gracz, który ma ruch, liczy go u siebie i wysyła nowy stan; pozostali odpytują serwer.
+const NET={mode:'local',seat:0,code:'',token:'',ver:-1,online:[],players:[],started:false,poll:null,applying:false,busy:false,again:false,deputyT:null,booting:false,last:''};
+const RKEY='civitas-room';
+async function api(path,body){const r=await fetch(API_BASE+'/api/rooms'+path,body?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:{cache:'no-store'});let b=null;try{b=await r.json()}catch(e){}
+if(!r.ok){const e=new Error(b&&typeof b.detail=='string'?b.detail:'Błąd serwera ('+r.status+').');e.status=r.status;throw e}return b}
+const lb=h=>{if(NET.last===h)return;NET.last=h;document.getElementById('lbox').innerHTML=h;document.getElementById('lobby').hidden=false};
+const lbErr=m=>{netClose();lb('<h2 style="font:700 20px var(--fh);margin:0 0 8px">Gra online</h2><p data-testid="lobby-error">'+m+'</p><div class="start"><button class="a" data-testid="lobby-error-back-btn" onclick="openLobby()">Wróć</button></div>')};
+function savedRoom(){try{const d=JSON.parse(localStorage.getItem(RKEY));return d&&d.code&&d.token?d:null}catch(e){return null}}
+function netClose(){clearInterval(NET.poll);clearTimeout(NET.deputyT);Object.assign(NET,{mode:'local',seat:0,code:'',token:'',ver:-1,online:[],players:[],started:false,poll:null,applying:false,busy:false,again:false,deputyT:null,booting:false,last:''})}
+function startLocal(n){netClose();document.getElementById('lobby').hidden=true;start(n)}
+function netLeave(){const {code,token}=NET;if(code)api('/'+code+'/leave',{token}).catch(()=>{});try{localStorage.removeItem(RKEY)}catch(e){}netClose();document.getElementById('lobby').hidden=true;start(3);document.getElementById('intro').hidden=false}
+function openLobby(){document.getElementById('intro').hidden=true;const s=savedRoom();NET.last='';
+lb('<h2 style="font:700 22px var(--fh);margin:0 0 8px">Gra online</h2><p>Jedna osoba zakłada pokój i podaje kod pozostałym (2–4 graczy). Stan gry trzyma serwer, więc każdy może zamknąć kartę i wrócić.</p>'+(s?'<div class="start"><button class="a main" data-testid="lobby-rejoin-btn" onclick="rejoin()">Wróć do pokoju '+s.code+'</button></div>':'')+'<div class="start"><button class="a main" data-testid="lobby-create-room-btn" onclick="hostRoom()">Załóż pokój</button></div><p>albo wpisz kod pokoju:</p><div class="start"><input id="jc" data-testid="lobby-code-input" maxlength="5" aria-label="Kod pokoju" autocomplete="off"><button class="a main" data-testid="lobby-join-btn" onclick="joinRoom()">Dołącz</button></div><div class="start"><button class="a" data-testid="lobby-back-btn" onclick="closeLobby()">Wróć</button></div>')}
+function closeLobby(){netClose();document.getElementById('lobby').hidden=true;showMain();document.getElementById('intro').hidden=false}
+function enterRoom(r){netClose();Object.assign(NET,{mode:'online',code:r.code,token:r.token,seat:r.seat});try{localStorage.setItem(RKEY,JSON.stringify({code:r.code,token:r.token}))}catch(e){}
+lb('<p data-testid="lobby-connecting">Łączenie z pokojem '+r.code+'…</p>');pollOnce();NET.poll=setInterval(pollOnce,1200)}
+async function hostRoom(){lb('<p>Zakładanie pokoju…</p>');try{enterRoom(await api('',{}))}catch(e){lbErr(e.message)}}
+async function joinRoom(){const code=(document.getElementById('jc').value||'').trim().toUpperCase();if(!code)return;lb('<p>Łączenie z pokojem '+code+'…</p>');try{enterRoom(await api('/'+code+'/join',{}))}catch(e){lbErr(e.status==404?'Nie znaleziono pokoju '+code+'. Sprawdź kod.':e.message)}}
+function rejoin(){const s=savedRoom();if(!s)return openLobby();enterRoom({code:s.code,token:s.token,seat:0})}
+function lobbyView(v){const host=NET.seat==0,k=v.players.length;
+const rows=v.players.map(s=>`<div data-testid="lobby-player-${s}"><i style="background:${COL[s]}"></i><b>${PN[s]}</b>${s==0?' · założyciel':''}${s==NET.seat?' (Ty)':''}<em class="${v.online.includes(s)?'on':''}">${v.online.includes(s)?'online':'offline'}</em></div>`).join('');
+lb(`<h2 style="font:700 22px var(--fh);margin:0 0 4px">Pokój online</h2><p>Kod pokoju:</p><div class="code" data-testid="lobby-room-code">${NET.code}</div><p>${host?'Pozostali otwierają tę stronę, wybierają „Gra online” i wpisują ten kod.':'Połączono. Czekaj, aż założyciel rozpocznie grę…'}</p><div class="plist" data-testid="lobby-players">${rows}</div><p>Graczy: ${k} z 4</p><div class="start">${host?`<button class="a main" data-testid="lobby-start-btn" ${k<2?'disabled':''} onclick="startOnline()">Start (${k} graczy)</button>`:''}<button class="a" data-testid="lobby-leave-btn" onclick="netLeave()">${host?'Anuluj':'Opuść pokój'}</button></div>`)}
+async function startOnline(){try{const v=await api('/'+NET.code+'/start',{token:NET.token});NET.seat=v.seat;pollOnce()}catch(e){alertLobby(e.message)}}
+function alertLobby(m){NET.last='';document.getElementById('lbox').insertAdjacentHTML('beforeend','<p style="color:var(--hot)">'+m+'</p>')}
+async function pollOnce(){if(NET.mode!='online')return;const code=NET.code;let v;
+try{v=await api('/'+code+'?token='+encodeURIComponent(NET.token)+(NET.ver>=0?'&since='+NET.ver:''))}catch(e){if(NET.code!==code)return;if(e.status==404||e.status==403){try{localStorage.removeItem(RKEY)}catch(x){}lbErr(e.status==404?'Pokój '+code+' już nie istnieje.':'Nie należysz do pokoju '+code+'.')}return}
+if(NET.mode!='online'||NET.code!==code)return;
+NET.seat=v.seat;NET.online=v.online;NET.players=v.players;NET.started=v.started;
+if(!v.started)return lobbyView(v);
+if(v.state&&v.ver>NET.ver&&!NET.busy){applyState(v.state,v.ver)}
+else if(!v.state&&v.ver==0){NET.ver=0;if(NET.seat==0&&!NET.booting){NET.booting=true;document.getElementById('lobby').hidden=true;NET.okey=NET.online.join(',');NET.last='';start(v.n)}else if(NET.seat!=0)lb('<p data-testid="lobby-preparing">Założyciel rozkłada planszę…</p>')}
+else{const ok=v.online.join(',');if(G&&NET.ver==v.ver&&ok!==NET.okey){NET.okey=ok;draw(true)}}
+deputy(v)}
+function applyState(s,ver){let o;try{o=JSON.parse(s)}catch(e){return}NET.applying=true;try{G=o;NET.ver=ver;NET.okey=NET.online.join(',');MSG='';document.getElementById('lobby').hidden=true;NET.last='';document.getElementById('intro').hidden=true;draw()}finally{NET.applying=false}}
+function push(){if(NET.mode!='online'||!NET.started||NET.applying||!G)return;if(NET.busy){NET.again=true;return}NET.busy=true;
+api('/'+NET.code+'/state',{token:NET.token,ver:NET.ver,state:JSON.stringify(G)}).then(r=>{NET.ver=r.ver}).catch(e=>{if(e.status==409)NET.ver=-1}).finally(()=>{NET.busy=false;if(NET.again){NET.again=false;push()}})}
+// Gdy gracz, który ma ruch, jest offline, najniższe obecne miejsce pomija jego turę.
+function deputy(v){if(!G||G.over||v.cur==null||v.online.includes(v.cur)||v.online[0]!==NET.seat||NET.ver!=v.ver){clearTimeout(NET.deputyT);NET.deputyT=null;return}
+if(NET.deputyT)return;NET.deputyT=setTimeout(()=>{NET.deputyT=null;if(NET.mode!='online'||!G||G.over||NET.online.includes(G.cur)||NET.online[0]!==NET.seat)return;G.fight=null;say(PN[G.cur]+' są offline – tura pominięta.');endTurn()},1500)}
+try{const z=parseFloat(localStorage.getItem('civitas-zoom'));ZOOM=z>=1&&z<=2.8?z:(typeof innerWidth!='undefined'&&innerWidth<700?1.35:1)}catch(e){if(typeof innerWidth!='undefined'&&innerWidth<700)ZOOM=1.35}
+applyZoom(false);
+start(3);document.getElementById('intro').hidden=false;showMain();document.getElementById('ver').textContent='Wersja '+VER;
+function showPlayers(){showM('m3')}
+function showMain(){showM('m1');refreshSave()}
+function applyZoom(keep){const bs=document.getElementById('bs');let fx=.5,fy=.5;if(keep){fx=(bs.scrollLeft+bs.clientWidth/2)/bs.scrollWidth;fy=(bs.scrollTop+bs.clientHeight/2)/bs.scrollHeight}document.getElementById('board').style.setProperty('--z',ZOOM);if(keep){bs.scrollLeft=fx*bs.scrollWidth-bs.clientWidth/2;bs.scrollTop=fy*bs.scrollHeight-bs.clientHeight/2}}
+function zoomTo(z){ZOOM=z;try{localStorage.setItem('civitas-zoom',ZOOM)}catch(e){}applyZoom(true)}
+function zoomBy(d){ZOOM=Math.min(2.8,Math.max(1,Math.round((ZOOM+d)*10)/10));try{localStorage.setItem('civitas-zoom',ZOOM)}catch(e){}applyZoom(true)}
+function centerHeart(){const bs=document.getElementById('bs');if(ZOOM>1){bs.scrollLeft=.62*bs.scrollWidth-bs.clientWidth/2;bs.scrollTop=.5*bs.scrollHeight-bs.clientHeight/2}}
+function refreshSave(){let d=null;try{d=JSON.parse(localStorage.getItem('civitas-save'))}catch(e){}const b=document.getElementById('ld'),i=document.getElementById('svinfo');if(b)b.disabled=!(d&&d.G);if(i)i.textContent=d&&d.G?'Zapis: tura '+d.G.round+', '+d.G.n+' graczy, '+new Date(d.t).toLocaleString('pl-PL'):'Brak zapisanej gry.'}
+function saveGame(){if(NET.mode!='local'||!G||G.fight)return alert('Zapis działa tylko w grze na jednym urządzeniu, poza starciem.');try{localStorage.setItem('civitas-save',JSON.stringify({v:VER,t:Date.now(),G}));alert('✓ Gra zapisana (tura '+G.round+').')}catch(e){alert('Nie udało się zapisać gry: przeglądarka blokuje pamięć.')}}
+function loadGame(){let d=null;try{d=JSON.parse(localStorage.getItem('civitas-save'))}catch(e){}if(!d||!d.G){refreshSave();return}netClose();document.getElementById('lobby').hidden=true;G=d.G;G.fight=null;MSG='';document.getElementById('intro').hidden=true;document.getElementById('fight').hidden=true;draw();centerHeart();if(G.ai&&G.ai[G.cur]&&!G.over)aiSchedule()}
+function exitGame(){try{window.close()}catch(e){}setTimeout(()=>{document.getElementById('svinfo').textContent='Aby wyjść, zamknij kartę przeglądarki lub aplikację.'},300)}
+function toggleMenu(){const m=document.getElementById('ddm');m.hidden=!m.hidden;document.getElementById('ddb').setAttribute('aria-expanded',String(!m.hidden))}
+function closeMenu(){document.getElementById('ddm').hidden=true;document.getElementById('ddb').setAttribute('aria-expanded','false')}
+function mi(t,f){return `<button role="menuitem" data-testid="menu-item-${t.toLowerCase().replace(/[^a-z0-9]+/g,'-')}" onclick="closeMenu();${f}">${t}</button>`}
+function renderMenu(){document.getElementById('ddm').innerHTML=mi('Karta pomocnicza','openAid()')+mi('Instrukcja','openMan()')+mi('Notatki projektowe',"document.getElementById('notes').hidden=false")+'<hr>'+(NET.mode=='local'?'<div class="dl">Nowa gra</div>'+mi('Z komputerem…',"showM('m4');document.getElementById('intro').hidden=false")+[2,3,4].map(n=>mi(n+' graczy (wieloosobowa)','startLocal('+n+')')).join(''):'<div class="dl">Pokój online: '+NET.code+'</div>'+mi('Opuść grę','netLeave()'))+(NET.mode=='local'?mi('Zapisz grę','saveGame()'):'')+'<hr>'+volRow()+mi('Ekran startowy',"showMain();document.getElementById('intro').hidden=false")+'<div class="dl">Wersja '+VER+'</div>'}
+const LEAF='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19C5 9 11 4 20 4c0 9-5 15-13 15M5 19l8-8" fill="none" stroke="#c9a24f" stroke-width="1.6" stroke-linecap="round"/></svg>';
+function renderTrack(){const t=document.getElementById('trk'),R5=['I','II','III','IV','V'];
+if(t.dataset.k!=String(TRACK)){const PH=TH.map((st,i)=>[st,(TH[i+1]!=null?TH[i+1]:TRACK+1)-st]);let h='';
+PH.forEach(([st,n],i)=>{h+=`<div class="tf" style="grid-column:span ${n}"><img src="face${i+1}.webp" alt="${ERA[i]}" width="84" height="84"></div>`});
+PH.forEach(([st,n],i)=>{h+=`<div class="tl" style="grid-column:span ${n}"><b>Faza ${R5[i]}</b>${ERA[i]}</div>`});
+for(let k=0;k<=TRACK;k++)h+=`<div class="tn${TH.includes(k)?' st':''}${k==TRACK?' en':''}">${k}</div>`;
+h+='<div class="tk" id="tk"></div>';t.style.gridTemplateColumns='repeat('+(TRACK+1)+',minmax(15px,1fr))';t.innerHTML=h;t.dataset.k=String(TRACK)}
+const tk=document.getElementById('tk');
+if(tk.dataset.n!=String(G.n)){tk.dataset.n=String(G.n);tk.style.height=(G.n*20+4)+'px';tk.innerHTML=G.P.map((q,i)=>`<div class="tok" id="tok${i}" style="top:${i*20+2}px;background:${COL[i]}"></div>`).join('')}
+G.P.forEach((q,i)=>{const e=document.getElementById('tok'+i);if(!e)return;e.style.left=((Math.min(q.evo,TRACK)+.5)/(TRACK+1)*100)+'%';e.title=PN[i]+': '+q.evo+' pkt ewolucji, wynik '+score(i);e.className='tok'+(i==G.cur?' cur':'');e.textContent=q.evo})}
+function renderTable(){const me=mySeat(),p=G.P[me],can=!G.over&&G.acts>0&&me==G.cur,R6=['I','II','III','IV','V'];
+renderTrack();
+document.getElementById('targ').innerHTML='<h3>Rynek Cech</h3><div class="slots">'+[0,1,2,3,4].map(i=>{const c=G.mk[i];return c?`<div class="slot p${c.p}" data-testid="market-slot-${i}" style="animation-delay:${i*50}ms"><b>${c.n}</b><span>+${c.p} pkt · ${c.p?'2'+ri('f'):'gratis'}</span></div>`:`<div class="slot empty">${LEAF}</div>`}).join('')+'</div>'}
+const LVN={easy:'Łatwy',med:'Średni',hard:'Trudny'};
+function mySeat(){return NET.mode!='local'?NET.seat:(G.ai?0:G.cur)}
+function aiSchedule(){clearTimeout(AIT);AIT=setTimeout(aiStep,650)}
+function aiStep(){if(!G||G.over||!G.ai||!G.ai[G.cur])return;const a0=G.acts,c0=G.cur;AIRUN=true;try{aiAct(G.ai[G.cur])}finally{AIRUN=false}
+if(G.cur==c0&&G.acts==a0){if(++AIFAIL>=3){AIFAIL=0;AIRUN=true;try{act('end')}finally{AIRUN=false}}}else AIFAIL=0;
+if(!G.over&&G.ai&&G.ai[G.cur])aiSchedule()}
+function yieldOf(b,p){const t=ter(b.r,b.c),x=zone(b.r,b.c)!='R'?1:0;return t=='f'?{f:2+(p.dev.P?1:0)+x,w:0,s:0}:{f:1,w:t=='w'?1+(p.dev.N?1:0)+x:0,s:t=='s'?1+(p.dev.N?1:0)+x:0}}
+function aiAct(lv){const me=G.cur,p=G.P[me],e=era(p.evo),own=G.B.filter(b=>b.o==me),C=[],seen=p.seen||{};
+if(G.acts<1){act('end');return}
+let gf=0,gw=0,gs=0;own.forEach(b=>{const y=yieldOf(b,p);gf+=y.f;gw+=y.w;gs+=y.s});
+C.push({s:gf*.55*Math.max(.12,1-p.f/8)+gw*.35*Math.max(.1,1-p.w/6)+gs*.4*Math.max(.1,1-p.s/6)+(p.f<2?2.5:0),run:()=>act('gather')});
+G.mk.forEach((c,i)=>{const cost=c.p?2:0;if(p.f<cost)return;let s=c.p?c.p*2-cost*.5+(p.f>=4?.8:0):.9;if(p.evo+c.p>=TRACK)s+=60;C.push({s,run:()=>act('evo',i)})});
+if(own.length&&own.length<8){const cost=p.dev.S?1:2;if(p.f>=cost){const bb=own.reduce((a,x)=>{const y=yieldOf(x,p),v=y.f*.5+y.w*.35+y.s*.4;return !a||v>a.v?{b:x,v}:a},null).b;C.push({s:2.3-cost*.4+(own.length<3?2:0)-(own.length>=6?1.6:0),run:()=>{click(bb.r,bb.c);act('settle')}})}}
+const W={N:3,P:2.6,S:1.7,O:2.2};Object.entries(DEV).forEach(([k,[n,cost]])=>{if(p.dev[k]||!can(me,cost))return;C.push({s:W[k]+(own.length<2?-1.5:0)-(lv=='easy'?2:0),run:()=>act('dev',k)})});
+own.forEach(b=>{if(own.length<2&&lv!='hard')return;nb(b.r,b.c).forEach(([r2,c2])=>{if(!ex(r2,c2))return;const o=owner(r2,c2);if(o===me)return;const z=zone(r2,c2);if(e<GATE[z])return;const cross=z!=zone(b.r,b.c);if(cross&&!p.dev.O&&p.f<1)return;
+let s=-.3-(cross&&!p.dev.O?.4:0);if(!isRev(r2,c2))s+=.6;if(z!='R'&&!seen[z])s+=2.6;s+=(+MASK[r2][c2])*.25;
+if(o!==null){const A=parts(me,1,b.r,b.c,r2,c2),D=parts(o,0,b.r,b.c,r2,c2);if(p.dev.O)D.push(['',-1]);if(o>=0&&G.P[o].dev.O)A.push(['',-1]);const a=sum(A),d=sum(D);let w=0;for(let x=1;x<=6;x++)for(let y=1;y<=6;y++)if(a+x>d+y)w++;w/=36;s+=w*(o<0?3.4:3)-(1-w)*3.2;if(lv=='easy')s=-.5+w*.8}
+else if(z=='R'&&own.length>=3)s-=.4;
+C.push({s,run:()=>{click(b.r,b.c);click(r2,c2);if(G.fight){rollFight();endFight()}}})})});
+C.push({s:.15,run:()=>act('end')});
+const noise={easy:4,med:1.1,hard:.2}[lv];let pick;
+if(lv=='easy'&&Math.random()<.3)pick=C[Math.floor(Math.random()*C.length)];
+else pick=C.reduce((a,x)=>{const v=x.s+(Math.random()-.5)*2*noise;return !a||v>a.v?{c:x,v}:a},null).c;
+pick.run()}
+function showM(id){['m1','m2','m3','m4','m5'].forEach(k=>document.getElementById(k).hidden=k!=id);document.getElementById('svinfo').hidden=id!='m1'}
+function showMode(){showM('m2')}
+function pickLevel(l){LV=l;showM('m5')}
+function startAI(n){netClose();document.getElementById('lobby').hidden=true;start(n+1);G.ai=[null];for(let i=0;i<n;i++)G.ai.push(LV);draw()}
+function ri(k){return `<img class="ri" src="${RIMG[k]}" alt="${RN[k]}" width="20" height="20">`}
+function costH(c){return Object.entries(c).map(([x,v])=>v+ri(x)).join(' ')}
+function showCard(k){const v=document.getElementById('cardv'),i=document.getElementById('cardvi');i.src=DIMG[k];i.alt='Karta odkryć: '+DEV[k][0];v.hidden=false}
+
+// Karta pomocnicza: legenda planszy + szczegóły akcji, ze stanem „teraz możliwe” dla gracza, który ma ruch.
+const TCOL={f:'#D9B45A',w:'#3F7A4A',s:'#7A8393'},ZCOL={R:'#E2B755',S:'#4C9AFF',Z:'#2EC4B6',N:'#F08A3C',E:'#B07CFF'};
+function openAid(){renderAid();document.getElementById('aid').hidden=false}
+function aidSt(ok,yes,no){return ok?`<span class="st y">✓ ${yes}</span>`:`<span class="st n">${no}</span>`}
+function aidState(){if(!G)return null;const me=mySeat(),p=G.P[me];if(G.over)return {msg:'Gra zakończona.'};if(me!=G.cur)return {msg:'Teraz ruch: '+PN[G.cur]+'.'};if(G.acts<1)return {msg:'Wykorzystano obie akcje – zakończ turę.'};
+let hexes=0;if(G.sel)for(let r=0;r<16;r++)for(let c=0;c<16;c++)if(ex(r,c)&&canGo(r,c))hexes++;
+const groups=G.B.filter(b=>b.o==me).length,sc=p.dev.S?1:2,mk=G.mk.filter(c=>!c.p||p.f>=2).length,dv=Object.keys(DEV).filter(k=>!p.dev[k]&&can(me,DEV[k][1])).map(k=>DEV[k][0]);
+return {move:G.sel?aidSt(hexes,hexes+' pól do wyboru','brak dostępnych pól'):aidSt(0,'','najpierw zaznacz grupę'),
+gather:aidSt(groups,groups+(groups==1?' grupa zbiera':' grup zbiera'),'brak grup'),
+settle:!G.sel?aidSt(0,'','zaznacz grupę'):groups>=8?aidSt(0,'','limit 8 grup'):aidSt(p.f>=sc,'koszt '+sc+' jedz.','brakuje jedzenia ('+sc+')'),
+trait:aidSt(mk,mk+' z 5 kart w zasięgu','brak jedzenia na cechę'),
+disc:aidSt(dv.length,'stać Cię: '+dv.join(', '),Object.keys(p.dev).length==4?'masz wszystkie':'brakuje surowców'),msg:'Twój ruch · akcje: '+G.acts+' z 2'}}
+function renderAid(){const S=aidState()||{},q=k=>S[k]||'',hx=(z,t,cl)=>`<span class="hx${cl?' '+cl:''}" style="--z:${z};--t:${t}"></span>`;
+const terr=[['f','Sawanna','2'+ri('f')],['w','Las','1'+ri('w')+' + 1'+ri('f')],['s','Skały','1'+ri('s')+' + 1'+ri('f')]].map(([t,n,y])=>`<div class="aidr">${hx('#0B1933',TCOL[t])}<p><b>${n}</b> · zbiór: ${y}</p></div>`).join('');
+const zones=['R','S','Z','N','E'].map((z,i)=>`<div class="aidr"><img class="aidf" src="face${i+1}.webp" alt="" width="28" height="28"><p><b style="color:${ZCOL[z]}">Strefa ${['I','II','III','IV','V'][i]}</b>${i?'':' (Serce Afryki)'} · ${i?'wejście od fazy '+['I','II','III','IV','V'][i]+' ('+TH[i]+' pkt)':'dostępna od początku'}<br><small>${ERA[i]}</small></p></div>`).join('');
+const disc=Object.entries(DEV).map(([k,[n,c]])=>`<div><img class="cv" src="${DIMG[k]}" alt="Karta: ${n}" width="62" height="86" onclick="showCard('${k}')"><p><b>${n}</b>koszt: ${costH(c)}<br>${{O:'wyprawy do innych stref za darmo; rywal −1 w starciu',S:'osiedlenie za 1 jedzenie; +1 w obronie',N:'+1 drewna lub kamienia przy zbiorze; +1 w starciu',P:'+1 jedzenia na sawannie; +1 w ataku'}[k]}</p></div>`).join('');
+document.getElementById('aidbox').innerHTML=`<div class="mh"><div><h2 id="aidt">Karta pomocnicza</h2><small>Legenda planszy · akcje w turze</small></div><button class="a" onclick="document.getElementById('aid').hidden=true">Zamknij ✕</button></div>
+<div class="aidb"><section class="aids" data-testid="aid-legend"><h3>Legenda planszy</h3>
+<div class="aidg"><h4>Tereny (wypełnienie pola)</h4>${terr}<p class="aidn">Poza Strefą I każda grupa zbiera <b>+1</b> surowca z pola.</p></div>
+<div class="aidg"><h4>Strefy (obramowanie pola)</h4>${zones}<p class="aidn">Faza zależy od punktów ewolucji na torze pod mapą. Pierwsze wejście do nowej strefy: <b>+1 pkt</b>.</p></div>
+<div class="aidg"><h4>Znaki na planszy</h4>
+<div class="aidr">${hx('#4C9AFF','','rv')}<p><b>Rewers</b> · pole nieodkryte, widać tylko numer strefy. Teren odkrywa pierwsza grupa, która wejdzie.</p></div>
+<div class="aidr">${hx('#E2B755','#D9B45A','ok')}<p><b>Pulsujące pole</b> · tam możesz teraz wejść zaznaczoną grupą.</p></div>
+<div class="aidr">${hx('#fff','#D9B45A','sel')}<p><b>Białe obramowanie</b> · zaznaczona grupa.</p></div>
+<div class="aidr"><span class="dot" style="background:${COL[0]}">2</span><p><b>Kółko w kolorze gracza</b> · jego grupy, liczba = ile grup stoi na polu.<br><small>${PN.map((n,i)=>`<span style="color:${COL[i]}">●</span> ${n}`).join(' ')}</small></p></div>
+<div class="aidr"><span class="dot" style="background:#111;color:#fff">1</span><p><b>Czarne kółko</b> · parantropy (4 / 6 / 8 przy 2 / 3 / 4 graczach). Nie ruszają się, bronią pola z siłą +3. Pokonanie ich daje +1 pkt ewolucji.</p></div>
+<p class="aidn">Jeziora i góry to tylko dekoracja.</p></div></section>
+<section class="aids" data-testid="aid-actions"><h3>Akcje w turze</h3><p class="aidn">${S.msg?'<b style="color:var(--ink)">'+S.msg+'</b> · ':''}Masz 2 akcje, w dowolnej kolejności, można je powtarzać.</p>
+<article class="aida"><header><h4>Wędrówka</h4>${q('move')}</header><ul><li><span class="k">Jak</span>kliknij swoją grupę, potem pulsujące sąsiednie pole (6 sąsiadów).</li><li><span class="k">Koszt</span>w tej samej strefie za darmo, do innej strefy 1${ri('f')} (z Ogniem za darmo).</li><li><span class="k">Warunek</span>Twoja faza musi być co najmniej równa numerowi strefy.</li><li><span class="k">Efekt</span>przesuwasz jedną grupę; rewers się odkrywa; pole z rywalem lub parantropem = <b>starcie</b>. Na pole z własną grupą nie wejdziesz (kliknięcie ją zaznacza).</li></ul></article>
+<article class="aida"><header><h4>Zbieraj</h4>${q('gather')}</header><ul><li><span class="k">Efekt</span>każda Twoja grupa zbiera ze swojego pola: sawanna 2${ri('f')}, las 1${ri('w')} + 1${ri('f')}, skały 1${ri('s')} + 1${ri('f')}.</li><li><span class="k">Premie</span>poza Strefą I +1 surowca z pola; Narzędzia +1${ri('w')} lub ${ri('s')}; Polowanie +1${ri('f')} na sawannie.</li></ul></article>
+<article class="aida"><header><h4>Osiedl</h4>${q('settle')}</header><ul><li><span class="k">Jak</span>zaznacz swoją grupę i wybierz „Osiedl”.</li><li><span class="k">Koszt</span>2${ri('f')} (ze Schronieniem 1${ri('f')}).</li><li><span class="k">Efekt</span>nowa grupa na tym samym polu; maksymalnie 8 grup.</li></ul></article>
+<article class="aida"><header><h4>Zakup z rynku cech</h4>${q('trait')}</header><ul><li><span class="k">Cecha 1–3 pkt</span>kosztuje 2${ri('f')}, punkty idą na tor ewolucji, karta zostaje na Twojej ręce.</li><li><span class="k">Adaptacja 0 pkt</span>za darmo, dostajesz +1${ri('f')} i +1${ri('w')}, karta wraca do talii (odświeża rynek).</li><li>Gdy na rynku są więcej niż 3 adaptacje, rynek jest tasowany.</li></ul></article>
+<article class="aida"><header><h4>Zakup karty odkryć</h4>${q('disc')}</header><p class="aidn" style="color:var(--ink)">Każdą kartę możesz mieć raz. Na koniec gry: +2 pkt za kartę. Kliknij miniaturę, żeby ją powiększyć.</p><div class="aidd">${disc}</div></article>
+<article class="aida"><header><h4>Starcie</h4></header><ul><li>Obie strony rzucają k6 i dodają: fazę (0–4), Narzędzia +1, Polowanie +1 w ataku, Schronienie +1 w obronie, wsparcie do +2 (dodatkowe własne grupy na polu i sąsiednie pola z grupami). Ogień rywala −1. Parantropy +3.</li><li>Wyższy wynik wygrywa, remis wygrywa obrońca. Przegrany traci jedną grupę; gdy pole opustoszeje, napastnik wchodzi. Pokonanie parantropów: +1 pkt ewolucji.</li></ul></article>
+<article class="aida"><header><h4>Zakończ turę</h4></header><ul><li>Nie zużywa akcji, możesz zakończyć wcześniej. Gra kończy się na koniec tury gracza z 40+ pkt ewolucji albo gdy zabraknie kart punktowanych.</li><li><span class="k">Wynik</span>ewolucja + 2 za kartę odkryć + 2 za pole poza Strefą I + 1 za grupę.</li></ul></article>
+</section></div>`}
+function openMan(){document.getElementById('man').hidden=false}
+document.addEventListener('keydown',e=>{if(e.key=='Escape'){document.getElementById('man').hidden=true;document.getElementById('notes').hidden=true;document.getElementById('cardv').hidden=true;document.getElementById('aid').hidden=true;closeMenu()}});
+document.addEventListener('click',e=>{if(e.target.closest&&!e.target.closest('.dd'))closeMenu()});
+if('serviceWorker' in navigator&&location.protocol.startsWith('http')){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
+</script></body></html>

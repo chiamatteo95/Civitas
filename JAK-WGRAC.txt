@@ -193,3 +193,17 @@ Parantropy:
 - Komputer bardziej chętnie atakuje parantropy.
 - Instrukcja i karta pomocnicza opisują nowe zasady.
 - Numer wersji: 0.1.5, sw.js: civitas-v19. Wgraj ponownie index.html i sw.js.
+
+CO ZMIENIŁEM W WERSJI 0.1.6
+---------------------------
+- Muzyka w menu głównym: utwór „Ritual Pulse” (plik ritual-pulse.mp3) gra w pętli na ekranie startowym i w poczekalni
+  online, a wyciszana jest płynnie po wejściu do gry. Po powrocie na ekran startowy gra dalej od tego samego miejsca.
+- Na ekranie startowym jest mały panel sterowania muzyką (przycisk wyciszenia, suwak głośności, podpis utworu).
+  Używa tej samej głośności co dźwięki w grze (ustawienie jest wspólne i zapamiętywane na urządzeniu).
+- Przeglądarki blokują automatyczne odtwarzanie dźwięku, więc na wielu telefonach muzyka włączy się dopiero po pierwszym
+  dotknięciu ekranu (do tego czasu panel pokazuje podpis „Dotknij ekranu, aby włączyć muzykę”).
+- Muzyka zatrzymuje się, gdy karta przeglądarki jest w tle.
+- ritual-pulse.mp3: przekonwertowany do 128 kb/s (ok. 3 MB zamiast 5 MB), bez okładki. WGRAJ GO do głównego katalogu
+  repozytorium obok index.html. Plik nie jest zapisywany w pamięci podręcznej aplikacji (service worker go pomija),
+  więc bez internetu muzyka nie zagra.
+- Numer wersji: 0.1.6, sw.js: civitas-v20. Wgraj ponownie index.html, sw.js i ritual-pulse.mp3.

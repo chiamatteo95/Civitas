@@ -86,6 +86,7 @@ header{flex-wrap:nowrap;align-items:center}.ht{display:flex;gap:12px;align-items
 .tok{position:absolute;width:20px;height:20px;border-radius:50%;border:2px solid #FFF6DC;transform:translateX(-50%);transition:left .7s var(--ease);font:700 9px/16px var(--fb);color:#111;text-align:center;box-shadow:0 2px 6px #000a}.tok.cur{animation:glow 1.8s ease-in-out infinite}
 :root{-webkit-text-size-adjust:100%}html,body{max-width:100%;overflow-x:hidden}
 .wrap{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+.mus{position:absolute;top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right));display:flex;align-items:center;gap:8px;max-width:calc(100vw - 24px);flex-wrap:wrap;justify-content:flex-end;background:rgba(7,18,38,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border:1px solid #ffffff30;border-radius:12px;padding:6px 10px;color:#fff;font:600 12px var(--fb)}.mus button{background:none;border:0;color:#fff;font-size:18px;line-height:1;cursor:pointer;padding:2px 4px}.mus input{width:96px;accent-color:#e0a82e}.mus span{opacity:.9;letter-spacing:.04em}
 @media (min-aspect-ratio:17/10) and (max-height:600px){.cover{background:#071226 url(cover.webp) left center/auto 100% no-repeat}#intro .menuBox{left:auto;right:max(12px,env(safe-area-inset-right));top:50%;bottom:auto;transform:translateY(-50%);width:clamp(220px,calc(100vw - 100dvh*1.49 - 24px),320px)}#intro .cover::after{display:none}.ver{left:max(12px,env(safe-area-inset-left))}}
 .tt{min-width:0}#side.panel{flex:1 1 440px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
 .sa,.sb{display:grid;gap:10px;align-content:start;min-width:0}
@@ -162,7 +163,7 @@ details{font-size:14px}summary{cursor:pointer;font-weight:600}details ul{padding
 .vol input[type=range]:active::-webkit-slider-thumb{transform:scale(1.15)}.vol input[type=range]:focus-visible{box-shadow:0 0 0 3px #C9A24F55}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style></head><body>
-<div id="intro" role="dialog" aria-modal="true" aria-labelledby="it"><div class="cover"><h1 id="it" class="sr">Civitas – Anthropogenesis</h1><div class="ver" id="ver" data-testid="version-label"></div>
+<div id="intro" role="dialog" aria-modal="true" aria-labelledby="it"><div class="cover"><h1 id="it" class="sr">Civitas – Anthropogenesis</h1><div class="ver" id="ver" data-testid="version-label"></div><div class="mus" id="mus" data-testid="music-control"><button id="musb" type="button" onclick="toggleMute()" aria-label="Wycisz muzykę">🔊</button><input id="musr" type="range" min="0" max="100" step="5" value="70" aria-label="Głośność muzyki" oninput="setVolume(this.value)"><span id="musl">♪ Ritual Pulse</span></div>
 <div class="menuBox"><div id="m1" class="mainMenu"><button class="a main big" data-testid="menu-local-btn" onclick="showMode()">Gra na tym urządzeniu</button><button class="a main big" id="ld" data-testid="menu-load-btn" onclick="loadGame()">Wczytaj grę</button><button class="a main big" data-testid="menu-online-btn" onclick="openLobby()">Gra online</button><button class="a big" data-testid="menu-manual-btn" onclick="openMan()">Instrukcja</button><button class="a big" data-testid="menu-exit-btn" onclick="exitGame()">Wyjście z gry</button></div><div id="svinfo" class="svinfo" data-testid="save-info"></div>
 <div id="m2" hidden><p>Gra na tym urządzeniu</p><div class="start"><button class="a main big" data-testid="menu-vs-ai-btn" onclick="showM('m4')">Gra z komputerem</button><button class="a main big" data-testid="menu-hotseat-btn" onclick="showPlayers()">Gra wieloosobowa</button></div><div class="start"><button class="a" onclick="showMain()">Wróć</button></div></div><div id="m4" hidden><p>Poziom trudności komputera</p><div class="start"><button class="a main big" data-testid="menu-level-easy-btn" onclick="pickLevel('easy')">Łatwy</button><button class="a main big" data-testid="menu-level-med-btn" onclick="pickLevel('med')">Średni</button><button class="a main big" data-testid="menu-level-hard-btn" onclick="pickLevel('hard')">Trudny</button></div><div class="start"><button class="a" onclick="showMode()">Wróć</button></div></div><div id="m5" hidden><p>Ilu przeciwników?</p><div class="start"><button class="a main big" data-testid="menu-ai-count-1-btn" onclick="startAI(1)">1 przeciwnik</button><button class="a main big" data-testid="menu-ai-count-2-btn" onclick="startAI(2)">2 przeciwników</button><button class="a main big" data-testid="menu-ai-count-3-btn" onclick="startAI(3)">3 przeciwników</button></div><div class="start"><button class="a" onclick="showM('m4')">Wróć</button></div></div><div id="m3" hidden><p>Gra wieloosobowa na jednym ekranie. Ilu graczy?</p><div class="start"><button class="a main big" data-testid="menu-players-2-btn" onclick="startLocal(2)">2 graczy</button><button class="a main big" data-testid="menu-players-3-btn" onclick="startLocal(3)">3 graczy</button><button class="a main big" data-testid="menu-players-4-btn" onclick="startLocal(4)">4 graczy</button></div><div class="start"><button class="a" onclick="showMode()">Wróć</button></div></div></div></div></div>
 <div id="lobby" hidden role="dialog" aria-modal="true" aria-label="Gra online"><div class="ibox" id="lbox" style="padding:16px"></div></div>
@@ -354,7 +355,7 @@ if(!document.getElementById('aid').hidden)renderAid();
 sndCheck();
 if(!noPush)push()}
 
-const VER='0.1.5';
+const VER='0.1.6';
 // Dźwięki: syntezowane w przeglądarce (Web Audio), bez plików – działają też offline.
 // Głośność 0–100 (0 = wyciszone), zapamiętywana na urządzeniu.
 const SND={vol:70,prev:70,ctx:null,master:null,last:null};
@@ -377,9 +378,24 @@ if(sig.turn!==L.turn&&!G.over)setTimeout(()=>play('turn'),sig.rev>L.rev?350:0)}
 function setVolume(v,preview){v=Math.max(0,Math.min(100,Math.round(+v)||0));SND.vol=v;if(v)SND.prev=v;try{localStorage.setItem('civitas-volume',String(v))}catch(e){}
 if(v){const c=actx();if(c&&SND.master)SND.master.gain.setTargetAtTime(gainOf(v),c.currentTime,.02)}
 const r=document.getElementById('volr'),l=document.getElementById('voll'),b=document.getElementById('volb');if(r&&r.value!=String(v))r.value=String(v);if(r)r.style.setProperty('--p',v+'%');if(l)l.textContent=v?v+'%':'wyciszone';if(b){b.textContent=v?(v<40?'🔈':'🔊'):'🔇';b.setAttribute('aria-label',v?'Wycisz dźwięki':'Włącz dźwięki');b.setAttribute('aria-pressed',String(!v))}
-if(preview&&v)setTimeout(()=>play('reveal'),30)}
+musSync();if(preview&&v)setTimeout(()=>play('reveal'),30)}
 function toggleMute(){setVolume(SND.vol?0:(SND.prev||70),true)}
 function volRow(){const v=SND.vol;return `<div class="vol" data-testid="menu-volume"><div class="volh"><span>Głośność</span><b id="voll" data-testid="menu-volume-value">${v?v+'%':'wyciszone'}</b></div><div class="volc"><button id="volb" type="button" data-testid="menu-volume-mute-btn" aria-pressed="${!v}" aria-label="${v?'Wycisz dźwięki':'Włącz dźwięki'}" onclick="toggleMute()">${v?(v<40?'🔈':'🔊'):'🔇'}</button><input id="volr" type="range" min="0" max="100" step="5" value="${v}" style="--p:${v}%" data-testid="menu-volume-slider" aria-label="Głośność dźwięków" oninput="setVolume(this.value)" onchange="setVolume(this.value,true)"></div></div>`}
+
+// Muzyka w menu głównym (ritual-pulse.mp3). Korzysta z tej samej głośności co dźwięki; gra, gdy widać ekran startowy lub poczekalnię online.
+const MUS={el:null,t:null,k:.6};
+const musEl=()=>{if(!MUS.el){const a=new Audio('ritual-pulse.mp3');a.loop=true;a.preload='auto';MUS.el=a}return MUS.el};
+function musWanted(){const i=document.getElementById('intro'),l=document.getElementById('lobby');return !!((i&&!i.hidden)||(l&&!l.hidden))&&!document.hidden}
+function musLabel(t){const e=document.getElementById('musl');if(e)e.textContent=t}
+function musUi(){const b=document.getElementById('musb'),r=document.getElementById('musr'),v=SND.vol;if(b){b.textContent=v?(v<40?'🔈':'🔊'):'🔇';b.setAttribute('aria-label',v?'Wycisz muzykę':'Włącz muzykę')}if(r){if(r.value!=String(v))r.value=String(v);r.style.setProperty('--p',v+'%')}}
+function musFade(to,pause){clearInterval(MUS.t);const a=MUS.el;if(!a)return;const target=to?Math.min(1,gainOf(SND.vol)*MUS.k):0,step=(target-a.volume)/12;let n=0;MUS.t=setInterval(()=>{n++;a.volume=Math.max(0,Math.min(1,a.volume+step));if(n>=12){clearInterval(MUS.t);a.volume=target;if(pause)a.pause()}},60)}
+function musSync(){musUi();const a=MUS.el;
+if(!musWanted()||!SND.vol){if(a&&!a.paused)musFade(0,true);musLabel(SND.vol?'♪ Ritual Pulse':'♪ Muzyka wyciszona');return}
+const e=musEl();if(!e.paused){clearInterval(MUS.t);e.volume=Math.min(1,gainOf(SND.vol)*MUS.k);return}
+e.volume=0;const p=e.play();if(p&&p.then)p.then(()=>{musFade(1);musLabel('♪ Ritual Pulse')}).catch(()=>musLabel('♪ Dotknij ekranu, aby włączyć muzykę'))}
+document.addEventListener('pointerdown',musSync,{passive:true});document.addEventListener('keydown',musSync);document.addEventListener('visibilitychange',musSync);
+if(window.MutationObserver){const mo=new MutationObserver(musSync);['intro','lobby'].forEach(id=>{const e=document.getElementById(id);if(e)mo.observe(e,{attributes:true,attributeFilter:['hidden']})})}
+setTimeout(musSync,0);
 
 // Adres serwera pokoi online. Na GitHub Pages gra łączy się z tym serwerem; na serwerze gry – z własnym /api.
 const SERVER='https://game-edits.preview.emergentagent.com';
